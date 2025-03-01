@@ -28,9 +28,10 @@ import { ModalDialogConfig } from '~/app/shared/models/modal-dialog-config.type'
  * will return the boolean value 'true', the reject button 'false'.
  */
 @Component({
-  selector: 'omv-confirm-dialog',
-  templateUrl: './modal-dialog.component.html',
-  styleUrls: ['./modal-dialog.component.scss']
+    selector: 'omv-confirm-dialog',
+    templateUrl: './modal-dialog.component.html',
+    styleUrls: ['./modal-dialog.component.scss'],
+    standalone: false
 })
 export class ModalDialogComponent {
   // Internal
@@ -67,8 +68,8 @@ export class ModalDialogComponent {
               dialogResult: true,
               class:
                 'confirmation' === this.config.template
-                  ? 'omv-background-color-pair-primary'
-                  : 'omv-background-color-pair-red'
+                  ? 'bg-primary'
+                  : 'bg-error'
             }
           ]
         });
@@ -86,7 +87,7 @@ export class ModalDialogComponent {
               text: gettext('OK'),
               autofocus: true,
               dialogResult: true,
-              class: 'omv-background-color-pair-primary'
+              class: 'bg-primary'
             }
           ]
         });

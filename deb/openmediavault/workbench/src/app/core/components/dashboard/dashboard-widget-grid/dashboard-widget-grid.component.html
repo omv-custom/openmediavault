@@ -4,7 +4,7 @@
   <div *ngIf="data"
        class="widget-content omv-grid omv-gap-1">
     <div *ngFor="let item of data.data"
-         class="item"
+         class="item rounded f-w-500 p-6 p-y-4 f-s-12"
          [ngClass]="config.grid?.item.class | template:item"
          matTooltipClass="omv-text-wrap-line"
          [matTooltip]="config.grid?.item.tooltip | template:item | br2nl | preventHtml"

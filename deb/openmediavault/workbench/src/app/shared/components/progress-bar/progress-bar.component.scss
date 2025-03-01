@@ -1,8 +1,6 @@
 @use 'scss/theme';
 
 .omv-progress-bar {
-  position: relative;
-  background-color: rgb(0 0 0 / 10%);
 
   .omv-progress-bar-text {
     white-space: nowrap;
@@ -22,4 +20,21 @@
   .omv-progress-bar-fill.warning {
     @include theme.background-color-pair('error');
   }
+
+  .mat-mdc-progress-bar {
+   --mdc-linear-progress-track-height: 15px;
+   --mdc-linear-progress-active-indicator-height: 15px;
+  }
+
+
+  #filesystem_size {
+    margin-top: -15px;
+    font-size: 12px;
+    display: flex;
+    color: #121212 !important;
+    position: relative;
+    z-index: 999;
+    justify-content: center;
+  }
+
 }

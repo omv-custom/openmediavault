@@ -21,8 +21,8 @@ import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
 import { Event, NavigationEnd, Router } from '@angular/router';
 import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import * as _ from 'lodash';
-import { forkJoin, Subscription } from 'rxjs';
-import { delay, filter, finalize, take, tap } from 'rxjs/operators';
+import { forkJoin, Subscription, Observable } from 'rxjs';
+import { delay, filter, finalize, take, tap, map, shareReplay } from 'rxjs/operators';
 
 import { DashboardWidgetConfigService } from '~/app/core/services/dashboard-widget-config.service';
 import { LogConfigService } from '~/app/core/services/log-config.service';
@@ -40,12 +40,13 @@ import { RunningTasks, TaskRunnerService } from '~/app/shared/services/task-runn
 import { UserLocalStorageService } from '~/app/shared/services/user-local-storage.service';
 
 @Component({
-  selector: 'omv-workbench-layout',
-  templateUrl: './workbench-layout.component.html',
-  styleUrls: ['./workbench-layout.component.scss']
+    selector: 'omv-workbench-layout',
+    templateUrl: './workbench-layout.component.html',
+    styleUrls: ['./workbench-layout.component.scss'],
+    standalone: false
 })
 export class WorkbenchLayoutComponent implements OnInit {
-  @ViewChild('navigationSidenav', { static: false })
+  @ViewChild('drawer', { static: false })
   private navigationSidenav: MatSidenav;
 
   @ViewChild('notificationSidenav', { static: false })
@@ -53,6 +54,12 @@ export class WorkbenchLayoutComponent implements OnInit {
 
   @Unsubscribe()
   private subscriptions = new Subscription();
+  
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
 
   public loading = true;
   public sideNavMode: MatDrawerMode;

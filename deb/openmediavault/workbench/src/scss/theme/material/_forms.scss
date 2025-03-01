@@ -21,7 +21,7 @@
   // @deprecated in Angular15
   .mat-form-field {
     // Copy-paste from @mat-form-field-typography();
-    $line-height: mat.line-height($typography-config, input);
+    $line-height: mat.m2-line-height($typography-config, input);
     $subscript-font-scale: 0.75;
 
     & & {

@@ -1,20 +1,19 @@
-<mat-list-item role="listitem"
-               [ngClass]="{'active': item.active}"
-               (click)="onClick(item)">
-  <div class="omv-list-item-indent-z{{ depth }}"></div>
-  <mat-icon svgIcon="{{ item.icon | mapIconEnum }}"></mat-icon>
-  <div class="omv-text-truncate">
-    {{ item.text | transloco }}
-  </div>
-  <div *ngIf="item.children?.length > 0"
-       class="omv-display-flex omv-flex-row omv-flex-1">
-    <div class="omv-flex-1"></div>
-    <mat-icon svgIcon="{{ item.expanded ? icon.chevronDown : icon.chevronRight }}"></mat-icon>
-  </div>
-</mat-list-item>
+     <mat-nav-list role="list">
+          <li class="list-group mb-8" class="omv-list-item-indent-z{{ depth }}">
+            <a matRipple [matRippleColor]="'#f7f8f443'" (click)="onClick(item)"
+              class="sidebar-menu fs-16 w-100 d-flex align-items-center" [ngClass]="{'active': item.active}">
+              <mat-icon svgIcon="{{ item.icon | mapIconEnum }}"></mat-icon> <span
+                class="ps-4">{{ item.text | transloco }}</span>
+            </a>
+            <span fxflex="" class="arrow-icon" *ngIf="item.children?.length > 0"><span fxflex=""></span> <mat-icon svgIcon="{{ item.expanded ? icon.chevronDown : icon.chevronRight }}"></mat-icon></span>
+          </li>
+      </mat-nav-list>
+        
 <div *ngIf="item.expanded && item.children?.length > 0">
+<ul class="submenu">
   <omv-navigation-bar-list-item *ngFor="let child of item.children"
                                 [item]="child"
                                 [depth]="depth + 1">
   </omv-navigation-bar-list-item>
+</ul>
 </div>

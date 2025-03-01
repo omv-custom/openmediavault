@@ -1,14 +1,9 @@
 <div class="omv-progress-bar">
-  <div class="omv-progress-bar-text">
-    <span *ngIf="text">{{ text }}</span>
-    <span *ngIf="!text">{{ value.toFixed(decimalPlaces | defaultTo:1) }}%</span>
-  </div>
-  <div class="omv-progress-bar-fill"
-       [ngClass]="{'warning': warningThreshold && warningThreshold > 0 && value > warningThreshold}"
-       [style.width]="(value | max:0)  + '%'">
-    <div class="omv-progress-bar-text">
-      <span *ngIf="text">{{ text }}</span>
-      <span *ngIf="!text">{{ value.toFixed(decimalPlaces | defaultTo:1) }}%</span>
-    </div>
-  </div>
+    <mat-progress-bar 
+       mode="determinate" 
+       [color]="updateColor(value.toFixed(decimalPlaces | defaultTo:1))"
+       value="{{ value.toFixed(decimalPlaces | defaultTo:1) }}" flex="100">
+    </mat-progress-bar>
+      <span id="filesystem_size" *ngIf="text">{{ text }}</span>
+      <span id="filesystem_size" *ngIf="!text">{{ value.toFixed(decimalPlaces | defaultTo:1) }}%</span>
 </div>

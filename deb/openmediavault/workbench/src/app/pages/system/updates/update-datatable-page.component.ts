@@ -21,7 +21,8 @@ import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import { DatatablePageConfig } from '~/app/core/components/intuition/models/datatable-page-config.type';
 
 @Component({
-  template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>'
+    template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>',
+    standalone: false
 })
 export class UpdateDatatablePageComponent {
   public config: DatatablePageConfig = {
@@ -127,30 +128,8 @@ export class UpdateDatatablePageComponent {
           message: gettext('All packages will be upgraded. Do you want to proceed?')
         },
         execute: {
-          type: 'taskDialog',
-          taskDialog: {
-            config: {
-              title: gettext('Upgrade system'),
-              startOnInit: true,
-              buttons: {
-                start: {
-                  hidden: true
-                },
-                stop: {
-                  hidden: true
-                },
-                close: {
-                  dialogResult: true
-                }
-              },
-              request: {
-                service: 'Apt',
-                method: 'upgrade',
-                maxRetries: 5
-              }
-            },
-            successUrl: '/reload'
-          }
+          type: 'url',
+          url: '/system/updatemgmt/updates/changelog/{{ _selected[0].filename | encodeuricomponent }}'
         }
       },
       {
@@ -162,8 +141,30 @@ export class UpdateDatatablePageComponent {
           maxSelected: 1
         },
         execute: {
-          type: 'url',
-          url: '/system/updatemgmt/updates/changelog/{{ _selected[0].filename | encodeuricomponent }}'
+          type: 'taskDialog',
+          taskDialog: {
+            config: {
+              title: gettext('Changelog'),
+              autoScroll: false,
+              startOnInit: true,
+              showCompletion: false,
+              buttons: {
+                start: {
+                  hidden: true
+                },
+                stop: {
+                  hidden: true
+                }
+              },
+              request: {
+                service: 'Apt',
+                method: 'getChangeLog',
+                params: {
+                  filename: '{{ _selected[0].filename }}'
+                }
+              }
+            }
+          }
         }
       }
     ]

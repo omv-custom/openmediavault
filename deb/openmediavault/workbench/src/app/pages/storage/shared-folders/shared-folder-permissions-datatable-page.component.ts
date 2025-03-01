@@ -28,7 +28,8 @@ import { NotificationService } from '~/app/shared/services/notification.service'
 import { RpcService } from '~/app/shared/services/rpc.service';
 
 @Component({
-  template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>'
+    template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>',
+    standalone: false
 })
 export class SharedFolderPermissionsDatatablePageComponent {
   @ViewChild(DatatablePageComponent, { static: true })
@@ -184,13 +185,16 @@ export class SharedFolderPermissionsDatatablePageComponent {
     }));
     this.rpcService
       .request('ShareMgmt', 'setPrivileges', {
-        uuid: _.get(this.page.routeParams, 'uuid'),
+        uuid: _.get(this.page.pageContext._routeParams, 'uuid'),
         privileges
       })
       .subscribe(() => {
         this.notificationService.show(
           NotificationType.success,
-          format(_.get(this.page.routeConfig, 'data.notificationTitle'), this.page.routeParams)
+          format(
+            _.get(this.page.pageContext._routeConfig, 'data.notificationTitle'),
+            this.page.pageContext._routeParams
+          )
         );
         this.router.navigate(['/storage/shared-folders']);
       });

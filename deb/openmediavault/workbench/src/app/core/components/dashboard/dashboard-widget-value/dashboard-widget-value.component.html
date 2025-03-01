@@ -2,7 +2,7 @@
                       (dataChangedEvent)="dataChanged($event)">
   <div *ngIf="data"
        class="widget-content omv-display-flex omv-flex-row omv-justify-content-start omv-align-items-center"
-       [ngClass]="{'omv-cursor-pointer': config.value?.url}"
+       [ngClass]="{'omv-cursor-pointer': config.value?.url, 'bg-info rounded': (config.value?.value | template:data) == 'Yes'}"
        [routerLink]="config.value?.url | template:data">
     <mat-icon *ngIf="config.value?.icon"
               mat-card-avatar

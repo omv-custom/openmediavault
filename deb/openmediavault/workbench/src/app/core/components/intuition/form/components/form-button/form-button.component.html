@@ -3,9 +3,9 @@
   <mat-label>{{ config.label | transloco | template:pageContext }}</mat-label>
   <mat-form-button [formControlName]="config.name"
                    [autofocus]="config.autofocus"
-                   matTooltip="{{ config.tooltip | transloco }}"
+                   matTooltip="{{ config.tooltip | transloco | template:pageContext }}"
                    (click)="onClick()">
-    {{ config.text | transloco | template:pageContext }}
+    {{ config.text | transloco }}
   </mat-form-button>
   <mat-hint *ngIf="config.hint?.length > 0"
             [innerHTML]="config.hint | transloco | template:pageContext | sanitizeHtml">

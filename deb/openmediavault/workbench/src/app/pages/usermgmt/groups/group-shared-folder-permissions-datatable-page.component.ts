@@ -28,8 +28,8 @@ import { NotificationService } from '~/app/shared/services/notification.service'
 import { RpcService } from '~/app/shared/services/rpc.service';
 
 @Component({
-  template:
-    '<omv-intuition-datatable-page #page [config]="this.config"></omv-intuition-datatable-page>'
+    template: '<omv-intuition-datatable-page #page [config]="this.config"></omv-intuition-datatable-page>',
+    standalone: false
 })
 export class GroupSharedFolderPermissionsDatatablePageComponent {
   @ViewChild('page', { static: true })
@@ -121,13 +121,16 @@ export class GroupSharedFolderPermissionsDatatablePageComponent {
     this.rpcService
       .request('ShareMgmt', 'setPrivilegesByRole', {
         role: 'group',
-        name: _.get(this.page.routeParams, 'name'),
+        name: _.get(this.page.pageContext._routeParams, 'name'),
         privileges
       })
       .subscribe(() => {
         this.notificationService.show(
           NotificationType.success,
-          format(_.get(this.page.routeConfig, 'data.notificationTitle'), this.page.routeParams)
+          format(
+            _.get(this.page.pageContext._routeConfig, 'data.notificationTitle'),
+            this.page.pageContext._routeParams
+          )
         );
         this.router.navigate(['/usermgmt/groups']);
       });

@@ -19,7 +19,7 @@
 @mixin theme($mode, $theme-config, $typography-config) {
   .mat-sidenav {
     @if $mode == light {
-      background-color: map.get(mat.$blue-grey-palette, 900);
+      background-color: map.get(mat.$m2-blue-grey-palette, 900);
     } @else {
       background-color: var(--mat-background-color-background);
     }

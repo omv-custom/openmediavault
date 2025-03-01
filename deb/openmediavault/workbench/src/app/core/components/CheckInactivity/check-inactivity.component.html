@@ -1,0 +1,10 @@
+<ng-template #inactivityDialog>
+  <h2 mat-dialog-title>Sesja wygasła</h2>
+  <mat-dialog-content>
+    Twoja sesja wygasła z powodu braku aktywności. Proszę odśwież stronę lub wyloguj się.
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="dialogRef.close()">Odśwież</button>
+    <button mat-button (click)="dialogRef.close()">Wyloguj</button>
+  </mat-dialog-actions>
+</ng-template>

@@ -7,10 +7,10 @@
   </mat-checkbox>
   <mat-error *ngIf="formGroup.invalid">
     <span *ngIf="formGroup.hasError('required', config.name)">
-      {{ 'This field is required.' | transloco }}
+      {{ 'This field is required.' | transloco | template:pageContext }}
     </span>
     <span *ngIf="formGroup.hasError('constraint', config.name)">
-      {{ formGroup.getError('constraint', config.name) | transloco }}
+      {{ formGroup.getError('constraint', config.name) | transloco | template:pageContext }}
     </span>
   </mat-error>
   <mat-hint *ngIf="config.hint?.length > 0 && !formGroup.get(config.name)?.errors"

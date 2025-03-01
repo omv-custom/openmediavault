@@ -1,0 +1,187 @@
+// Variables:
+// --brand-primary-color
+// --brand-secondary-color
+// --brand-tertiary-color
+
+// This theme uses system variables:
+// Don't forget to use mat.system-level-colors().
+// Example:
+//
+// :root {
+//   @include mat.all-component-themes($light-theme);
+//   @include mat.system-level-colors($light-theme);
+//
+//   &.dark-theme {
+//     @include mat.all-component-colors($dark-theme);
+//     @include mat.system-level-colors($dark-theme);
+//   }
+// }
+
+
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: color-mix(in oklab, var(--brand-primary-color), #000 85.714%),
+    20: color-mix(in oklab, var(--brand-primary-color), #000 71.428%),
+    25: color-mix(in oklab, var(--brand-primary-color), #000 57.142%),
+    30: color-mix(in oklab, var(--brand-primary-color), #000 42.857%),
+    35: color-mix(in oklab, var(--brand-primary-color), #000 28.57%),
+    40: color-mix(in oklab, var(--brand-primary-color), #000 14.285%),
+    50: var(--brand-primary-color),
+    60: color-mix(in oklab, var(--brand-primary-color), #fff 14.285%),
+    70: color-mix(in oklab, var(--brand-primary-color), #fff 28.57%),
+    80: color-mix(in oklab, var(--brand-primary-color), #fff 42.857%),
+    90: color-mix(in oklab, var(--brand-primary-color), #fff 57.142%),
+    95: color-mix(in oklab, var(--brand-primary-color), #fff 71.428%),
+    98: color-mix(in oklab, var(--brand-primary-color), #fff 85.714%),
+    99: color-mix(in oklab, var(--brand-primary-color), #fff 99%),
+    100: #ffffff,
+  ),
+  secondary: (
+    0: #000000,
+    10: color-mix(in oklab, var(--brand-secondary-color), #000 85.714%),
+    20: color-mix(in oklab, var(--brand-secondary-color), #000 71.428%),
+    25: color-mix(in oklab, var(--brand-secondary-color), #000 57.142%),
+    30: color-mix(in oklab, var(--brand-secondary-color), #000 42.857%),
+    35: color-mix(in oklab, var(--brand-secondary-color), #000 28.57%),
+    40: color-mix(in oklab, var(--brand-secondary-color), #000 14.285%),
+    50: var(--brand-secondary-color),
+    60: color-mix(in oklab, var(--brand-secondary-color), #fff 14.285%),
+    70: color-mix(in oklab, var(--brand-secondary-color), #fff 28.57%),
+    80: color-mix(in oklab, var(--brand-secondary-color), #fff 42.857%),
+    90: color-mix(in oklab, var(--brand-secondary-color), #fff 57.142%),
+    95: color-mix(in oklab, var(--brand-secondary-color), #fff 71.428%),
+    98: color-mix(in oklab, var(--brand-secondary-color), #fff 85.714%),
+    99: color-mix(in oklab, var(--brand-secondary-color), #fff 99%),
+    100: #ffffff,
+  ),
+  tertiary: (
+    0: #000000,
+    10: color-mix(in oklab, var(--brand-tertiary-color), #000 85.714%),
+    20: color-mix(in oklab, var(--brand-tertiary-color), #000 71.428%),
+    25: color-mix(in oklab, var(--brand-tertiary-color), #000 57.142%),
+    30: color-mix(in oklab, var(--brand-tertiary-color), #000 42.857%),
+    35: color-mix(in oklab, var(--brand-tertiary-color), #000 28.57%),
+    40: color-mix(in oklab, var(--brand-tertiary-color), #000 14.285%),
+    50: var(--brand-tertiary-color),
+    60: color-mix(in oklab, var(--brand-tertiary-color), #fff 14.285%),
+    70: color-mix(in oklab, var(--brand-tertiary-color), #fff 28.57%),
+    80: color-mix(in oklab, var(--brand-tertiary-color), #fff 42.857%),
+    90: color-mix(in oklab, var(--brand-tertiary-color), #fff 57.142%),
+    95: color-mix(in oklab, var(--brand-tertiary-color), #fff 71.428%),
+    98: color-mix(in oklab, var(--brand-tertiary-color), #fff 85.714%),
+    99: color-mix(in oklab, var(--brand-tertiary-color), #fff 99%),
+    100: #ffffff,
+  ),
+  neutral: (
+    0: #000000,
+    4: color-mix(in srgb, #000, #fff 4%),
+    6: color-mix(in srgb, #000, #fff 6%),
+    10: color-mix(in srgb, #000, #fff 10%),
+    12: color-mix(in srgb, #000, #fff 12%),
+    17: color-mix(in srgb, #000, #fff 17%),
+    20: color-mix(in srgb, #000, #fff 20%),
+    22: color-mix(in srgb, #000, #fff 22%),
+    24: color-mix(in srgb, #000, #fff 24%),
+    25: color-mix(in srgb, #000, #fff 25%),
+    30: color-mix(in srgb, #000, #fff 30%),
+    35: color-mix(in srgb, #000, #fff 35%),
+    40: color-mix(in srgb, #000, #fff 40%),
+    50: color-mix(in srgb, #000, #fff 50%),
+    60: color-mix(in srgb, #000, #fff 60%),
+    70: color-mix(in srgb, #000, #fff 70%),
+    80: color-mix(in srgb, #000, #fff 80%),
+    87: color-mix(in srgb, #000, #fff 87%),
+    90: color-mix(in srgb, #000, #fff 90%),
+    92: color-mix(in srgb, #000, #fff 92%),
+    95: color-mix(in srgb, #000, #fff 95%),
+    94: color-mix(in srgb, #000, #fff 94%),
+    96: color-mix(in srgb, #000, #fff 96%),
+    98: color-mix(in srgb, #000, #fff 98%),
+    99: color-mix(in srgb, #000, #fff 99%),
+    100: #ffffff,
+  ),
+  neutral-variant: (
+    0: #000000,
+    10: color-mix(in srgb, #000, #fff 10%),
+    20: color-mix(in srgb, #000, #fff 20%),
+    25: color-mix(in srgb, #000, #fff 25%),
+    30: color-mix(in srgb, #000, #fff 30%),
+    35: color-mix(in srgb, #000, #fff 35%),
+    40: color-mix(in srgb, #000, #fff 40%),
+    50: color-mix(in srgb, #000, #fff 50%),
+    60: color-mix(in srgb, #000, #fff 60%),
+    70: color-mix(in srgb, #000, #fff 70%),
+    80: color-mix(in srgb, #000, #fff 80%),
+    90: color-mix(in srgb, #000, #fff 90%),
+    95: color-mix(in srgb, #000, #fff 95%),
+    98: color-mix(in srgb, #000, #fff 98%),
+    99: color-mix(in srgb, #000, #fff 99%),
+    100: #ffffff,
+  ),
+  error: (
+    0: #000000,
+    10: #410002,
+    20: #690005,
+    25: #7e0007,
+    30: #93000a,
+    35: #a80710,
+    40: #dc2626,
+    50: #de3730,
+    60: #ff5449,
+    70: #ff897d,
+    80: #f87171,
+    90: #ffdad6,
+    95: #ffedea,
+    98: #fff8f7,
+    99: #fffbff,
+    100: #ffffff,
+  ),
+);
+
+$_rest: (
+  secondary: map.get($_palettes, secondary),
+  neutral: map.get($_palettes, neutral),
+  neutral-variant: map.get($_palettes,  neutral-variant),
+  error: map.get($_palettes, error),
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+$_tertiary: map.merge(map.get($_palettes, tertiary), $_rest);
+
+$light-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: $_primary,
+    tertiary: $_tertiary,
+    use-system-variables: true,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: $_primary,
+    tertiary: $_tertiary,
+    use-system-variables: true,
+  ),
+  typography: (
+    use-system-variables: true,
+  ),
+));
+
+html {
+   .light-theme {
+     @include mat.all-component-themes($light-theme);
+     @include mat.system-level-colors($light-theme);
+   }
+
+   .dark-theme {
+     @include mat.all-component-colors($dark-theme);
+     @include mat.system-level-colors($dark-theme);
+   }
+ }

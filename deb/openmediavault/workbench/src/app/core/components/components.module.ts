@@ -18,6 +18,7 @@ import { NavigationBarListItemComponent } from '~/app/core/components/navigation
 import { NotificationBarComponent } from '~/app/core/components/notification-bar/notification-bar.component';
 import { TopBarComponent } from '~/app/core/components/top-bar/top-bar.component';
 import { WelcomePanelComponent } from '~/app/core/components/welcome-panel/welcome-panel.component';
+import { CheckInactivityComponent } from '~/app/core/components/CheckInactivity/check-inactivity.component';
 import { MaterialModule } from '~/app/material.module';
 import { SharedModule } from '~/app/shared/shared.module';
 
@@ -33,6 +34,7 @@ import { SharedModule } from '~/app/shared/shared.module';
     WorkbenchLayoutComponent,
     ApplyConfigPanelComponent,
     GreenRainComponent,
+    CheckInactivityComponent,
     WelcomePanelComponent
   ],
   exports: [

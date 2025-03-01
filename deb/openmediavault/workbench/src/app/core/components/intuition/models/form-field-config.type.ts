@@ -194,40 +194,14 @@ export type FormFieldConfig = {
     // the message is displayed while the request is running.
     progressMessage?: string;
     // Display a notification when the request was successful.
-    // The following tokens are supported:
-    // - _response: The response of the RPC request.
-    // - _editing: Boolean value whether the form is in editing mode.
-    // - _session: Session information, e.g. `username` or `permissions`.
-    // - _routeConfig: The current route configuration.
-    // - _routeParams: The route parameters.
-    // - _routeQueryParams: The route query parameters.
-    // - _routeUrlSegments: The URL segments.
-    // Example:
-    // "{{ _response['foo'] }}"
     successNotification?: string;
     // Copy the specified template to the clipboard.
-    // The following tokens are supported:
-    // - _response: The response of the RPC request.
-    // - _editing: Boolean value whether the form is in editing mode.
-    // - _session: Session information, e.g. `username` or `permissions`.
-    // - _routeConfig: The current route configuration.
-    // - _routeParams: The route parameters.
-    // - _routeQueryParams: The route query parameters.
-    // - _routeUrlSegments: The URL segments.
     // Example:
-    // "{{ _response['bar'] }}"
+    // "{{ _response['token'] }}"
     successCopyToClipboard?: string;
     // Navigate to this URL when the request was successful.
     // The URL will be formatted using the values from the parent
-    // form.
-    // The following tokens are supported:
-    // - _response: The response of the RPC request.
-    // - _editing: Boolean value whether the form is in editing mode.
-    // - _session: Session information, e.g. `username` or `permissions`.
-    // - _routeConfig: The current route configuration.
-    // - _routeParams: The route parameters.
-    // - _routeQueryParams: The route query parameters.
-    // - _routeUrlSegments: The URL segments.
+    // form. The RPC response is accessible via '_response'.
     // Example:
     // /foo/bar/{{ xyz }}/{{ _response['baz'] }}
     // where `xyz` will be replaced by the value of the form field

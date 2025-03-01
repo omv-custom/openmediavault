@@ -1,10 +1,10 @@
-<mat-form-field class="omv-flex-1"
+<mat-form-field appearance="outline" class="w-100"
                 [formGroup]="formGroup">
   <div *ngIf="config.icon"
        matPrefix>
     <mat-icon [svgIcon]="config.icon"></mat-icon>&nbsp;
   </div>
-  <mat-label>{{ config.label | transloco | template:pageContext }}</mat-label>
+<mat-label class="f-w-600 m-b-8 d-block">{{ config.label | transloco | template:pageContext }}</mat-label>
   <textarea matInput
             [ngClass]="{'omv-text-monospace': config.monospace}"
             [formControlName]="config.name"

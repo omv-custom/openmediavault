@@ -13,7 +13,6 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-@use 'button';
 @use 'card';
 @use 'checkbox';
 @use 'chip';
@@ -28,7 +27,6 @@
 @use 'toolbar';
 
 @mixin all-component-themes($mode, $theme-config, $typography-config) {
-  @include button.theme($mode, $theme-config, $typography-config);
   @include card.theme($mode, $theme-config, $typography-config);
   @include checkbox.theme($mode, $theme-config, $typography-config);
   @include chip.theme($mode, $theme-config, $typography-config);

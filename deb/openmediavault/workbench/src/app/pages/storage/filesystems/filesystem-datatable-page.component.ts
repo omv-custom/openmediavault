@@ -25,7 +25,8 @@ import { MkfsConfig, MkfsConfigService } from '~/app/core/services/mkfs-config.s
 import { Unsubscribe } from '~/app/decorators';
 
 @Component({
-  template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>'
+    template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>',
+    standalone: false
 })
 export class FilesystemDatatablePageComponent implements OnInit {
   @Unsubscribe()
@@ -298,7 +299,6 @@ export class FilesystemDatatablePageComponent implements OnInit {
         tooltip: gettext('Unmount'),
         enabledConstraints: {
           constraint: [
-            { operator: 'n', arg0: { prop: 'mountpoint' } },
             // Disable button if file system is in use or read-only.
             {
               operator: 'if',
@@ -329,9 +329,10 @@ export class FilesystemDatatablePageComponent implements OnInit {
           type: 'request',
           request: {
             service: 'FileSystemMgmt',
-            method: 'umountByDir',
+            method: 'umount',
             params: {
-              dir: '{{ mountpoint }}'
+              id: '{{ devicefile }}',
+              fstab: true
             },
             progressMessage: gettext('Please wait, unmounting the file system ...')
           }

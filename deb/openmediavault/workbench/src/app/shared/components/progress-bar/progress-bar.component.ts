@@ -18,9 +18,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'omv-progress-bar',
-  templateUrl: './progress-bar.component.html',
-  styleUrls: ['./progress-bar.component.scss']
+    selector: 'omv-progress-bar',
+    templateUrl: './progress-bar.component.html',
+    styleUrls: ['./progress-bar.component.scss'],
+    standalone: false
 })
 export class ProgressBarComponent {
   @Input()
@@ -34,4 +35,15 @@ export class ProgressBarComponent {
 
   @Input()
   warningThreshold?: number;
+
+    updateColor(progress) {
+       if (progress<25){
+          return 'primary';
+       } else if (progress<85){
+          return 'accent';
+       } else {
+         return 'warn';
+       }
+    }
+
 }

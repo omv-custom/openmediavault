@@ -23,9 +23,10 @@ import {
 } from '~/app/shared/services/prefers-color-scheme.service';
 
 @Component({
-  selector: 'omv-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'omv-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent {
   constructor(
@@ -35,9 +36,9 @@ export class AppComponent {
     this.prefersColorSchemeService.change$.subscribe(
       (prefersColorScheme: PrefersColorScheme): void => {
         if (prefersColorScheme === 'dark') {
-          this.renderer2.addClass(document.body, 'omv-dark-theme');
+          this.renderer2.addClass(document.body, 'dark-theme');
         } else {
-          this.renderer2.removeClass(document.body, 'omv-dark-theme');
+          this.renderer2.removeClass(document.body, 'dark-theme');
         }
       }
     );

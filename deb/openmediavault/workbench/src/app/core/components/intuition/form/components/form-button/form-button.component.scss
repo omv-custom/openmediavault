@@ -1,11 +1,13 @@
 @use 'scss/defaults/colors' as dc;
 
 omv-form-button {
-  .mat-flat-button {
+  .mat-mdc-unelevated-button {
     color: dc.$omv-color-white;
   }
-
-  .mat-form-field .mat-form-field-underline {
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+  .mat-mdc-form-field .mat-form-field-underline {
     display: none;
   }
 }

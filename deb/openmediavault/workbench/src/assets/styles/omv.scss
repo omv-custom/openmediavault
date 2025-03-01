@@ -1,0 +1,830 @@
+html{--mat-card-title-text-size: 1.30rem;
+     --mat-card-subtitle-text-size: 16px;
+     --mat-card-title-text-line-height: 2.5rem;
+     --mat-card-title-text-weight: 400;
+     --mat-card-subtitle-text-weight: 100;
+}
+
+html.light-theme {
+  color-scheme: light;
+  --mat-sys-corner-small: 7px;
+  --mat-sys-corner-medium: 20px;
+  --mat-sys-background: #fafafa;
+  --mat-sys-surface-bright: #f2f6fa;
+  --mat-sys-surface: #fff;
+  --mat-sys-surface-container: #fff;
+  --mat-sys-surface-container-low: #fff;
+  --mat-sys-on-background: #2a3547;
+  --mat-sys-outline: #d7dde2;
+  --mat-sys-outline-variant: #d7dde2;
+  --mdc-outlined-text-field-hover-outline-color: #d7dde2;
+  --mdc-checkbox-unselected-hover-state-layer-color: #d7dde2;
+  --mat-menu-item-hover-state-layer-color: #f6f9fc;
+  --mat-standard-button-toggle-state-layer-color: #f6f9fc;
+  --mat-option-focus-state-layer-color: #f6f9fc;
+  --mat-option-hover-state-layer-color: #f6f9fc;
+  --mdc-switch-unselected-track-color: #f6f9fc;
+  --mat-stepper-header-focus-state-layer-color: #f6f9fc;
+  --mat-stepper-header-hover-state-layer-color: #f6f9fc;
+  --mdc-dialog-supporting-text-color: var(--mat-sys-on-background);
+  --mat-expansion-header-hover-state-layer-color: #f6f9fc;
+}
+
+html.orange_theme {
+  --mat-sys-primary: rgb(251, 151, 120);
+  --mat-sys-primary-fixed-dim: rgb(251, 151, 120, .15);
+  --mat-sys-secondary: rgb(3, 201, 215);
+  --mat-sys-secondary-fixed-dim: rgb(3, 201, 215, .15);
+  --mat-sys-error-fixed-dim: rgba(252, 75, 108, .15);
+}
+
+html {
+  --mat-sys-error: rgb(252, 75, 108);
+  --mat-sys-error-fixed-dim: rgba(252, 75, 108, .15);
+  --mat-select-container-elevation-shadow: var(--mat-sys-level3);
+  --mdc-list-list-item-label-text-tracking: 0;
+  --mdc-switch-track-height: 28px;
+  --mat-sidenav-container-divider-color: var(--mat-sys-outline-variant);
+  --mat-dialog-with-actions-content-padding: 20px 24px;
+  --mat-form-field-container-text-tracking: unset;
+  --mat-switch-with-icon-handle-size: 21px;
+  --mat-badge-text-color: white;
+  --mat-switch-selected-with-icon-handle-horizontal-margin: 0 26px;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Overflow
+.omv-overflow-auto {
+  overflow: auto;
+}
+
+.omv-overflow-y-auto {
+  overflow-y: auto;
+}
+
+.omv-overflow-hidden {
+  overflow: hidden;
+}
+
+.omv-overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Sizing
+.omv-h-100, .omv-h-full {
+  height: 100% !important;
+}
+
+.omv-h-auto {
+  height: auto;
+}
+
+.omv-w-10 {
+  width: 10% !important;
+}
+
+.omv-w-20 {
+  width: 20% !important;
+}
+
+.omv-w-25 {
+  width: 25% !important;
+}
+
+.omv-w-33 {
+  width: 33.3333% !important;
+}
+
+.omv-w-45 {
+  width: 45% !important;
+}
+
+.omv-w-50 {
+  width: 50% !important;
+}
+
+.omv-w-66 {
+  width: 66.6667% !important;
+}
+
+.omv-w-75 {
+  width: 75% !important;
+}
+
+.omv-w-80 {
+  width: 80% !important;
+}
+
+.omv-w-90 {
+  width: 90% !important;
+}
+
+.omv-w-100, .omv-w-full {
+  width: 100% !important;
+}
+
+.omv-w-auto {
+  width: auto;
+}
+
+.omv-max-w-10 {
+  max-width: 10%;
+}
+
+.omv-max-w-20 {
+  max-width: 20%;
+}
+
+.omv-max-w-25 {
+  max-width: 25%;
+}
+
+.omv-max-w-33 {
+  max-width: 33.3333%;
+}
+
+.omv-max-w-45 {
+  max-width: 45%;
+}
+
+.omv-max-w-50 {
+  max-width: 50%;
+}
+
+.omv-max-w-66 {
+  max-width: 66.6667%;
+}
+
+.omv-max-w-75 {
+  max-width: 75%;
+}
+
+.omv-max-w-80 {
+  max-width: 80%;
+}
+
+.omv-max-w-90 {
+  max-width: 90%;
+}
+
+.omv-max-w-100 {
+  max-width: 100%;
+}
+
+.omv-max-w-none {
+  max-width: none;
+}
+
+
+
+.omv-display-flex {
+  display: flex !important;
+}
+
+.omv-flex-row {
+  flex-direction: row;
+}
+
+.omv-flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.omv-flex-column {
+  flex-direction: column;
+}
+
+.omv-flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.omv-flex-column-reverse-lt-sm {
+  @media only screen and (width <= 599px) {
+    flex-direction: column-reverse;
+  }
+}
+
+// Prevent a flex item from growing or shrinking.
+.omv-flex-none {
+  flex: none;
+}
+
+// Allow a flex item to grow and shrink as needed, ignoring its initial
+// size.
+.omv-flex-1 {
+  flex: 1 1 0%;
+}
+
+.omv-flex-grow {
+  flex: 1 1 100%;
+}
+
+// Allow a flex item to shrink but not grow, taking into account its
+// initial size.
+.omv-flex-initial, .omv-flex-nogrow {
+  flex: 0 1 auto;
+}
+
+.omv-flex-noshrink {
+  flex: 1 0 auto;
+}
+
+// Allow a flex item to grow and shrink, taking its initial size into
+// account.
+.omv-flex-auto {
+  flex: 1 1 auto;
+}
+
+.omv-flex-fill {
+  height: 100%;
+  min-height: 100%;
+  min-width: 100%;
+  width: 100%;
+}
+
+.omv-flex-grow-1 {
+  flex-grow: 1;
+}
+
+.omv-flex-grow-0 {
+  flex-grow: 0;
+}
+
+.omv-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.omv-flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.omv-flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+.omv-justify-content-start {
+  justify-content: flex-start;
+}
+
+.omv-justify-content-center {
+  justify-content: center;
+}
+
+.omv-justify-content-between {
+  justify-content: space-between;
+}
+
+.omv-justify-content-end {
+  justify-content: flex-end;
+}
+
+.omv-align-content-start {
+  align-content: flex-start;
+}
+
+.omv-align-content-center {
+  align-content: center;
+}
+
+.omv-align-content-end {
+  align-content: flex-end;
+}
+
+.omv-align-content-stretch {
+  align-content: stretch;
+}
+
+.omv-align-items-start {
+  align-items: flex-start;
+}
+
+.omv-align-items-center {
+  align-items: center;
+}
+
+.omv-align-items-end {
+  align-items: flex-end;
+}
+
+.omv-align-items-baseline {
+  align-items: baseline;
+}
+
+.omv-align-items-stretch {
+  align-items: stretch;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Grid
+.omv-grid {
+  display: grid;
+}
+
+.omv-grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.omv-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.omv-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.omv-grid-cols-none {
+  grid-template-columns: none;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Gap
+.omv-gap-0 {
+  gap: 0;
+}
+
+/* stylelint-disable selector-class-pattern */
+.omv-gap-0\.5 {
+  gap: 0.125rem;
+}
+
+.omv-gap-1 {
+  gap: 0.25rem;
+}
+
+.omv-gap-1\.5 {
+  gap: 0.375rem;
+}
+
+.omv-gap-2 {
+  gap: 0.5rem;
+}
+
+.omv-gap-2\.5 {
+  gap: 0.625rem;
+}
+/* stylelint-enable selector-class-pattern */
+
+.omv-gap-3 {
+  gap: 0.75rem;
+}
+
+.omv-gap-4 {
+  gap: 1rem;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Cursors
+.omv-cursor-default {
+  cursor: default !important;
+}
+
+.omv-cursor-pointer {
+  cursor: pointer !important;
+}
+
+.omv-cursor-wait {
+  cursor: wait !important;
+}
+
+.omv-cursor-amiga20-select {
+  cursor: url('data:image/x-icon;base64,AAABAAEAFBQAAAEAIAC4BgAAFgAAACgAAAAUAAAAKAAAAAEAIAAAAAAAQAYAAMIeAADCHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/SHP//0hz//9Ic///AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//wAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/0hz//9Ic///SHP///////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///AAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz/////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//8AAAAAAAAAAAAAAP8AAAD/SHP//0hz//9Ic/////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//wAAAAAAAAD/AAAA/0hz//9Ic///SHP/////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///AAAA/wAAAP9Ic///SHP//0hz/////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz//8AAAD/SHP//0hz//9Ic/////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///SHP//0hz//9Ic///SHP/////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz//9Ic///SHP//0hz/////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP/////////////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///SHP//0hz//9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//0hz//9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//0hz//9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP9Ic///SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/SHP//////////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEhz/////////////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP/+AAD/PAAA/jgAAP4wEAD8IDAA/ABwAPgA8AD4AfAA8APwAPAAMADgADAA4ABwAMAB8ADAB/AAgB/wAIB/8AAB//AAB//wAB//8AA='),
+    auto;
+}
+
+.omv-cursor-amiga20-busy {
+  cursor: url('data:image/x-icon;base64,AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAMIeAADCHgAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP8AAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/wAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wD///8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8AAAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wAAAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP////8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/0BA4P9AQOD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/QEDg/0BA4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/////wD///8AAAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/0BA4P9AQOD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wAAAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/QEDg/0BA4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/0BA4P9AQOD/wODg/8Dg4P/A4OD/wODg/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8AAAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/QEDg/0BA4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wD///8A////AAAAAP8AAAD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/0BA4P9AQOD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/QEDg/0BA4P8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAP8AAAD/AAAA/wAAAP/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP8AAAD/AAAA/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P/A4OD/wODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAA/wAAAP/A4OD/wODg/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/8Dg4P/A4OD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wAAAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AwODg/8Dg4P8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/////wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wDA4OD/wODg/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A/8AD///AA//8AAA//AAAP/AAAA/wAAAPwAAAA8AAAAPAAAADwAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAPAAAADwAAAA8AAAAPwAAAP8AAAD/wAAD/8AAA//8AD///AA///8D////A////AD///wA///8AP///AD/8='),
+    auto;
+}
+
+.omv-cursor-amiga13-select {
+  cursor: url('data:image/x-icon;base64,AAACAAEAICAAAAoACgCoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEIAP8RCAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQgA/xEIAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/AAAA/wAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/wAAAP8AAAD/AAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f8AAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/wAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP/Mu6r/zLuq/8y7qv/Mu6r/zLuq/8y7qv/Mu6r/zLuq/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/8y7qv/Mu6r/zLuq/8y7qv/Mu6r/zLuq/8y7qv/Mu6r/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////z////8////8D////A////AD///wA///wA///8AP/8MAP//DAD//AAD//wAA//8AA///AAP//wAP//8AD///AAP//wAD//8AA///AAP//wAP//8AD//////////////////////////////////////////////////////8='),
+    auto;
+}
+
+.omv-cursor-amiga13-link {
+  a:hover {
+    cursor: url('data:image/x-icon;base64,AAACAAEAICAAAAoACgCoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEIAP8RCAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQgA/xEIAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8iIt3/IiLd/yIi3f8iIt3/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/yIi3f8iIt3/IiLd/yIi3f/Mu6r/zLuq/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/IiLd/yIi3f8iIt3/IiLd/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP/Mu6r/zLuq/8y7qv/Mu6r/AAAA/wAAAP8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/AAAA/8y7qv/Mu6r/zLuq/8y7qv8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAAAP8AAAD/AAAA/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/wAAAP8AAAD/AAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////z////8////8D////A////AD///wA///wA///8AP//8AP///AD///AD///wA///wA///8AP//8AP///AD///AD///wA///8A////AP///wP///8D///////////////////////////////////////////////////////8='),
+      auto;
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Display
+.omv-display-none {
+  display: none !important;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Font
+.omv-font-weight-lighter {
+  font-weight: lighter !important;
+}
+
+.omv-font-weight-normal {
+  font-weight: normal !important;
+}
+
+.omv-font-weight-bold {
+  font-weight: bold !important;
+}
+
+.omv-font-weight-bolder {
+  font-weight: bolder !important;
+}
+
+.omv-font-italic {
+  font-style: italic !important;
+}
+
+.omv-font-size-small {
+  font-size: small !important;
+}
+
+.omv-font-size-smaller {
+  font-size: smaller !important;
+}
+
+.omv-font-size-medium {
+  font-size: medium !important;
+}
+
+.omv-font-size-large {
+  font-size: large !important;
+}
+
+.omv-font-size-larger {
+  font-size: larger !important;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Font - Derived from the Material theme typography
+.omv-font-weight-title {
+  font-weight: var(--mat-font-weight-title);
+}
+
+.omv-font-size-title {
+  font-size: var(--mat-font-size-title);
+}
+
+.omv-font-size-subheading-2 {
+  font-size: var(--mat-font-size-subheading-2);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Text
+.omv-text-center {
+  text-align: center !important;
+}
+
+.omv-text-monospace {
+}
+
+.omv-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.omv-text-wrap {
+  white-space: pre;
+}
+
+.omv-text-wrap-line {
+  white-space: pre-line;
+}
+
+.omv-text-nowrap {
+  white-space: nowrap;
+}
+
+.omv-text-decoration-none {
+  text-decoration: none !important;
+}
+
+.omv-text-muted {
+  @extend .omv-color-disabled-text;
+}
+
+.omv-text-capitalize {
+  text-transform: capitalize !important;
+}
+
+.omv-text-lowercase {
+  text-transform: lowercase !important;
+}
+
+.omv-text-uppercase {
+  text-transform: uppercase !important;
+}
+
+.omv-text-blink {
+  animation: toggle-opacity 1s step-start infinite;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Keyframes
+@keyframes toggle-opacity {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate-360 {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Icon
+.omv-icon-sm {
+  height: 0.875rem !important;
+  width: 0.875rem !important;
+  flex-shrink: 0;
+}
+
+.omv-icon-lg {
+  height: 2.5rem !important;
+  width: 2.5rem !important;
+  flex-shrink: 0;
+}
+
+.omv-icon-rotate-360-infinite {
+  animation: rotate-360 1s infinite linear;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Color - Derived from the active Material theme
+.omv-color-text {
+  color: var(--mat-color-text);
+}
+
+.omv-color-secondary-text {
+  color: var(--mat-color-secondary-text);
+}
+
+.omv-color-disabled-text {
+  color: var(--mat-color-disabled-text);
+}
+
+.omv-color-hint-text {
+  color: var(--mat-color-hint-text);
+}
+
+.omv-background-color-hover {
+  background-color: var(--mat-background-color-hover);
+}
+
+.omv-background-color-selected-button {
+  background-color: #F2F2F2;
+}
+
+.omv-background-color-card {
+  background-color: var(--mat-background-color-card);
+}
+
+.omv-background-color-transparent {
+  background-color: transparent;
+}
+
+//omv-background-color-pair-
+//omv-background-color-pair-green
+
+html {
+  --mat-sys-primary: rgb(93, 135, 255);
+  --mat-sys-error: rgb(250, 137, 107);
+  --mat-sys-body-medium-size: 14px;
+  --mat-sys-body-large-size: 14px;
+  --mat-sys-outline-variant: #d7dde2;
+  --mat-sys-level1: 0px 12px 24px -4px rgba(145, 158, 171, .3);
+  --mat-sys-level2: rgba(145, 158, 171, .12) 0px 1px 16px;
+  --mat-sys-level3: 0px 12px 24px -4px rgba(145, 158, 171, .3)
+  --mat-menu-container-shape: 10px;
+}
+
+.omv-background-color-pair-primary {
+  background-color:var(--mat-sys-primary) !important;
+}
+.omv-background-color-pair-secondary {
+  background-color:#777e89 !important;
+}
+.omv-background-color-pair-success, .omv-background-color-pair-light-green, .omv-background-color-pair-green {
+  background-color:#00c292 !important;
+}
+.omv-background-color-pair-error {
+  background-color:var(--mat-sys-error) !important;
+}
+.omv-background-color-pair-info {
+  background-color:#03c9d7 !important;
+}
+.omv-background-color-pair-warning, omv-background-color-pair-light-yellow, .omv-background-color-pair-yellow {
+  background-color:#fec90f !important;
+}
+.omv-background-color-pair-danger {
+  background-color:#e46a76 !important;
+}
+.omv-background-color-pair-indigo {
+  background-color:#551a8b !important;
+}
+.omv-background-color-pair-light {
+  background-color:#4952581f !important;
+}
+.omv-background-color-pair-dark {
+  background-color:#000000de !important;
+}
+.omv-background-color-pair-muted {
+  background-color:#949db2 !important;
+}
+.omv-background-color-pair-white {
+  background-color:#fff !important;
+}
+.omv-background-color-pair-black {
+  background-color:#000 !important;
+}
+.omv-background-color-pair-light-primary {
+  background-color:#fcf1ed !important;
+}
+.omv-background-color-pair-light-info {
+  background-color:#f7f8f7 !important;
+}
+
+.mat-mdc-icon-button {
+  -webkit-user-select: none;
+  user-select: none;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  outline: none;
+  background-color: rgba(0,0,0,0);
+  fill: currentColor;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 0;
+  overflow: visible;
+  border-radius: 50%;
+  flex-shrink: 0;
+  text-align: center;
+  width: var(--mdc-icon-button-state-layer-size, 40px);
+  height: var(--mdc-icon-button-state-layer-size, 40px);
+  padding: calc(calc(var(--mdc-icon-button-state-layer-size, 40px) - var(--mdc-icon-button-icon-size, 24px)) / 2);
+  font-size: var(--mdc-icon-button-icon-size, 24px);
+  color: var(--mdc-icon-button-icon-color, light-dark(#44474e, #e0e2ec));
+}
+.object-cover {
+  object-fit: cover;
+}
+.rounded-circle {
+  border-radius: 50% !important;
+}
+.icon-20 {
+  height: 20px !important;
+  width: 20px !important;
+  line-height: 28px !important;
+}
+
+.p-y-16 {
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+.p-x-32 {
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+.align-items-center {
+  align-items: center !important;
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+.f-w-600 {
+  font-weight: 600 !important;
+}
+.f-s-16 {
+  font-size: 16px !important;
+}
+[dir="ltr"] .m-l-auto {
+  margin-left: auto !important;
+}
+html .mat-mdc-menu-panel {
+  box-shadow: var(--mat-sys-level3) !important;
+}
+.topbar-dd {
+  min-width: 360px !important;
+}
+[dir="ltr"] .m-l-16 {
+  margin-left: 16px !important;
+}
+mat-icon.size-48 {
+  width:48px;
+  height: 48px;
+  line-height:10px;
+}
+.mat-mdc-menu-panel {
+  min-width: 112px;
+  max-width: 280px;
+  overflow: auto;
+  box-sizing: border-box;
+  outline: 0;
+  animation: _mat-menu-enter 120ms cubic-bezier(0, 0, 0.2, 1);
+  border-radius: var(--mat-menu-container-shape, var(--mat-sys-corner-extra-small)) !important;
+  background-color: var(--mat-menu-container-color, var(--mat-sys-surface-container));
+  box-shadow: var(--mat-menu-container-elevation-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));
+  will-change: transform,opacity;
+}
+.mat-list-item-content {
+  color:rgba(0, 0, 0, .80);
+}
+.dark-theme .mat-list-item-content {
+  color:#FFF;
+}
+
+.submenu {
+  overflow-y: hidden;
+  transform-origin: top;
+  padding-left: 30px;
+}
+
+.ltr .ps-4 {
+  padding-left: 4px !important;
+  font-size: 14px;
+}
+
+.sidebar-menu.active {
+  background-color: var(--mat-sys-secondary);
+}
+
+html {
+  --mat-sys-secondary: rgb(3, 201, 215);
+  --mat-sys-secondary-fixed-dim: rgb(3, 201, 215, .15);
+}
+
+.mat-nav-list .mat-ripple {
+  height: 45px;
+  font-size: 15px;
+  padding: 2px 5px !important;
+  border-radius: 30px;
+  margin-bottom: -20px;
+}
+
+.omv-m {
+  margin: 1.7rem;
+}
+
+.p-left {
+  margin-left: 25px;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Overflow
+.omv-overflow-auto {
+  overflow: auto;
+}
+
+.omv-overflow-y-auto {
+  overflow-y: auto;
+}
+
+.omv-overflow-hidden {
+  overflow: hidden;
+}
+
+.omv-overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.omv-scrollable-xy,
+.omv-scrollable-y {
+   scrollbar-color: #5dacdf transparent;
+
+  --scrollbar-border-radius: 0 !important;
+  --scrollbar-thumb-color: #5dacdf !important;
+  --scrollbar-thumb-hover-color: var(--scrollbar-thumb-color) !important;
+
+}
+
+.omv-scrollable-xy {
+  @extend .omv-overflow-auto;
+}
+
+.omv-scrollable-y {
+  @extend .omv-overflow-x-hidden;
+  @extend .omv-overflow-y-auto;
+}

@@ -46,10 +46,11 @@ import { io, Socket } from 'socket.io-client';
  * display the content received by a background task.
  */
 @Component({
-  selector: 'omv-task-dialog-ssh',
-  templateUrl: './task-dialog-ssh.component.html',
-  styleUrls: ['./task-dialog-ssh.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'omv-task-dialog-ssh',
+    templateUrl: './task-dialog-ssh.component.html',
+    styleUrls: ['./task-dialog-ssh.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class TaskDialogSshComponent implements OnInit, OnDestroy {
   @ViewChild('terminal', { static: true }) terminalDiv!: ElementRef;
@@ -75,7 +76,7 @@ export class TaskDialogSshComponent implements OnInit, OnDestroy {
   ) {
     this.config = data;
     this.sanitizeConfig();
-    this.socket = io('http://127.0.0.1:1122', { }); // Connect to server Socket.IO    
+    this.socket = io('http://192.168.1.22:1122', { }); // Połączenie z serwerem Socket.IO    
   }
 
   ngOnInit(): void {
@@ -110,34 +111,35 @@ export class TaskDialogSshComponent implements OnInit, OnDestroy {
     this.term.open(document.getElementById('terminal'));
     fitAddon.fit();
 
+    // Obsługa danych wprowadzanych przez użytkownika
     this.term.onData((data) => {
-      if (data === '\r') {
+      if (data === '\r') { // Wykrywanie naciśnięcia Enter
         this.sendInputToServer();
       } else {
-        this.inputBuffer += data;
-        this.term.write(data);
+        this.inputBuffer += data; // Dodawanie znaków do bufora
+        this.term.write(data); // Wyświetlanie znaków w terminalu
       }
     });
   }
 
   private connectToWebSocket(): void {
     this.socket.on('connect', () => {
-      this.term.write('Connected To SSH\r\n');
+      this.term.write('Połączono z serwerem SSH\r\n');
     });
 
     this.socket.on('output', (data: string) => {
-      this.term.write(data);
+      this.term.write(data); // Wyświetlanie odpowiedzi z serwera
     });
 
     this.socket.on('disconnect', () => {
-      this.term.write('\r\nSSH server connection closed\r\n');
+      this.term.write('\r\nPołączenie z serwerem SSH zamknięte\r\n');
     });
   }
 
   private sendInputToServer(): void {
     if (this.socket && this.socket.connected) {
-      this.socket.emit('input', this.inputBuffer);
-      this.inputBuffer = '';
+      this.socket.emit('input', this.inputBuffer); // Wysyłanie danych do serwera
+      this.inputBuffer = ''; // Czyszczenie bufora
     }
   }
 

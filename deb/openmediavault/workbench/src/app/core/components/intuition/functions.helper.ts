@@ -18,7 +18,7 @@
 import * as _ from 'lodash';
 
 import { FormFieldConfig } from '~/app/core/components/intuition/models/form-field-config.type';
-import { PageContext } from '~/app/core/components/intuition/models/page.type';
+import { PageContext } from '~/app/core/models/page-context.type';
 import { formatDeep, isFormatable } from '~/app/functions.helper';
 
 /**
@@ -48,6 +48,7 @@ export const flattenFormFieldConfig = (fields: Array<FormFieldConfig>): Array<Fo
  * @param convertFn The function that is used to convert the formatted string.
  *   E.g. this can be used to convert `string` to `boolean`.
  */
+
 export const formatFormFieldConfig = (
   fields: Array<FormFieldConfig>,
   pageContext: PageContext,

@@ -22,8 +22,8 @@ import { PluginsDatatablePageComponent } from '~/app/pages/system/plugins/plugin
 import { PowermgmtSettingsFormPageComponent } from '~/app/pages/system/powermgmt/powermgmt-settings-form-page.component';
 import { PowermgmtTaskDatatablePageComponent } from '~/app/pages/system/powermgmt/powermgmt-task-datatable-page.component';
 import { PowermgmtTaskFormPageComponent } from '~/app/pages/system/powermgmt/powermgmt-task-form-page.component';
-import { SystemRoutingModule } from '~/app/pages/system/system-routing.module';
 import { UpdateChangelogTextPageComponent } from '~/app/pages/system/updates/update-changelog-text-page.component';
+import { SystemRoutingModule } from '~/app/pages/system/system-routing.module';
 import { UpdateDatatablePageComponent } from '~/app/pages/system/updates/update-datatable-page.component';
 import { UpdateSettingsSoftwareFormPageComponent } from '~/app/pages/system/updates/update-settings-software-form-page.component';
 import { UpdateSettingsUpdatesFormPageComponent } from '~/app/pages/system/updates/update-settings-updates-form-page.component';

@@ -1,39 +1,86 @@
-<mat-toolbar class="omv-top-bar"
-             color="primary">
-  <button mat-icon-button
-          matTooltip="{{ 'Show/Hide navigation' | transloco }}"
-          (click)="onToggleNavigation($event)">
-    <mat-icon svgIcon="{{ icon.menu }}"></mat-icon>
-  </button>
-  <span class="omv-flex-1"></span>
-  <span class="hostname">{{ hostname }}</span>
-  <mat-divider *ngIf="hostname"
+<mat-toolbar class="header ps-24 pe-24">
+
+      <button type="button" class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" aria-label="Toggle sidenav" mat-icon-button (click)="onToggleNavigation($event)"
+        matTooltip="{{ 'Show/Hide navigation' | transloco }}">
+        <mat-icon svgIcon="{{ icon.menu }}"></mat-icon>
+      </button>
+      <span class="hostname">{{ hostname }}</span>
+      <mat-divider *ngIf="hostname"
                vertical="true">
-  </mat-divider>
-  <button *ngIf="permissions?.role.includes(roles.admin)"
-          mat-icon-button
-          matTooltip="{{ 'Notifications' | transloco }}"
-          (click)="onToggleNotification($event)">
-    <mat-icon svgIcon="{{ icon.bell }}"
+      </mat-divider>
+      <span class="flex-1-auto"></span>
+
+<button mat-icon-button mat-button [matMenuTriggerFor]="language" class="mat-mdc-menu-trigger m-r-5 mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
+mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered aria-haspopup="menu" aria-expanded="false">
+<span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
+<img class="rounded-circle object-cover icon-20" src="/assets/flags/{{ currentLocale }}.svg">
+<span class="mat-focus-indicator"></span>
+<span class="mat-mdc-button-touch-target"></span>
+<span class="mat-ripple mat-mdc-button-ripple"></span>
+</button>
+<mat-menu #language="matMenu" class="mat-mdc-menu-panel cardWithShadow mat-menu-after mat-menu-below">
+    <ng-template matMenuContent>
+      <button *ngFor="let locale of locales | keyvalue"
+              mat-menu-item
+              [ngClass]="{'active': locale.key === currentLocale}"
+              [disabled]="locale.key === currentLocale"
+              (click)="onLocale(locale.key)">
+<div class="d-flex align-items-center"><img class="rounded-circle object-cover m-r-8 icon-20" src="/assets/flags/{{ locale.key }}.svg"><span class="f-s-14">{{ locale.value }}</span></div>
+      </button>
+    </ng-template>
+</mat-menu>
+
+<button mat-icon-button="" aria-label="lightdark" class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" mat-ripple-loader-class-name="mat-mdc-button-ripple" 
+ [ngClass]="{'active': darkModeEnabled}"
+ (click)="onToggleDarkMode()"
+ mat-ripple-loader-centered=""><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
+<mat-icon [ngClass]="darkModeEnabled ? 'md-light' : 'md-dark'" svgIcon="{{ darkModeEnabled ? 'mdi:weather-sunny' : 'mdi:theme-light-dark'}}"></mat-icon>
+<span class="mat-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple"></span>
+</button>
+
+      <button *ngIf="permissions?.role.includes(roles.admin)"
+      mat-icon-button 
+      class="mat-mdc-menu-trigger m-x-5 mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" 
+      mat-ripple-loader-class-name="mat-mdc-button-ripple" 
+      mat-ripple-loader-centered=""
+      aria-haspopup="menu" aria-expanded="false" [matMenuTriggerFor]="noti">
+         <mat-icon svgIcon="{{ icon.bell }}"
               [matBadge]="numNotifications"
               [matBadgeHidden]="!numNotifications"
               matBadgeColor="accent"
               matBadgeOverlap="true"
-              matBadgeSize="small">
-    </mat-icon>
-  </button>
-  <button mat-icon-button
+              matBadgeSize="medium">
+         </mat-icon>      
+     </button>
+
+
+<mat-menu #noti class="cardWithShadow topbar-dd" [hasBackdrop]="false">
+<div class="mat-mdc-menu-content">
+ <div class="d-flex align-items-center p-x-32 p-y-16">
+   <h6 class="f-s-16 f-w-600 m-0">{{ 'Notifications' | transloco }}</h6>
+   <span class="m-l-auto">
+    <span class="bg-primary text-white p-x-8 p-y-4 f-w-500 rounded f-s-12">{{ numNotifications }}</span>
+   </span>
+ </div>
+   <omv-notification-bar (click)="$event.stopPropagation();"></omv-notification-bar>
+</div>
+</mat-menu>
+
+<button mat-icon-button
+          class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'Help' | transloco }}"
           [matMenuTriggerFor]="helpMenu">
     <mat-icon svgIcon="{{ icon.help }}"></mat-icon>
   </button>
   <button mat-icon-button
+          class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'User Settings' | transloco }}"
           [matMenuTriggerFor]="settingsMenu">
     <mat-icon svgIcon="{{ icon.user }}"></mat-icon>
   </button>
   <button *ngIf="permissions?.role.includes(roles.admin)"
           mat-icon-button
+          class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'Power' | transloco }}"
           [matMenuTriggerFor]="powerMenu">
     <mat-icon svgIcon="{{ icon.power }}"></mat-icon>
@@ -151,4 +198,5 @@
       </button>
     </ng-template>
   </mat-menu>
-</mat-toolbar>
+
+    </mat-toolbar>

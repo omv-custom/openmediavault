@@ -1,5 +1,6 @@
 @use 'scss/defaults/colors' as dc;
 @use 'scss/defaults/variables' as dv;
+@use 'scss/mixins';
 
 .omv-navigation-bar {
   min-width: dv.$omv-navigation-bar-width;
@@ -28,3 +29,4 @@
     }
   }
 }
+

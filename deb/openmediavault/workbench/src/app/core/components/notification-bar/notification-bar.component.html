@@ -1,13 +1,4 @@
 <div class="omv-notification-bar">
-  <mat-toolbar>
-    <button mat-icon-button
-            class="omv-color-primary"
-            matTooltip="{{ 'Dismiss all' | transloco }}"
-            [disabled]="!dismissibleNotifications"
-            (click)="onRemoveAllNotifications()">
-      <mat-icon svgIcon="{{ icon.delete }}"></mat-icon>
-    </button>
-  </mat-toolbar>
   <mat-list role="list">
     <mat-list-item *ngFor="let task of tasks | keyvalue"
                    role="listitem">
@@ -122,4 +113,20 @@
       </mat-menu>
     </mat-list-item>
   </mat-list>
+</div>
+
+<div class="p-y-12 p-x-32">
+<button mat-stroked-button="" 
+ color="primary" 
+ class="w-100 mdc-button mdc-button--outlined mat-mdc-outlined-button mat-primary mat-mdc-button-base" 
+ matTooltip="{{ 'Dismiss all' | transloco }}"
+ [disabled]="!dismissibleNotifications"
+ (click)="onRemoveAllNotifications()"
+ mat-ripple-loader-class-name="mat-mdc-button-ripple">
+<span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span>
+<span class="mdc-button__label"> {{ 'Dismiss all' | transloco }} </span><span class="mat-focus-indicator"></span>
+<span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple">
+<div class="mat-ripple-element" style="left: -1.11052px; top: -180.111px; height: 398.221px; width: 398.221px; transition-duration: 150ms; transform: scale3d(1, 1, 1); opacity: 0;"></div>
+</span>
+</button>
 </div>

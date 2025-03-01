@@ -1,13 +1,11 @@
 <div class="omv-dashboard-widget-container"
      [ngClass]="{'loading': loading && firstLoad, 'error': error}">
-  <mat-card [ngClass]="{'omv-cursor-wait': loading, 'omv-background-color-pair-error': error}">
+  <mat-card class="mat-mdc-card mdc-card cardWithShadow overflow-hidden" [ngClass]="{'omv-cursor-wait': loading, 'omv-background-color-pair-error': error}">
     <mat-progress-bar *ngIf="loading && firstLoad"
                       mode="indeterminate">
     </mat-progress-bar>
-    <mat-card-title-group *ngIf="config.title && !config.hideTitle">
-      <mat-card-title>{{ config.title | transloco }}</mat-card-title>
-    </mat-card-title-group>
     <mat-card-content>
+      <mat-card-title *ngIf="config.title && !config.hideTitle">{{ config.title | transloco }}</mat-card-title>
       <ng-content *ngIf="!error && !firstLoad"></ng-content>
     </mat-card-content>
   </mat-card>

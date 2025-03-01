@@ -1,6 +1,6 @@
 <mat-form-field class="omv-flex-1"
                 [formGroup]="formGroup">
-  <mat-label>{{ config.label | transloco | template:pageContext }}</mat-label>
+  <mat-label>{{ config.label | transloco }}</mat-label>
   <mat-form-code-editor [formControlName]="config.name"
                         [autofocus]="config.autofocus"
                         [required]="config.validators?.required"
@@ -9,7 +9,7 @@
   </mat-form-code-editor>
   <mat-error *ngIf="formGroup.invalid">
     <span *ngIf="formGroup.hasError('required', config.name)">
-      {{ 'This field is required.' | transloco }}
+      {{ 'This field is required.' | transloco | template:pageContext }}
     </span>
     <span *ngIf="formGroup.hasError('constraint', config.name)">
       {{ formGroup.getError('constraint', config.name) | transloco }}

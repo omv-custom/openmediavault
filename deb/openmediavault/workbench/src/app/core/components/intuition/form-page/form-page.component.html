@@ -21,12 +21,12 @@
     <span [innerHtml]="hint.text | transloco | template:pageContext | nl2br | sanitizeHtml"></span>
   </omv-alert-panel>
 </div>
-<mat-card [ngClass]="{'omv-display-none': loading || error}">
+
+<mat-card appearance="outlined" [ngClass]="{'omv-display-none': loading || error}">
   <ng-container *ngTemplateOutlet="renderCardHeader"></ng-container>
   <mat-card-content>
     <omv-intuition-form [id]="config.id"
-                        [config]="config.fields"
-                        [pageContext]="pageContext">
+                        [config]="config.fields">
     </omv-intuition-form>
   </mat-card-content>
   <mat-card-actions *ngIf="config.buttons.length"
@@ -36,7 +36,7 @@
       <omv-submit-button *ngIf="button.template === 'submit'"
                          [form]="config.id"
                          [formGroup]="form.formGroup"
-                         [disabled]="button.disabled || (editing && form.formGroup.pristine)"
+                         [disabled]="button.disabled || (pageContext._editing && form.formGroup.pristine)"
                          (buttonClick)="onButtonClick(button)">
         {{ button.text | transloco | template:pageContext }}
       </omv-submit-button>

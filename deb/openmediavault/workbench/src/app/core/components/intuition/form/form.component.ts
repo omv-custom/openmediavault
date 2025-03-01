@@ -28,6 +28,8 @@ import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
+import { PageContext } from '~/app/core/models/page-context.type';
+import { PageContextService } from '~/app/core/services/page-context.service';
 import {
   flattenFormFieldConfig,
   setupConfObjUuidFields
@@ -38,7 +40,6 @@ import {
   FormFieldConstraintValidator,
   FormFieldModifier
 } from '~/app/core/components/intuition/models/form-field-config.type';
-import { PageContext } from '~/app/core/components/intuition/models/page.type';
 import { Unsubscribe } from '~/app/decorators';
 import { format, formatDeep } from '~/app/functions.helper';
 import { CustomValidators } from '~/app/shared/forms/custom-validators';
@@ -47,9 +48,10 @@ import { ConstraintService } from '~/app/shared/services/constraint.service';
 let nextUniqueId = 0;
 
 @Component({
-  selector: 'omv-intuition-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+    selector: 'omv-intuition-form',
+    templateUrl: './form.component.html',
+    styleUrls: ['./form.component.scss'],
+    standalone: false
 })
 export class FormComponent implements AfterViewInit, OnInit {
   @Input()
@@ -59,14 +61,21 @@ export class FormComponent implements AfterViewInit, OnInit {
   config: FormFieldConfig[];
 
   @Input()
-  pageContext: PageContext = {};
+  context = {};
 
   @Unsubscribe()
   private subscriptions: Subscription = new Subscription();
 
   public formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private pageContextService: PageContextService
+  ) {}
+
+  protected get pageContext(): PageContext {
+    return this.pageContextService.get();
+  }
 
   ngOnInit(): void {
     this.sanitizeConfig();

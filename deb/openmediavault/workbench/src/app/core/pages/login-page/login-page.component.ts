@@ -31,16 +31,21 @@ import { AuthService } from '~/app/shared/services/auth.service';
 import { BlockUiService } from '~/app/shared/services/block-ui.service';
 import { DialogService } from '~/app/shared/services/dialog.service';
 import { LocaleService } from '~/app/shared/services/locale.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'omv-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'omv-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.scss'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class LoginPageComponent implements OnInit {
   public currentLocale: string;
   public locales: Record<string, string> = {};
+
+  public loading = false;
+  public error: HttpErrorResponse;
 
   public config: FormPageConfig = {
     id: 'login',
@@ -117,4 +122,5 @@ export class LoginPageComponent implements OnInit {
     LocaleService.setCurrentLocale(locale);
     this.router.navigate(['/reload']);
   }
+
 }
