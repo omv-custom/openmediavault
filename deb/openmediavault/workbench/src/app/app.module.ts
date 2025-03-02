@@ -16,11 +16,12 @@
  * GNU General Public License for more details.
  */
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslocoService } from '@ngneat/transloco';
 import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { ToastrModule } from 'ngx-toastr';
@@ -56,7 +57,13 @@ import { allIcons } from 'angular-feather/icons';
         TranslocoRootModule,
         MaterialModule,
         TablerIconsModule.pick(TablerIcons),
-        AppRoutingModule], providers: [
+        AppRoutingModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        })], providers: [
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandlerService

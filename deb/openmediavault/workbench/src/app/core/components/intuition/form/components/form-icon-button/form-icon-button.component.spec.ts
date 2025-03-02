@@ -4,7 +4,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { FormIconButtonComponent } from '~/app/core/components/intuition/form/components/form-icon-button/form-icon-button.component';
 import { IntuitionModule } from '~/app/core/components/intuition/intuition.module';
-import { PageContextService } from '~/app/core/services/page-context.service';
 import { TestingModule } from '~/app/testing.module';
 
 describe('FormIconButtonComponent', () => {
@@ -13,8 +12,7 @@ describe('FormIconButtonComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [IntuitionModule, TestingModule, ToastrModule.forRoot()],
-      providers: [PageContextService]
+      imports: [IntuitionModule, TestingModule, ToastrModule.forRoot()]
     }).compileComponents();
   }));
 

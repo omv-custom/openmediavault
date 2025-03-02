@@ -10,7 +10,7 @@ import { Subscription, interval } from 'rxjs';
 })
 export class CheckInactivityComponent implements OnInit, OnDestroy {
 
-  private inactivityTime = 200000; // 5 minut w milisekundach
+  private inactivityTime = 120000; // 5 minut w milisekundach
   private lastActivityTime: number;
   private timerSubscription: Subscription;
   public dialogRef: any;

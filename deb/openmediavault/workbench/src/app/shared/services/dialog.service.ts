@@ -40,7 +40,8 @@ export class DialogService {
     return this.matDialog.open(
       component,
       _.defaultsDeep(config, {
-        disableClose: true
+        disableClose: true,
+        restoreFocus: true
       })
     );
   }

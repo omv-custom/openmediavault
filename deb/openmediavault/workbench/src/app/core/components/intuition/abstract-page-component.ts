@@ -15,17 +15,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-import { AfterViewInit, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+  Route,
+  Router,
+  UrlSegment,
+  UrlSegmentGroup
+} from '@angular/router';
 import * as _ from 'lodash';
+import { combineLatest, Subscription } from 'rxjs';
 
-import { PageHintConfig } from '~/app/core/components/intuition/models/page-config.type';
-import { PageContext } from '~/app/core/models/page-context.type';
-import { PageContextService } from '~/app/core/services/page-context.service';
-import { formatDeep, isFormatable } from '~/app/functions.helper';
+import { PageContext, PageHintConfig } from '~/app/core/components/intuition/models/page.type';
+import { decodeURIComponentDeep, formatDeep, isFormatable } from '~/app/functions.helper';
+import { AuthSessionService } from '~/app/shared/services/auth-session.service';
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit {
+export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit, OnDestroy {
   @Input()
   config: T;
 
@@ -33,10 +49,26 @@ export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit 
   @Output()
   readonly afterViewInitEvent = new EventEmitter();
 
-  protected constructor(protected pageContextService: PageContextService) {
+  readonly routeUrlSegments: string[];
+  readonly routeConfig: Route;
+  routeParams: Params = {};
+  routeQueryParams: Params = {};
+
+  private activatedRouteSubscription: Subscription;
+
+  protected constructor(
+    protected activatedRoute: ActivatedRoute,
+    protected authSessionService: AuthSessionService,
+    protected router: Router
+  ) {
+    this.routeConfig = this.activatedRoute.routeConfig;
+
+    const urlTree = this.router.parseUrl(this.router.url);
+    this.routeUrlSegments = this.getUrlSegments(urlTree.root.children);
+
     // Is the component configured via route data?
-    if (_.has(this.pageContext._routeConfig, 'data.config')) {
-      this.config = _.cloneDeep(_.get(this.pageContext._routeConfig, 'data.config')) as T;
+    if (_.has(this.routeConfig, 'data.config')) {
+      this.config = _.cloneDeep(_.get(this.routeConfig, 'data.config')) as T;
     }
   }
 
@@ -47,12 +79,32 @@ export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit 
    * property names start with underscores.
    */
   get pageContext(): PageContext {
-    return this.pageContextService.get();
+    return {
+      _session: {
+        username: this.authSessionService.getUsername(),
+        permissions: this.authSessionService.getPermissions()
+      },
+      _routeConfig: this.routeConfig,
+      _routeParams: this.routeParams,
+      _routeQueryParams: this.routeQueryParams,
+      _routeUrlSegments: this.routeUrlSegments
+    };
   }
 
   ngOnInit(): void {
     this.sanitizeConfig();
-    this.onPageInit();
+    this.activatedRouteSubscription = combineLatest([
+      this.activatedRoute.params,
+      this.activatedRoute.queryParams
+    ]).subscribe(([params, queryParams]: Params[]) => {
+      this.routeParams = decodeURIComponentDeep(params);
+      this.routeQueryParams = decodeURIComponentDeep(queryParams);
+      this.onRouteParams();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.activatedRouteSubscription?.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -82,7 +134,7 @@ export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit 
    * A callback method that is invoked immediately after the observable
    * of the matrix parameters scoped to this route have been resolved.
    */
-  protected onPageInit(): void {}
+  protected onRouteParams(): void {}
 
   /**
    * Format the given configuration properties using the page context.
@@ -95,5 +147,19 @@ export abstract class AbstractPageComponent<T> implements AfterViewInit, OnInit 
         _.set(this.config as Record<string, any>, prop, formatDeep(value, this.pageContext));
       }
     });
+  }
+
+  /**
+   * @private
+   */
+  private getUrlSegments(children: { [key: string]: UrlSegmentGroup }): string[] {
+    let segments: string[] = [];
+    _.forEach(_.keys(children), (key: string) => {
+      const urlSegmentGroup: UrlSegmentGroup = children[key];
+      segments = segments
+        .concat(urlSegmentGroup.segments.map((segment: UrlSegment) => segment.path))
+        .concat(this.getUrlSegments(urlSegmentGroup.children));
+    });
+    return segments;
   }
 }

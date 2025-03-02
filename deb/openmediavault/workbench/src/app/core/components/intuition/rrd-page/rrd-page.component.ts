@@ -17,6 +17,7 @@
  */
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import * as _ from 'lodash';
 import { EMPTY } from 'rxjs';
@@ -27,9 +28,9 @@ import {
   RrdPageConfig,
   RrdPageGraphConfig
 } from '~/app/core/components/intuition/models/rrd-page-config.type';
-import { PageContextService } from '~/app/core/services/page-context.service';
 import { format, formatDeep, unixTimeStamp } from '~/app/functions.helper';
 import { Icon } from '~/app/shared/enum/icon.enum';
+import { AuthSessionService } from '~/app/shared/services/auth-session.service';
 import { BlockUiService } from '~/app/shared/services/block-ui.service';
 import { DataStoreService } from '~/app/shared/services/data-store.service';
 import { RpcService } from '~/app/shared/services/rpc.service';
@@ -38,7 +39,6 @@ import { RpcService } from '~/app/shared/services/rpc.service';
     selector: 'omv-intuition-rrd-page',
     templateUrl: './rrd-page.component.html',
     styleUrls: ['./rrd-page.component.scss'],
-    providers: [PageContextService],
     standalone: false
 })
 export class RrdPageComponent extends AbstractPageComponent<RrdPageConfig> implements OnInit {
@@ -57,12 +57,14 @@ export class RrdPageComponent extends AbstractPageComponent<RrdPageConfig> imple
   );
 
   constructor(
-    @Inject(PageContextService) pageContextService: PageContextService,
+    @Inject(ActivatedRoute) activatedRoute: ActivatedRoute,
+    @Inject(AuthSessionService) authSessionService: AuthSessionService,
+    @Inject(Router) router: Router,
     private blockUiService: BlockUiService,
     private dataStoreService: DataStoreService,
     private rpcService: RpcService
   ) {
-    super(pageContextService);
+    super(activatedRoute, authSessionService, router);
     // Check if monitoring is enabled.
     this.rpcService.request('PerfStats', 'get').subscribe((resp) => {
       this.monitoringEnabled = _.get(resp, 'enable', false);

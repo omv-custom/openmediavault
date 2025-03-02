@@ -4,7 +4,6 @@ import { ToastrModule } from 'ngx-toastr';
 
 import { FormDatatableComponent } from '~/app/core/components/intuition/form/components/form-datatable/form-datatable.component';
 import { IntuitionModule } from '~/app/core/components/intuition/intuition.module';
-import { PageContextService } from '~/app/core/services/page-context.service';
 import { TestingModule } from '~/app/testing.module';
 
 describe('FormDatatableComponent', () => {
@@ -13,8 +12,7 @@ describe('FormDatatableComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [IntuitionModule, TestingModule, ToastrModule.forRoot()],
-      providers: [PageContextService]
+      imports: [IntuitionModule, TestingModule, ToastrModule.forRoot()]
     }).compileComponents();
   }));
 

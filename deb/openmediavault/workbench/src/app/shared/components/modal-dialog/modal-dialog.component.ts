@@ -61,7 +61,8 @@ export class ModalDialogComponent {
             {
               text: gettext('No'),
               dialogResult: false,
-              autofocus: true
+              autofocus: true,
+              class: 'bg-danger text-white'
             },
             {
               text: gettext('Yes'),

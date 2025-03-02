@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  */
 import { Component, Inject, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import * as _ from 'lodash';
 import { concat } from 'rxjs';
@@ -28,7 +28,7 @@ import { DatatablePageActionConfig } from '~/app/core/components/intuition/model
 import { DatatablePageConfig } from '~/app/core/components/intuition/models/datatable-page-config.type';
 import { DatatablePageButtonConfig } from '~/app/core/components/intuition/models/datatable-page-config.type';
 import { FormFieldConfig } from '~/app/core/components/intuition/models/form-field-config.type';
-import { PageContextService } from '~/app/core/services/page-context.service';
+import { PageContext } from '~/app/core/components/intuition/models/page.type';
 import { format, formatDeep, isFormatable } from '~/app/functions.helper';
 import { translate } from '~/app/i18n.helper';
 import {
@@ -37,11 +37,13 @@ import {
 } from '~/app/shared/components/datatable/datatable.component';
 import { ModalDialogComponent } from '~/app/shared/components/modal-dialog/modal-dialog.component';
 import { TaskDialogComponent } from '~/app/shared/components/task-dialog/task-dialog.component';
+import { TaskDialogSshComponent } from '~/app/shared/components/task-dialog-ssh/task-dialog-ssh.component';
 import { Icon } from '~/app/shared/enum/icon.enum';
 import { NotificationType } from '~/app/shared/enum/notification-type.enum';
 import { DatatableAction } from '~/app/shared/models/datatable-action.type';
 import { DatatableSelection } from '~/app/shared/models/datatable-selection.model';
 import { RpcListResponse } from '~/app/shared/models/rpc.model';
+import { AuthSessionService } from '~/app/shared/services/auth-session.service';
 import { BlockUiService } from '~/app/shared/services/block-ui.service';
 import { ClipboardService } from '~/app/shared/services/clipboard.service';
 import { DataStoreService } from '~/app/shared/services/data-store.service';
@@ -50,11 +52,10 @@ import { NotificationService } from '~/app/shared/services/notification.service'
 import { RpcService } from '~/app/shared/services/rpc.service';
 
 @Component({
-  selector: 'omv-intuition-datatable-page',
-  templateUrl: './datatable-page.component.html',
-  styleUrls: ['./datatable-page.component.scss'],
-  providers: [PageContextService],
-  standalone: false
+    selector: 'omv-intuition-datatable-page',
+    templateUrl: './datatable-page.component.html',
+    styleUrls: ['./datatable-page.component.scss'],
+    standalone: false
 })
 export class DatatablePageComponent extends AbstractPageComponent<DatatablePageConfig> {
   @ViewChild('table', { static: true })
@@ -65,19 +66,30 @@ export class DatatablePageComponent extends AbstractPageComponent<DatatablePageC
   public selection = new DatatableSelection();
 
   constructor(
-    @Inject(PageContextService) pageContextService: PageContextService,
+    @Inject(ActivatedRoute) activatedRoute: ActivatedRoute,
+    @Inject(AuthSessionService) authSessionService: AuthSessionService,
+    @Inject(Router) router: Router,
     private blockUiService: BlockUiService,
     private clipboardService: ClipboardService,
     private dataStoreService: DataStoreService,
-    private router: Router,
     private rpcService: RpcService,
     private dialogService: DialogService,
     private notificationService: NotificationService
   ) {
-    super(pageContextService);
-    this.pageContextService.set({
-      _selected: this.selection.selected
-    });
+    super(activatedRoute, authSessionService, router);
+  }
+
+  /**
+   * Append the current selection to the page context.
+   */
+  override get pageContext(): PageContext {
+    const result = _.merge(
+      {
+        _selected: this.selection.selected
+      },
+      super.pageContext
+    );
+    return result;
   }
 
   loadData(params: DataTableLoadParams) {
@@ -140,9 +152,6 @@ export class DatatablePageComponent extends AbstractPageComponent<DatatablePageC
 
   onSelectionChange(selection: DatatableSelection) {
     this.selection = selection;
-    this.pageContextService.set({
-      _selected: this.selection.selected
-    });
   }
 
   onActionClick(action: DatatablePageActionConfig): void {
@@ -245,6 +254,31 @@ export class DatatablePageComponent extends AbstractPageComponent<DatatablePageC
             if (res) {
               if (_.isString(taskDialog.successUrl)) {
                 this.navigate(taskDialog.successUrl);
+              } else {
+                this.reloadData();
+              }
+            }
+          });
+          break;
+        case 'taskDialogSsh':
+          const taskDialogSsh = _.cloneDeep(action.execute.taskDialogSsh);
+          // Process tokenized configuration properties.
+          _.forEach(['request.params'], (path) => {
+            const value = _.get(taskDialogSsh.config, path);
+            if (isFormatable(value)) {
+              _.set(taskDialogSsh.config, path, formatDeep(value, this.pageContext));
+            }
+          });
+          const dialog_ssh = this.dialogService.open(TaskDialogSshComponent, {
+            width: _.get(taskDialogSsh.config, 'width', '75%'),
+            data: _.omit(taskDialogSsh.config, ['width'])
+          });
+          dialog_ssh.afterClosed().subscribe((res) => {
+            // Navigate to the configured URL or reload the datatable,
+            // but only if the dialog close input is `true`.
+            if (res) {
+              if (_.isString(taskDialogSsh.successUrl)) {
+                this.navigate(taskDialogSsh.successUrl);
               } else {
                 this.reloadData();
               }
@@ -400,7 +434,7 @@ export class DatatablePageComponent extends AbstractPageComponent<DatatablePageC
     }
   }
 
-  protected override onPageInit() {
+  protected override onRouteParams() {
     // Format tokenized configuration properties.
     this.formatConfig([
       'store.proxy.service',

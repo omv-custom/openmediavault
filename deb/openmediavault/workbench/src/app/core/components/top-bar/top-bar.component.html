@@ -30,10 +30,10 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
     </ng-template>
 </mat-menu>
 
-<button mat-icon-button="" aria-label="lightdark" class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" mat-ripple-loader-class-name="mat-mdc-button-ripple" 
+<button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" mat-ripple-loader-class-name="mat-mdc-button-ripple" 
  [ngClass]="{'active': darkModeEnabled}"
  (click)="onToggleDarkMode()"
- mat-ripple-loader-centered=""><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
+ mat-ripple-loader-centered><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
 <mat-icon [ngClass]="darkModeEnabled ? 'md-light' : 'md-dark'" svgIcon="{{ darkModeEnabled ? 'mdi:weather-sunny' : 'mdi:theme-light-dark'}}"></mat-icon>
 <span class="mat-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple"></span>
 </button>
@@ -42,7 +42,7 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
       mat-icon-button 
       class="mat-mdc-menu-trigger m-x-5 mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" 
       mat-ripple-loader-class-name="mat-mdc-button-ripple" 
-      mat-ripple-loader-centered=""
+      mat-ripple-loader-centered
       aria-haspopup="menu" aria-expanded="false" [matMenuTriggerFor]="noti">
          <mat-icon svgIcon="{{ icon.bell }}"
               [matBadge]="numNotifications"

@@ -28,8 +28,7 @@ import { marker as gettext } from '@ngneat/transloco-keys-manager/marker';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
-import { PageContext } from '~/app/core/models/page-context.type';
-import { PageContextService } from '~/app/core/services/page-context.service';
+import { PageContext } from '~/app/core/components/intuition/models/page.type';
 import {
   flattenFormFieldConfig,
   setupConfObjUuidFields
@@ -61,6 +60,9 @@ export class FormComponent implements AfterViewInit, OnInit {
   config: FormFieldConfig[];
 
   @Input()
+  pageContext: PageContext = {};
+
+  @Input()
   context = {};
 
   @Unsubscribe()
@@ -68,14 +70,7 @@ export class FormComponent implements AfterViewInit, OnInit {
 
   public formGroup: FormGroup;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private pageContextService: PageContextService
-  ) {}
-
-  protected get pageContext(): PageContext {
-    return this.pageContextService.get();
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.sanitizeConfig();

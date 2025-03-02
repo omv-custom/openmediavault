@@ -16,11 +16,12 @@
  * GNU General Public License for more details.
  */
 import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'lodash';
 
 import { AbstractPageComponent } from '~/app/core/components/intuition/abstract-page-component';
 import { TabsPageConfig } from '~/app/core/components/intuition/models/tabs-page-config.type';
-import { PageContextService } from '~/app/core/services/page-context.service';
+import { AuthSessionService } from '~/app/shared/services/auth-session.service';
 
 /**
  * This component will render a page containing tabs.
@@ -29,12 +30,15 @@ import { PageContextService } from '~/app/core/services/page-context.service';
     selector: 'omv-intuition-tabs-page',
     templateUrl: './tabs-page.component.html',
     styleUrls: ['./tabs-page.component.scss'],
-    providers: [PageContextService],
     standalone: false
 })
 export class TabsPageComponent extends AbstractPageComponent<TabsPageConfig> {
-  constructor(@Inject(PageContextService) pageContextService: PageContextService) {
-    super(pageContextService);
+  constructor(
+    @Inject(ActivatedRoute) activatedRoute,
+    @Inject(AuthSessionService) authSessionService: AuthSessionService,
+    @Inject(Router) router: Router
+  ) {
+    super(activatedRoute, authSessionService, router);
   }
 
   protected override sanitizeConfig() {

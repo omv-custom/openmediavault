@@ -3,7 +3,6 @@ import { FormBuilder } from '@angular/forms';
 
 import { FormSelectComponent } from '~/app/core/components/intuition/form/components/form-select/form-select.component';
 import { IntuitionModule } from '~/app/core/components/intuition/intuition.module';
-import { PageContextService } from '~/app/core/services/page-context.service';
 import { TestingModule } from '~/app/testing.module';
 
 describe('FormSelectComponent', () => {
@@ -12,8 +11,7 @@ describe('FormSelectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [IntuitionModule, TestingModule],
-      providers: [PageContextService]
+      imports: [IntuitionModule, TestingModule]
     }).compileComponents();
   }));
 
