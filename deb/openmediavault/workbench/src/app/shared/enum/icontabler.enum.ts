@@ -10,5 +10,6 @@ export enum IconTabler {
    reset = 'restore',
    reboot = 'rotate',
    standby = 'player-pause',
-   shutdown = 'power'
+   shutdown = 'power',
+   home = 'home'
 }

@@ -3,7 +3,7 @@
      class="mat-subtitle-1"
      [ngClass]="{'active': !breadcrumbs.length}"
      matTooltip="{{ 'Home' | transloco }}">
-    <mat-icon svgIcon="{{ icon.home }}"></mat-icon>
+    <i-tabler name="{{ icontabler.home }}"></i-tabler>
   </a>
   <div *ngFor="let breadcrumb of breadcrumbs; let last = last">
     <mat-divider vertical="true"></mat-divider>

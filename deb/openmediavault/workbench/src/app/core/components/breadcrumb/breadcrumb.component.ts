@@ -31,6 +31,7 @@ import { filter, startWith } from 'rxjs/operators';
 import { Unsubscribe } from '~/app/decorators';
 import { format, formatDeep } from '~/app/functions.helper';
 import { Icon } from '~/app/shared/enum/icon.enum';
+import { IconTabler } from '~/app/shared/enum/icontabler.enum';
 import { RpcService } from '~/app/shared/services/rpc.service';
 
 export type Breadcrumb = {
@@ -52,6 +53,7 @@ export class BreadcrumbComponent {
 
   public breadcrumbs: Breadcrumb[] = [];
   public icon = Icon;
+  public icontabler = IconTabler;
 
   constructor(
     private activatedRoute: ActivatedRoute,
