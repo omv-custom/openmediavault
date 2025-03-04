@@ -10,13 +10,11 @@
       </mat-divider>
       <span class="flex-1-auto"></span>
 
+<i-tabler name="brand-github" class="someclass"></i-tabler>
+
 <button mat-icon-button mat-button [matMenuTriggerFor]="language" class="mat-mdc-menu-trigger m-r-5 mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
 mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered aria-haspopup="menu" aria-expanded="false">
-<span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
 <img class="rounded-circle object-cover icon-20" src="/assets/flags/{{ currentLocale }}.svg">
-<span class="mat-focus-indicator"></span>
-<span class="mat-mdc-button-touch-target"></span>
-<span class="mat-ripple mat-mdc-button-ripple"></span>
 </button>
 <mat-menu #language="matMenu" class="mat-mdc-menu-panel cardWithShadow mat-menu-after mat-menu-below">
     <ng-template matMenuContent>
@@ -25,7 +23,7 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
               [ngClass]="{'active': locale.key === currentLocale}"
               [disabled]="locale.key === currentLocale"
               (click)="onLocale(locale.key)">
-<div class="d-flex align-items-center"><img class="rounded-circle object-cover m-r-8 icon-20" src="/assets/flags/{{ locale.key }}.svg"><span class="f-s-14">{{ locale.value }}</span></div>
+              <div class="d-flex align-items-center"><img class="rounded-circle object-cover m-r-8 icon-20" src="/assets/flags/{{ locale.key }}.svg"><span class="f-s-14">{{ locale.value }}</span></div>
       </button>
     </ng-template>
 </mat-menu>
@@ -33,9 +31,8 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
 <button mat-icon-button aria-label="lightdark" class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" mat-ripple-loader-class-name="mat-mdc-button-ripple" 
  [ngClass]="{'active': darkModeEnabled}"
  (click)="onToggleDarkMode()"
- mat-ripple-loader-centered><span class="mat-mdc-button-persistent-ripple mdc-icon-button__ripple"></span>
-<mat-icon [ngClass]="darkModeEnabled ? 'md-light' : 'md-dark'" svgIcon="{{ darkModeEnabled ? 'mdi:weather-sunny' : 'mdi:theme-light-dark'}}"></mat-icon>
-<span class="mat-focus-indicator"></span><span class="mat-mdc-button-touch-target"></span><span class="mat-ripple mat-mdc-button-ripple"></span>
+ mat-ripple-loader-centered>
+<i-tabler [name]="darkModeEnabled ? 'sun-low' : 'moon'"></i-tabler>
 </button>
 
       <button *ngIf="permissions?.role.includes(roles.admin)"
@@ -44,13 +41,11 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
       mat-ripple-loader-class-name="mat-mdc-button-ripple" 
       mat-ripple-loader-centered
       aria-haspopup="menu" aria-expanded="false" [matMenuTriggerFor]="noti">
-         <mat-icon svgIcon="{{ icon.bell }}"
-              [matBadge]="numNotifications"
+              <i-tabler name="{{ icontabler.notification }}" [matBadge]="numNotifications"
               [matBadgeHidden]="!numNotifications"
               matBadgeColor="accent"
               matBadgeOverlap="true"
-              matBadgeSize="medium">
-         </mat-icon>      
+              matBadgeSize="medium"></i-tabler>         
      </button>
 
 
@@ -70,27 +65,27 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
           class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'Help' | transloco }}"
           [matMenuTriggerFor]="helpMenu">
-    <mat-icon svgIcon="{{ icon.help }}"></mat-icon>
+    <i-tabler name="{{ icontabler.help }}"></i-tabler>
   </button>
   <button mat-icon-button
           class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'User Settings' | transloco }}"
           [matMenuTriggerFor]="settingsMenu">
-    <mat-icon svgIcon="{{ icon.user }}"></mat-icon>
+    <i-tabler name="{{ icontabler.user }}"></i-tabler>
   </button>
   <button *ngIf="permissions?.role.includes(roles.admin)"
           mat-icon-button
           class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
           matTooltip="{{ 'Power' | transloco }}"
           [matMenuTriggerFor]="powerMenu">
-    <mat-icon svgIcon="{{ icon.power }}"></mat-icon>
+    <i-tabler name="{{ icontabler.power }}"></i-tabler>
   </button>
 
   <mat-menu #settingsMenu="matMenu">
     <ng-template matMenuContent>
       <button mat-menu-item
               disabled>
-        <mat-icon svgIcon="{{ icon.user }}"></mat-icon>
+        <i-tabler name="{{ icontabler.user }}"></i-tabler>
         <span [innerHTML]="loggedInAs | transloco | sanitizeHtml"></span>
       </button>
       <button *ngIf="permissions?.role.includes(roles.user)"
@@ -101,35 +96,29 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
       </button>
       <button mat-menu-item
               routerLink="/usermgmt/change-password">
-        <mat-icon svgIcon="{{ icon.password }}"></mat-icon>
+        <i-tabler name="{{ icontabler.password }}"></i-tabler>
         <span>{{ 'Change Password' | transloco }}</span>
       </button>
       <button mat-menu-item
               (click)="onLogout()">
-        <mat-icon svgIcon="{{ icon.logout }}"></mat-icon>
+        <i-tabler name="{{ icontabler.logout }}"></i-tabler>
         <span>{{ 'Logout' | transloco }}</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-menu-item
-              [ngClass]="{'active': darkModeEnabled}"
-              (click)="onToggleDarkMode()">
-        <mat-icon svgIcon="mdi:weather-night"></mat-icon>
-        <mat-slide-toggle [checked]="darkModeEnabled">{{ 'Dark mode' | transloco }}</mat-slide-toggle>
-      </button>
-      <button mat-menu-item
               [matMenuTriggerFor]="localeMenu">
-        <mat-icon svgIcon="mdi:earth"></mat-icon>
+        <i-tabler name="{{ icontabler.language }}"></i-tabler>
         <span>{{ 'Language' | transloco }}</span>
       </button>
       <button mat-menu-item
               routerLink="/dashboard/settings">
-        <mat-icon svgIcon="{{ icon.apps }}"></mat-icon>
+        <i-tabler name="{{ icontabler.apps }}"></i-tabler>
         <span>{{ 'Dashboard' | transloco }}</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-menu-item
               (click)="onClearStateStorage()">
-        <mat-icon svgIcon="{{ icon.reset }}"></mat-icon>
+        <i-tabler name="{{ icontabler.reset }}"></i-tabler>
         <span>{{ 'Reset UI to defaults' | transloco }}</span>
       </button>
     </ng-template>
@@ -139,17 +128,17 @@ mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
     <ng-template matMenuContent>
       <button mat-menu-item
               (click)="onReboot()">
-        <mat-icon svgIcon="{{ icon.reboot }}"></mat-icon>
+        <i-tabler name="{{ icontabler.reboot }}"></i-tabler>
         <span>{{ 'Reboot' | transloco }}</span>
       </button>
       <button mat-menu-item
               (click)="onStandby()">
-        <mat-icon svgIcon="{{ icon.standby }}"></mat-icon>
+        <i-tabler name="{{ icontabler.standby }}"></i-tabler>
         <span>{{ 'Standby' | transloco }}</span>
       </button>
       <button mat-menu-item
               (click)="onShutdown()">
-        <mat-icon svgIcon="{{ icon.shutdown }}"></mat-icon>
+        <i-tabler name="{{ icontabler.shutdown }}"></i-tabler>
         <span>{{ 'Shutdown' | transloco }}</span>
       </button>
     </ng-template>

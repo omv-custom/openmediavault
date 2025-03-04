@@ -38,9 +38,6 @@ import { TitleService } from '~/app/shared/services/title.service';
 import { SharedModule } from '~/app/shared/shared.module';
 import { TranslocoRootModule } from '~/app/transloco-root.module';
 
-import { TablerIconsModule } from 'angular-tabler-icons';
-import * as TablerIcons from 'angular-tabler-icons/icons';
-
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
 
@@ -56,7 +53,6 @@ import { allIcons } from 'angular-feather/icons';
         }),
         TranslocoRootModule,
         MaterialModule,
-        TablerIconsModule.pick(TablerIcons),
         AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
@@ -113,7 +109,7 @@ import { allIcons } from 'angular-feather/icons';
         },
         provideHttpClient(withInterceptorsFromDi())
     ],
-    exports: [TablerIconsModule,FeatherModule] })
+    exports: [FeatherModule] })
 export class AppModule {
   constructor(public titleService: TitleService) {}
 }

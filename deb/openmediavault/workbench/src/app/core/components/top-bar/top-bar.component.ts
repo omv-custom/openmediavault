@@ -26,6 +26,7 @@ import { format } from '~/app/functions.helper';
 import { translate } from '~/app/i18n.helper';
 import { ModalDialogComponent } from '~/app/shared/components/modal-dialog/modal-dialog.component';
 import { Icon } from '~/app/shared/enum/icon.enum';
+import { IconTabler } from '~/app/shared/enum/icontabler.enum';
 import { Permissions, Roles } from '~/app/shared/models/permissions.model';
 import { AuthService } from '~/app/shared/services/auth.service';
 import { AuthSessionService } from '~/app/shared/services/auth-session.service';
@@ -58,6 +59,7 @@ export class TopBarComponent {
   private subscriptions = new Subscription();
 
   public icon = Icon;
+  public icontabler = IconTabler;
   public currentLocale: string;
   public locales: Record<string, string> = {};
   public username: string;

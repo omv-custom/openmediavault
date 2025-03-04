@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { TablerIconsModule } from "angular-tabler-icons";
+import * as TablerIcons from "angular-tabler-icons/icons";
 
 import { ApplyConfigPanelComponent } from '~/app/core/components/apply-config-panel/apply-config-panel.component';
 import { BreadcrumbComponent } from '~/app/core/components/breadcrumb/breadcrumb.component';
@@ -44,7 +46,8 @@ import { SharedModule } from '~/app/shared/shared.module';
     IntuitionModule,
     NotificationBarComponent,
     DashboardModule,
-    GreenRainComponent
+    GreenRainComponent,
+    TablerIconsModule
   ],
   imports: [
     CommonModule,
@@ -54,7 +57,8 @@ import { SharedModule } from '~/app/shared/shared.module';
     IntuitionModule,
     TranslocoModule,
     NgScrollbarModule,
-    DashboardModule
+    DashboardModule,
+    TablerIconsModule.pick(TablerIcons)
   ]
 })
 export class ComponentsModule {}

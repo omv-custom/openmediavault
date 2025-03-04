@@ -30,14 +30,6 @@ html.light-theme {
   --mat-expansion-header-hover-state-layer-color: #f6f9fc;
 }
 
-html.orange_theme {
-  --mat-sys-primary: rgb(251, 151, 120);
-  --mat-sys-primary-fixed-dim: rgb(251, 151, 120, .15);
-  --mat-sys-secondary: rgb(3, 201, 215);
-  --mat-sys-secondary-fixed-dim: rgb(3, 201, 215, .15);
-  --mat-sys-error-fixed-dim: rgba(252, 75, 108, .15);
-}
-
 html {
   --mat-sys-error: rgb(252, 75, 108);
   --mat-sys-error-fixed-dim: rgba(252, 75, 108, .15);
