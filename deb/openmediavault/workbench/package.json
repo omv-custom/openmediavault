@@ -91,7 +91,6 @@
     "@angular/cli": "^19.1.8",
     "@angular/compiler-cli": "^19.2.0",
     "@angular/language-service": "^19.2.0",
-    "@ngneat/transloco-keys-manager": "^3.8.0",
     "@types/chart.js": "^2.9.41",
     "@types/jest": "^29.5.14",
     "@types/lodash": "^4.17.16",
