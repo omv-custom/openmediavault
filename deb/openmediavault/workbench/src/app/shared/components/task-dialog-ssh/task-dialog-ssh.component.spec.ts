@@ -7,7 +7,7 @@ import { TestingModule } from '~/app/testing.module';
 
 describe('TaskDialogSshComponent', () => {
   let component: TaskDialogSshComponent;
-  let fixture: ComponentFixture<TaskDialogComponent>;
+  let fixture: ComponentFixture<TaskDialogSshComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
