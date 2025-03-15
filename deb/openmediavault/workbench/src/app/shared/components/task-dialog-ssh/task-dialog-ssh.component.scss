@@ -53,7 +53,7 @@ omv-task-dialog-ssh {
   @extend .omv-overflow-y-auto;
 }
 
-@each $name in map-keys(theme.$omv-color-pairs) {
+@each $name in map.keys(theme.$omv-color-pairs) {
   // Deprecated, use `.omv-background-color-pair-xxx`.
   .omv-background-color-theme-#{$name} {
     @include theme.background-color-pair($name);

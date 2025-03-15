@@ -17,7 +17,7 @@
       color: dc.$omv-color-white;
 
       .close {
-        background-image: url('^./assets/images/wb-tb-close.png');
+        background-image: url('~/assets/images/wb-tb-close.png');
         width: 30px;
         height: inherit;
       }
@@ -31,7 +31,7 @@
       }
 
       .mid {
-        background-image: url('^./assets/images/wb-tb-mid.png');
+        background-image: url('~/assets/images/wb-tb-mid.png');
       }
 
       .mid-end {
@@ -40,7 +40,7 @@
       }
 
       .position {
-        background-image: url('^./assets/images/wb-tb-position.png');
+        background-image: url('~/assets/images/wb-tb-position.png');
         width: 53px;
         height: inherit;
       }

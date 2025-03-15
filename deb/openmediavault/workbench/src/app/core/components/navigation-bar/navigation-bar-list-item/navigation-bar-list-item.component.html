@@ -2,7 +2,7 @@
     activeMenu: item.url ? router.isActive(item.url, true) : false,
     active: item.active,
     expanded: expanded,
-  }" [style]="item.children ? '':'margin-left: 10px;'" class="menu-list-item">
+  }" class="menu-list-item">
   <i-tabler class="routeIcon" name="{{ item.icon | mapIconTablerEnum }}" matListItemIcon></i-tabler>
   <span class="hide-menu">{{ item.text | transloco }}</span>
   
@@ -15,6 +15,8 @@
 </a>
 
 @if(expanded) {
+<div class="submenu">
 <omv-navigation-bar-list-item *ngFor="let child of item.children" [item]="child" (click)="onSubItemSelected(child)" [depth]="depth + 1">
 </omv-navigation-bar-list-item>
+</div>
 }

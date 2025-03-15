@@ -3,21 +3,21 @@
 
 :host {
   .background {
-    content: url('^./assets/images/standby.jpg');
+    content: url('~/assets/images/standby.jpg');
     object-fit: cover;
   }
 
   .topbar {
     background-color: hsla(
-      color.hue(dc.$omv-color-corporate-default),
-      color.saturation(dc.$omv-color-corporate-default),
-      color.lightness(dc.$omv-color-corporate-default),
+      color.channel(dc.$omv-color-corporate-default, "hue", $space: hsl),
+      color.channel(dc.$omv-color-corporate-default, "saturation", $space: hsl),
+      color.channel(dc.$omv-color-corporate-default, "lightness", $space: hsl),
       54%
     );
     backdrop-filter: blur(4px);
 
     .logo {
-      content: url('^./assets/images/openmediavault_logo.svg');
+      content: url('~/assets/images/openmediavault_logo.svg');
       width: auto;
       height: auto;
     }

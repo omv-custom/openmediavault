@@ -22,7 +22,7 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "allowedCommonJsDependencies": [
               "lodash",
@@ -35,7 +35,10 @@
               "dayjs",
               "@ngneat/transloco-keys-manager/marker",
               "nunjucks",
-              "flat"
+              "flat",
+              "@xterm/xterm",
+              "@xterm/addon-fit",
+              "@xterm/addon-web-links"
             ],
             "outputPath": "dist/openmediavault-workbench",
             "index": "src/index.html",

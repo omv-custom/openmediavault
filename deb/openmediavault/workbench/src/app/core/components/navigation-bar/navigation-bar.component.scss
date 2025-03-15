@@ -12,15 +12,6 @@
     border-left: 3px solid dc.$omv-color-transparent;
     height: dv.$omv-top-bar-height;
     padding-left: dv.$omv-padding;
-
-    .logo {
-      width: 100%;
-      height: 100%;
-      background-image: url('^./assets/images/openmediavault_logo_simple.svg');
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position-y: center;
-    }
   }
 
   .content {
