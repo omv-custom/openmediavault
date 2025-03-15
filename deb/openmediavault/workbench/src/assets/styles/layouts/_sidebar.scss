@@ -1,33 +1,104 @@
-// @=@=@=@=@=@=@=@=@=@=@=@=@=@=@=@=@
-// Sidebar
-// @=@=@=@=@=@=@=@=@=@=@=@=@=@=@=@=@
+@use "../variables" as *;
 
-.sidenav {
-  min-width: 265px !important;
-  box-shadow: 0px 7px 30px 0px rgba(113, 122, 131, 0.11);
-  border: 0;
+.mat-drawer.sidebarNav {
+  width: 270px;
+  flex-shrink: 0;
+  transition: swift-ease-out(width);
+  position: absolute;
+  overflow-x: hidden;
+  border-right: 1px solid #d7dde2;
+  border-radius: 0px !important;
+}
 
-  .list-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2px;
-  }
+.branding {
+  padding: 20px;
+}
 
-  .sidebar-menu {
-    border-radius: 25px;
-    font-size: 15px;
-    padding: 10px;
-  margin-top: -20px;
+.sidebar-list {
+  &.mdc-list {
+    
+    .mdc-list-group__subheader {
+      margin: 12px 0;
+      text-transform: uppercase;
+      font-size: 0.55rem;
+      font-weight: 600;
+      margin-top: 24px;
+    }
 
-    &.activelink {
-      background-color: #03c9d7 !important;
-      color: #FFF !important;
+    .menu-list-item {
+      height: 45px;
+      font-size: 14px;
+      padding: 8px 10px !important;
+      margin-bottom: 2px;
+      border-radius: 30px;
+      .hide-menu {
+        font-size: 14px;
+      }
+
+      &:before,
+      &:focus {
+        z-index: -1;
+      }
+
+
+      .item-chip {
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+
+      &:hover::before {
+        background-color: rgb(2, 160, 171);
+      }
+
+      &.activeMenu {
+        background-color: rgb(3, 201, 215);
+
+        .mdc-list-item__primary-text {
+          color: $white !important;
+        }
+
+        .mat-mdc-list-item-icon {
+          color: $white !important;
+        }
+      }
+
+      .mdc-list-item__start {
+        margin-right: 14px;
+        margin-left: 0 !important;
+        width: 20px;
+        height: 20px;
+        line-height: 0px;
+        fill: transparent !important;
+      }
+
+      .mdc-list-item__primary-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .arrow-icon {
+          display: flex;
+          gap: 2px;
+
+          .mat-icon {
+            font-size: 16px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
     }
   }
+}
 
-  .buy-flexy {
-    background-color: #fcf1ed;
-    border-radius: 10px;
-  }
-
+.flex-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }

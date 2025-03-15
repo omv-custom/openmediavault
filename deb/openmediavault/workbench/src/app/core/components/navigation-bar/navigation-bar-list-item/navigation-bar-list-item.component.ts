@@ -15,15 +15,23 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Event, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { NavigationBarListItem } from '~/app/core/components/navigation-bar/navigation-bar-list-item/navigation-bar-list-item.type';
+import { NavService } from '~/app/core/services/nav.service';
 import { Unsubscribe } from '~/app/decorators';
-import { Icon } from '~/app/shared/enum/icon.enum';
+import { IconTabler } from '~/app/shared/enum/icontabler.enum';
 
 @Component({
     selector: 'omv-navigation-bar-list-item',
@@ -31,9 +39,13 @@ import { Icon } from '~/app/shared/enum/icon.enum';
     styleUrls: ['./navigation-bar-list-item.component.scss'],
     standalone: false
 })
-export class NavigationBarListItemComponent implements OnInit {
+export class NavigationBarListItemComponent implements OnChanges {
   @Input()
   item: NavigationBarListItem;
+
+  @Output() notify: EventEmitter<boolean> = new EventEmitter<boolean>();
+  expanded: any = false;
+  @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
 
   @Input()
   depth = 0;
@@ -41,9 +53,9 @@ export class NavigationBarListItemComponent implements OnInit {
   @Unsubscribe()
   private subscriptions = new Subscription();
 
-  public icon = Icon;
+  public icon = IconTabler;
 
-  constructor(private router: Router) {
+  constructor(public navService: NavService, public router: Router) {
     this.subscriptions.add(
       this.router.events
         .pipe(filter((event: Event) => event instanceof NavigationStart))
@@ -71,13 +83,52 @@ export class NavigationBarListItemComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+/*  ngOnInit(): void {
     if (this.item.children && this.item.children.length > 0) {
       this.item.active = this.router.url === this.item.url;
     } else {
       this.item.active = _.startsWith(this.router.url, this.item.url);
     }
     this.item.expanded = _.startsWith(this.router.url, this.item.url);
+  } */
+
+  ngOnChanges() {
+    const url = this.navService.currentUrl();
+    if (this.item.url && url) {
+      this.expanded = url.indexOf(`/${this.item.url}`) === 0;
+      this.ariaExpanded = this.expanded;
+    }
+  }
+
+  onItemSelected(item: NavigationBarListItem) {
+    if (item.url) {
+      this.router.navigate([item.url]);
+    }
+    if (!item.children || !item.children.length) {
+      this.router.navigate([item.url]);
+    }
+    if (item.children && item.children.length) {
+      this.expanded = !this.expanded;
+    }
+    //scroll
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    if (!this.expanded) {
+      if (window.innerWidth < 1024) {
+        this.notify.emit();
+      }
+    }
+  }
+
+  onSubItemSelected(item: NavigationBarListItem) {
+    if (!item.children || !item.children.length) {
+      if (this.expanded && window.innerWidth < 1024) {
+        this.notify.emit();
+      }
+    }
   }
 
   onClick(item: NavigationBarListItem) {

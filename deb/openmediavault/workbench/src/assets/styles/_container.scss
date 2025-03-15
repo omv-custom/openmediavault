@@ -133,3 +133,9 @@ td.hljs-ln-line.hljs-ln-numbers {
     flex-direction: row !important;
   }
 }
+
+[id^="cdk-overlay-"] {
+     box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+     animation: _mat-menu-enter 120mscubic-bezier(0, 0, 0.2, 1);
+     border-radius: 10px !important;
+}

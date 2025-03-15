@@ -1,9 +1,8 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container orange_theme" autoFocus>
 
   <!-- Sidebar -->
-   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+   <mat-sidenav #drawer class="sidebarNav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-
     <div class="p-16">
       <div class="mb-16">
         <a href="/" class="d-flex align-items-center">
@@ -15,6 +14,7 @@
         <omv-navigation-bar></omv-navigation-bar>
       </div>
     </div>
+
   </mat-sidenav>
 
   <mat-sidenav-content>

@@ -2,12 +2,12 @@
 @use "@angular/material" as mat;
 
 @use "variables" as *;
-@use "override-component";
-
 @use "themecolors/orange_theme";
+@use "override-component";
 
 @use "theme-variables/default-variables";
 @use "theme-variables/light-theme-variables";
+@use "theme-variables/dark-theme-variables";
 @use "matm3";
 
 //container layout

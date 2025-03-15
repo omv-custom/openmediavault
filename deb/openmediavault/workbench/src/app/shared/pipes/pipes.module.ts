@@ -14,6 +14,7 @@ import { JoinPipe } from '~/app/shared/pipes/join.pipe';
 import { LocaleDatePipe } from '~/app/shared/pipes/locale-date.pipe';
 import { MapPipe } from '~/app/shared/pipes/map.pipe';
 import { MapIconEnumPipe } from '~/app/shared/pipes/map-icon-enum.pipe';
+import { MapIconTablerEnumPipe } from '~/app/shared/pipes/map-icontabler-enum.pipe';
 import { MaxPipe } from '~/app/shared/pipes/max.pipe';
 import { Nl2brPipe } from '~/app/shared/pipes/nl2br.pipe';
 import { NotAvailablePipe } from '~/app/shared/pipes/not-available.pipe';
@@ -45,6 +46,7 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     UpperFirstPipe,
     MaxPipe,
     MapIconEnumPipe,
+    MapIconTablerEnumPipe,
     SanitizeHtmlPipe,
     EncodeUriComponentPipe,
     ReplacePipe,
@@ -69,6 +71,7 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     HttpErrorResponsePipe,
     MapPipe,
     MapIconEnumPipe,
+    MapIconTablerEnumPipe,
     ArrayPipe,
     TemplatePipe,
     TrustHtmlPipe,
@@ -97,6 +100,7 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     HttpErrorResponsePipe,
     MapPipe,
     MapIconEnumPipe,
+    MapIconTablerEnumPipe,
     ArrayPipe,
     TemplatePipe,
     TrustHtmlPipe,
