@@ -128,8 +128,30 @@ export class UpdateDatatablePageComponent {
           message: gettext('All packages will be upgraded. Do you want to proceed?')
         },
         execute: {
-          type: 'url',
-          url: '/system/updatemgmt/updates/changelog/{{ _selected[0].filename | encodeuricomponent }}'
+          type: 'taskDialog',
+          taskDialog: {
+            config: {
+              title: gettext('Upgrade system'),
+              startOnInit: true,
+              buttons: {
+                start: {
+                  hidden: true
+                },
+                stop: {
+                  hidden: true
+                },
+                close: {
+                  dialogResult: true
+                }
+              },
+              request: {
+                service: 'Apt',
+                method: 'upgrade',
+                maxRetries: 5
+              }
+            },
+            successUrl: '/reload'
+          }
         }
       },
       {

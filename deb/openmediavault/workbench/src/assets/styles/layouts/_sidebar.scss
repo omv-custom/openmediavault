@@ -1,7 +1,7 @@
 @use "../variables" as *;
 
 .mat-drawer.sidebarNav {
-  width: 270px;
+  width: 300px;
   flex-shrink: 0;
   transition: swift-ease-out(width);
   position: absolute;

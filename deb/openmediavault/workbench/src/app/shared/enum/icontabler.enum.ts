@@ -43,5 +43,22 @@ export enum IconTabler {
    'harddisk' = 'chess-bishop',
    'mdi:speedometer' = 'brand-speedtest',
    'mdi:memory' = 'brand-cakephp',
-   'mdi:timer-outline' = 'time-duration-0'
+   'mdi:timer-outline' = 'time-duration-0',
+   'mdi:pulse' = 'activity',
+   'mdi:file-tree' = 'file-description',
+   'mdi:playlist-music-outline' = 'playlist',
+   'mdi:floppy' = 'device-floppy',
+   'mdi:playlist-edit' = 'playlist-x',
+   'mdi:script-text-outline' = 'script-minus',
+   'mdi:file-document-outline' = 'briefcase',
+   'mdi:format-list-group' = 'users-group',
+   'mdi:poll' = 'git-pull-request-draft',
+   'mdi:image-multiple-outline' = 'box-multiple',
+   'mdi:lan' = 'brand-golang',
+   'mdi:database' = 'database',
+   'mdi:list-box-outline' = 'align-box-left-top',
+   'mdi:docker' = 'brand-docker',
+   'mdi:calendar-clock-outline' = 'calendar-clock',
+   'mdi:restore' = 'restore',
+   'mdi:file-key-outline' = 'circle-key'
 }

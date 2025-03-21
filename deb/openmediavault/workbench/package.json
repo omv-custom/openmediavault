@@ -99,7 +99,7 @@
     "@types/validator": "^13.12.2",
     "@typescript-eslint/eslint-plugin": "^8.26.0",
     "@typescript-eslint/parser": "^8.26.0",
-    "cypress": "~14.1.0",
+    "cypress": "^14.2.0",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
     "eslint-plugin-import": "^2.31.0",

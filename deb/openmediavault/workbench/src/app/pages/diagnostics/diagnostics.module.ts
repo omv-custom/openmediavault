@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MaterialModule } from '~/app/material.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
 import { CoreModule } from '~/app/core/core.module';
 import { DiagnosticsRoutingModule } from '~/app/pages/diagnostics/diagnostics-routing.module';
@@ -36,6 +38,6 @@ import { SystemLogsRemoteFormPageComponent } from '~/app/pages/diagnostics/syste
     ServiceSmbTextPageComponent,
     ServiceSshTextPageComponent
   ],
-  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule]
+  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule, MaterialModule, TranslocoModule]
 })
 export class DiagnosticsModule {}

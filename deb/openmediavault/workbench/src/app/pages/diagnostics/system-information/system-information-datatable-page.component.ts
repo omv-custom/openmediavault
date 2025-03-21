@@ -119,26 +119,21 @@ export class SystemInformationDatatablePageComponent {
             name: gettext('Load Average'),
             value: {
               type: 'text',
-              value: format(
-                '{{ loadAverage.1min | tofixed(2) }}, {{ loadAverage.5min | tofixed(2) }}, {{ loadAverage.15min | tofixed(2) }}',
-                res
-              )
+              value: format('{{ loadAverage.1min | tofixed(2) }}, {{ loadAverage.5min | tofixed(2) }}, {{ loadAverage.15min | tofixed(2) }}', res)
             }
           },
           cpuUsage: {
             name: gettext('CPU Usage'),
             value: {
-              type: 'progressBar',
-              text: `${res.cpuUsage?.toFixed(1)}%`,
-              value: res.cpuUsage?.toFixed(1)
+              type: 'text',
+              value: `${res.cpuUsage?.toFixed(1)}%`
             }
           },
           memUsed: {
             name: gettext('Memory Usage'),
             value: {
-              type: 'progressBar',
-              text: `${(res.memUtilization * 100).toFixed(1)}% of ${this.binaryUnitPipe.transform(res.memTotal)}`,
-              value: (res.memUtilization * 100).toFixed(1)
+              type: 'text',
+              value: `${(res.memUtilization * 100).toFixed(1)}% of ${this.binaryUnitPipe.transform(res.memTotal)}`
             }
           }
         };

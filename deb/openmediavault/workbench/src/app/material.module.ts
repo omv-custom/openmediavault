@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 /*import { MatLegacySlideToggleModule as MatSlideToggleModule } from '@angular/material/legacy-slide-toggle';
 import { MatLegacySliderModule as MatSliderModule } from '@angular/material/legacy-slider';*/
+import { MatTableModule } from '@angular/material/table';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
@@ -62,6 +63,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatToolbarModule,
     MatTooltipModule,
     MatTabsModule,
+    MatTableModule,
     DragDropModule,
     OverlayModule,
     ClipboardModule

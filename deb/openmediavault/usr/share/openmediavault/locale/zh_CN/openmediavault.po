@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 00:18+0100\n"
+"POT-Creation-Date: 2025-01-30 16:42+0100\n"
 "PO-Revision-Date: 2012-03-17 01:48+0000\n"
 "Last-Translator: songming <by@songming.me>, 2013-2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/openmediavault/openmediavault/language/zh_CN/)\n"
@@ -771,6 +771,9 @@ msgstr "复制"
 
 msgid "Copy permissions"
 msgstr "複製權限"
+
+msgid "Copy public SSH key"
+msgstr "复制 SSH 公钥"
 
 msgid "Copy to clipboard"
 msgstr "复制到剪贴板"
@@ -1615,11 +1618,8 @@ msgstr "安装"
 msgid "Install plugin"
 msgstr "安装插件 ..."
 
-msgid "Install public key to remote machine"
-msgstr "安裝公鑰到遠端機器"
-
 msgid "Install security updates unattended."
-msgstr "無人管顧安裝安全更新。"
+msgstr ""
 
 msgid "Install updates"
 msgstr "安装更新 ..."
@@ -2994,7 +2994,7 @@ msgid "Snapshots"
 msgstr "快照"
 
 msgid "Software"
-msgstr "軟體"
+msgstr ""
 
 msgid "Software Failure.   Press left mouse button to continue."
 msgstr "软件错误。   按鼠标左键继续。"

@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the openmediavault package.
 # 
 # Translators:
-# Stefan Thrane Overby <stoverby@gmail.com>, 2012-2018,2020-2023,2025
+# Stefan Thrane Overby <stoverby@gmail.com>, 2012-2018,2020-2023
 msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-14 00:18+0100\n"
+"POT-Creation-Date: 2025-01-30 16:42+0100\n"
 "PO-Revision-Date: 2012-03-17 01:48+0000\n"
-"Last-Translator: Stefan Thrane Overby <stoverby@gmail.com>, 2012-2018,2020-2023,2025\n"
+"Last-Translator: Stefan Thrane Overby <stoverby@gmail.com>, 2012-2018,2020-2023\n"
 "Language-Team: Danish (http://app.transifex.com/openmediavault/openmediavault/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -229,7 +229,7 @@ msgid "9 months"
 msgstr "9 månder"
 
 msgid "A (5 GHz)"
-msgstr "A (5Ghz)"
+msgstr ""
 
 msgid ""
 "A reboot is needed to fully apply the changes introduced by package "
@@ -280,7 +280,7 @@ msgid "Active"
 msgstr "Aktiv"
 
 msgid "Active or Idle"
-msgstr "Aktiv eller ledig"
+msgstr ""
 
 msgid "Add"
 msgstr "Tilføj"
@@ -464,10 +464,10 @@ msgid "Authentication required"
 msgstr "Godkendelse påkrævet"
 
 msgid "Automatic"
-msgstr "Automatisk"
+msgstr ""
 
 msgid "Automatic logout"
-msgstr "Automatisk log ud"
+msgstr ""
 
 msgid "Available"
 msgstr "Tilgængelig"
@@ -476,7 +476,7 @@ msgid "Azerbaijan"
 msgstr "Azerbaijan"
 
 msgid "B/G (2.4 GHz)"
-msgstr "B/G (2.4 Ghz)"
+msgstr ""
 
 msgid "Back"
 msgstr "Tilbage"
@@ -494,7 +494,7 @@ msgid "Bahrain"
 msgstr "Bahrain"
 
 msgid "Band"
-msgstr "Bånd"
+msgstr ""
 
 msgid "Bangladesh"
 msgstr "Bangladesh"
@@ -503,7 +503,7 @@ msgid "Barbados"
 msgstr "Barbados"
 
 msgid "Base path"
-msgstr "Base sti"
+msgstr ""
 
 msgid "Belarus"
 msgstr "Belarus"
@@ -766,6 +766,9 @@ msgstr "Kopier"
 msgid "Copy permissions"
 msgstr ""
 
+msgid "Copy public SSH key"
+msgstr "Kopier offentlig SSH nøgle"
+
 msgid "Copy to clipboard"
 msgstr "Kopier til udklipsholder"
 
@@ -815,7 +818,7 @@ msgid "Created bridge network connection."
 msgstr ""
 
 msgid "Created firewall rule."
-msgstr "Oprettet firewall regl."
+msgstr ""
 
 msgid "Created group \"{{ name }}\"."
 msgstr ""
@@ -965,7 +968,7 @@ msgid "Disallow the user to modify their own account."
 msgstr ""
 
 msgid "Disk Temperatures"
-msgstr "Disk Temperaturer"
+msgstr ""
 
 msgid "Disks"
 msgstr "Diske"
@@ -998,16 +1001,16 @@ msgid "Displays the S.M.A.R.T. status of all monitored disk devices."
 msgstr ""
 
 msgid "Displays the system time."
-msgstr "Viser systemets tid."
+msgstr ""
 
 msgid "Displays the system uptime."
-msgstr "Viser systemets oppetid."
+msgstr ""
 
 msgid "Displays the temperature of all disk devices."
-msgstr "Viser temperaturen på alle disk enheder."
+msgstr ""
 
 msgid "Displays various system information."
-msgstr "Viser forskellige system informationer."
+msgstr ""
 
 msgid "Djibouti"
 msgstr "Djibouti"
@@ -1094,7 +1097,7 @@ msgid "Dronning Maud Land"
 msgstr "Dronning Maud Land"
 
 msgid "Each line represents a group."
-msgstr "Hver linie repræsenterer en gruppe."
+msgstr ""
 
 msgid ""
 "Each line represents a user. Note, the password must be entered in plain "
@@ -1190,7 +1193,7 @@ msgid "Ethiopia"
 msgstr "Ethiopia"
 
 msgid "Events"
-msgstr "Begivenheder"
+msgstr ""
 
 msgid "Every N day of month"
 msgstr "Hver N månedsdag"
@@ -1284,10 +1287,10 @@ msgid ""
 msgstr "Filer, der er større end det specificeret antal, vil ikke blive lagt i papirkurven."
 
 msgid "Fingerprint (SHA-1)"
-msgstr "Fingeraftryk (SHA-1)"
+msgstr ""
 
 msgid "Fingerprint (SHA-256)"
-msgstr "Fingeraftryk (SHA-256)"
+msgstr ""
 
 msgid "Finland"
 msgstr "Finland"
@@ -1609,9 +1612,6 @@ msgstr "Installer"
 msgid "Install plugin"
 msgstr "Installer plugin"
 
-msgid "Install public key to remote machine"
-msgstr ""
-
 msgid "Install security updates unattended."
 msgstr ""
 
@@ -1642,13 +1642,13 @@ msgid "Invalid PGP public key."
 msgstr ""
 
 msgid "Invalid SSH public key (OpenSSH format)."
-msgstr "Ugyldigt SSH offentlig nøgle (OpenSSH format)."
+msgstr ""
 
 msgid "Invalid SSH public key (OpenSSH or RFC 4716 format)"
-msgstr "Ugyldigt SSH offentlig nøgle (OpenSSH eller RFC 4716 format)"
+msgstr ""
 
 msgid "Invalid SSH public key (RFC 4716 format)."
-msgstr "Ugyldigt SSH offentlig nøgle (RFC 4716 format)."
+msgstr ""
 
 msgid "Invalid User-Agent."
 msgstr "Ugyldig Bruger-Agent."
@@ -1657,13 +1657,13 @@ msgid "Invalid domain name."
 msgstr "Ugyldig domænenavn."
 
 msgid "Invalid group name."
-msgstr "Ugyldigt gruppenavn."
+msgstr ""
 
 msgid "Invalid host name."
-msgstr "Ugyldigt værtsnavn."
+msgstr ""
 
 msgid "Invalid user name."
-msgstr "Ugyldigt brugernavn."
+msgstr ""
 
 msgid "Invalid user."
 msgstr "Ugyldig bruger."
@@ -1778,16 +1778,16 @@ msgid "Lifetime"
 msgstr "Livstid"
 
 msgid "Limit custom"
-msgstr "Begræns brugerdefineret"
+msgstr ""
 
 msgid "Limit daily"
-msgstr "Begræns dagligt"
+msgstr ""
 
 msgid "Limit hourly"
-msgstr "Begræns hver time"
+msgstr ""
 
 msgid "Limit monthly"
-msgstr "Begræns månedligt"
+msgstr ""
 
 msgid "Limit weekly"
 msgstr ""

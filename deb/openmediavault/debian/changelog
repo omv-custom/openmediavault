@@ -1,9 +1,21 @@
+openmediavault (8.0.1) stable; urgency=low
+
+  * Fix Update Packages
+
+ -- Gekomod <zaba141@o2.pl>  Thu, 21 Mar 2025 20:50:11 +0100
+
 openmediavault (8.0.0) stable; urgency=low
 
   * Add PWA
   * Update Angular 19.2.0
   * Rollback Last changes
   * Update Themes
+  * Add i-tabler for icons
+  * Fix Style
+  * Add `omv-salt deploy list-dirty` command to list dirty modules.
+  * Fix bug in scheduled task pages when a value other than `Specific date` is selected for `Execution time`.
+  * Issue #1931: Decode URI component in route context service.
+  * Add Bcachefs
 
  -- Gekomod <zaba141@o2.pl>  Sun, 28 Feb 2025 15:05:29 +0100
 
