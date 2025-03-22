@@ -20,6 +20,7 @@ import { ServiceSshTextPageComponent } from '~/app/pages/diagnostics/services/se
 import { SystemInformationDatatablePageComponent } from '~/app/pages/diagnostics/system-information/system-information-datatable-page.component';
 import { SystemLogsListPageComponent } from '~/app/pages/diagnostics/system-logs/system-logs-list-page.component';
 import { SystemLogsRemoteFormPageComponent } from '~/app/pages/diagnostics/system-logs/system-logs-remote-form-page.component';
+import { PipesModule } from '~/app/shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,6 @@ import { SystemLogsRemoteFormPageComponent } from '~/app/pages/diagnostics/syste
     ServiceSmbTextPageComponent,
     ServiceSshTextPageComponent
   ],
-  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule, MaterialModule, TranslocoModule]
+  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule, MaterialModule, TranslocoModule, PipesModule]
 })
 export class DiagnosticsModule {}

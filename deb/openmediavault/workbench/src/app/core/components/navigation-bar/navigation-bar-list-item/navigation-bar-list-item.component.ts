@@ -101,9 +101,11 @@ export class NavigationBarListItemComponent implements OnChanges {
   }
 
   onItemSelected(item: NavigationBarListItem) {
+/*
     if (item.url) {
       this.router.navigate([item.url]);
     }
+*/
     if (!item.children || !item.children.length) {
       this.router.navigate([item.url]);
     }

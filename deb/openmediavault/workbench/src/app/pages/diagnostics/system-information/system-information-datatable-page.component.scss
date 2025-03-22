@@ -5,8 +5,24 @@ mat-card {
 mat-progress-bar {
   width: 100%;
   margin-top: 8px;
+  height: 30px;
 }
 
 table {
   width: 100%;
+}
+
+.column-name {
+  flex: 0 0 300px;
+}
+
+.mat-row,
+.mat-header-row {
+    display: flex;
+}
+
+.mat-cell,
+.mat-header-cell {
+    display: flex;
+    align-items: center;
 }

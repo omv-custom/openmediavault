@@ -29,12 +29,18 @@ import {
   SystemInformation,
   SystemInformationService
 } from '~/app/shared/services/system-information.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-    template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>',
+//    template: '<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>',
+    templateUrl: './system-information-datatable-page.component.html',
+    styleUrls: ['./system-information-datatable-page.component.scss'],
     standalone: false
 })
 export class SystemInformationDatatablePageComponent {
+  public dataSource = new MatTableDataSource<any>();
+  public displayedColumns: string[] = ['name', 'value'];
+
   @Unsubscribe()
   private subscriptions = new Subscription();
 
@@ -125,23 +131,29 @@ export class SystemInformationDatatablePageComponent {
           cpuUsage: {
             name: gettext('CPU Usage'),
             value: {
-              type: 'text',
-              value: `${res.cpuUsage?.toFixed(1)}%`
+              type: 'progress',
+              text: `${res.cpuUsage?.toFixed(1)}%`,
+              value: res.cpuUsage?.toFixed(1)
             }
           },
           memUsed: {
             name: gettext('Memory Usage'),
             value: {
-              type: 'text',
-              value: `${(res.memUtilization * 100).toFixed(1)}% of ${this.binaryUnitPipe.transform(res.memTotal)}`
-            }
-          }
+              type: 'progress',
+              text: `${(res.memUtilization * 100).toFixed(1)}% of ${this.binaryUnitPipe.transform(res.memTotal)}`,
+              value: `${(res.memUtilization * 100).toFixed(1)}`
+           }
+          },
+          configDirty: { name: 'Config Dirty', value: { type: 'text', value: res.configDirty ? 'Yes' : 'No' } },
+          rebootRequired: { name: 'Reboot Required', value: { type: 'text', value: res.rebootRequired ? 'Yes' : 'No' } },
+          availablePkgUpdates: { name: 'Available Package Updates', value: { type: 'text', value: res.availablePkgUpdates || 0 } }
         };
         _.forEach(rows, (value: Record<any, any>, key: string) => {
           if (_.has(res, key)) {
             data.push(value);
           }
         });
+        this.dataSource.data = data;
         this.config.store.data = data;
       })
     );
