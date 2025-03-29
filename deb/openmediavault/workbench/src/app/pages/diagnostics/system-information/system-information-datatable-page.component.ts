@@ -25,6 +25,7 @@ import { DatatablePageConfig } from '~/app/core/components/intuition/models/data
 import { Unsubscribe } from '~/app/decorators';
 import { format, notAvailable } from '~/app/functions.helper';
 import { BinaryUnitPipe } from '~/app/shared/pipes/binary-unit.pipe';
+import { ToastrService } from 'ngx-toastr';
 import {
   SystemInformation,
   SystemInformationService
@@ -73,8 +74,19 @@ export class SystemInformationDatatablePageComponent {
 
   constructor(
     private binaryUnitPipe: BinaryUnitPipe,
-    private systemInformationService: SystemInformationService
+    private systemInformationService: SystemInformationService,
+    private toastr: ToastrService
   ) {
+
+this.toastr.success('everything is broken', 'Major Error', {
+  timeOut: 9000,
+  positionClass: 'toast-top-center',
+  disableTimeOut: false,
+  progressBar: true, 
+  progressAnimation: 'increasing',
+  toastClass: 'ngx-toastr',
+});
+
     this.subscriptions.add(
       this.systemInformationService.systemInfo$.subscribe((res: SystemInformation) => {
         const data = [];

@@ -20,6 +20,7 @@ import { ServiceSshTextPageComponent } from '~/app/pages/diagnostics/services/se
 import { SystemInformationDatatablePageComponent } from '~/app/pages/diagnostics/system-information/system-information-datatable-page.component';
 import { SystemLogsListPageComponent } from '~/app/pages/diagnostics/system-logs/system-logs-list-page.component';
 import { SystemLogsRemoteFormPageComponent } from '~/app/pages/diagnostics/system-logs/system-logs-remote-form-page.component';
+import { ToastrModule } from 'ngx-toastr';
 import { PipesModule } from '~/app/shared/pipes/pipes.module';
 
 @NgModule({
@@ -39,6 +40,6 @@ import { PipesModule } from '~/app/shared/pipes/pipes.module';
     ServiceSmbTextPageComponent,
     ServiceSshTextPageComponent
   ],
-  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule, MaterialModule, TranslocoModule, PipesModule]
+  imports: [CommonModule, CoreModule, DiagnosticsRoutingModule, MaterialModule, TranslocoModule, PipesModule,ToastrModule.forRoot()]
 })
 export class DiagnosticsModule {}
