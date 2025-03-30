@@ -54,11 +54,12 @@ jobs:
         run: cd debs && ls -la
       - uses: actions/upload-artifact@v4
         with:
-          path: 'debs'
-          name: | 
-                openmediavault_*.deb
-                openmediavault_*.buildinfo
-                openmediavault_*.changes
+          path: 'debs/openmediavault_*.deb'
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          path: 'debs/openmediavault_*.buildinfo'
+          if-no-files-found: error
  
   test-shell:
     runs-on: ubuntu-latest
