@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { marker as gettext } from '@jsverse/transloco-keys-manager/marker';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
@@ -34,7 +35,7 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   onMouseMove() {
     this.lastActivityTime = Date.now();
     localStorage.setItem('lastActivityTime', this.lastActivityTime.toString());
-    
+
     if (this.dialogRef) {
       this.dialogRef.close();
       this.dialogRef = null;
@@ -55,7 +56,10 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   private openInactivityDialog(): void {
    if (!this.dialogRef) {
     this.dialogRef = this.dialog.open(this.inactivityDialog, {
-      data: 'test',
+      data: {
+        title: gettext('Sesja wygasła'),
+        message: gettext('Twoja sesja wygasła z powodu braku aktywności. Proszę odśwież stronę lub wyloguj się.')
+      },
       disableClose: true
     });
 
