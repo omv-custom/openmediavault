@@ -55,8 +55,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: 'debs'
-          pattern: openmediavault_*.*
-          merge-multiple: true
+          name: openmediavault_*.*
  
   test-shell:
     runs-on: ubuntu-latest
