@@ -1,10 +1,10 @@
-<ng-template #inactivityDialog>
+<ng-template #inactivityDialog let-data>
   <h2 mat-dialog-title>{{ data.title }}</h2>
   <mat-dialog-content>
     {{ data.message }}
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Odśwież</button>
+    <button mat-button (click)="refreshPage()">Odśwież</button>
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Wyloguj</button>
   </mat-dialog-actions>
 </ng-template>

@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, HostListener, TemplateRef, ViewChild, Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, OnDestroy, HostListener, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog} from '@angular/material/dialog';
 import { marker as gettext } from '@jsverse/transloco-keys-manager/marker';
 import { Subscription, interval } from 'rxjs';
 
@@ -16,9 +16,15 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   private timerSubscription: Subscription;
   public dialogRef: any;
 
+  // Dane do dialogu
+  public dialogData = {
+    title: gettext('Sesja wygasła'),
+    message: gettext('Twoja sesja wygasła z powodu braku aktywności. Proszę odśwież stronę lub wyloguj się.')
+  };
+
   @ViewChild('inactivityDialog', { static: true }) inactivityDialog!: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: { title: string, message: string }) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.lastActivityTime = Number(localStorage.getItem('lastActivityTime')) || Date.now();
@@ -36,10 +42,12 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
     this.lastActivityTime = Date.now();
     localStorage.setItem('lastActivityTime', this.lastActivityTime.toString());
 
+    /*
     if (this.dialogRef) {
       this.dialogRef.close();
       this.dialogRef = null;
     }
+    */
   }
 
   private startTimer(): void {
@@ -56,10 +64,7 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   private openInactivityDialog(): void {
    if (!this.dialogRef) {
     this.dialogRef = this.dialog.open(this.inactivityDialog, {
-      data: {
-        title: gettext('Sesja wygasła'),
-        message: gettext('Twoja sesja wygasła z powodu braku aktywności. Proszę odśwież stronę lub wyloguj się.')
-      },
+      data: this.dialogData,
       disableClose: true
     });
 
@@ -67,5 +72,9 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
       this.dialogRef = null;
     });
    }
+  }
+
+  public refreshPage(): void {
+    window.location.reload();
   }
 }
