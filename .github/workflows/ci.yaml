@@ -48,17 +48,13 @@ jobs:
       - name: Build deb
         working-directory: deb/openmediavault/
         run: dpkg-buildpackage -us -uc -d -b
+      - name: Move File
+        run: mv 'deb/*.deb' '../debs' && mv 'deb/*.buildinfo' '../debs' && 'deb/*.changes' '../debs'
       - name: List File
-        run: ${{ steps.build-deb.outputs.filename }}
-      - name: List File 2
         run: cd deb && ls -la
       - uses: actions/upload-artifact@v4
         with:
-          path: | 
-                'debs'
-                'deb/*.deb'
-                'deb/*.buildinfo'
-                'deb/*.changes'
+          path: 'debs'
  
   test-shell:
     runs-on: ubuntu-latest
