@@ -55,10 +55,17 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           path: 'debs/openmediavault_*.deb'
+          name: OpenMediaVault Deb File
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         with:
           path: 'debs/openmediavault_*.buildinfo'
+          name: OpenMediaVault Buildinfo File
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        with:
+          path: 'debs/openmediavault_*.changes'
+          name: OpenMediaVault Changes File
           if-no-files-found: error
  
   test-shell:
