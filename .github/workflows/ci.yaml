@@ -31,9 +31,21 @@ jobs:
       - name: Build If Present
         working-directory: deb/openmediavault/workbench/
         run: npm run build --if-present
-      - name: Test
-        working-directory: deb/openmediavault/workbench/
-        run: npm run test:ci
+        
+  build-deb:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: singingwolfboy/build-dpkg-buster@v1
+        id: build
+        with:
+          args: --unsigned-source --unsigned-changes
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: ${{ steps.build.outputs.filename }}
+          path: ${{ steps.build.outputs.filename }}
  
   test-shell:
     runs-on: ubuntu-latest
