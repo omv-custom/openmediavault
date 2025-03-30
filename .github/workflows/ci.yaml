@@ -36,16 +36,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: singingwolfboy/build-dpkg-buster@v1
-        id: build
-        with:
-          args: --unsigned-source --unsigned-changes
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.build.outputs.filename }}
-          path: ${{ steps.build.outputs.filename }}
+      - name: Build deb
+        run: dpkg-buildpackage -us -uc -d -b
  
   test-shell:
     runs-on: ubuntu-latest
