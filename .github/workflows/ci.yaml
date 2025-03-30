@@ -38,7 +38,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build deb
         working-directory: deb/openmediavault/
-        run: dpkg-buildpackage -us -uc -d -b
+        run: 
+              sudo apt install debhelper dh-python fakeroot python3-all python3-stdeb python3-yaml -y
+              dpkg-buildpackage -us -uc -d -b
  
   test-shell:
     runs-on: ubuntu-latest
