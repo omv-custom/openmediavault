@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, HostListener, TemplateRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, OnDestroy, HostListener, TemplateRef, ViewChild, Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { marker as gettext } from '@jsverse/transloco-keys-manager/marker';
 import { Subscription, interval } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
 
   @ViewChild('inactivityDialog', { static: true }) inactivityDialog!: TemplateRef<any>;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: { title: string, message: string }) {}
 
   ngOnInit(): void {
     this.lastActivityTime = Number(localStorage.getItem('lastActivityTime')) || Date.now();
