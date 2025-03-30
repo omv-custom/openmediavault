@@ -4,7 +4,7 @@
     {{ data.message }}
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button (click)="refreshPage()">Odśwież</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Wyloguj</button>
+    <button mat-button class="bg-info" (click)="refreshPage()">Odśwież</button>
+    <button mat-button [mat-dialog-close]="true" class="bg-error" cdkFocusInitial>Wyloguj</button>
   </mat-dialog-actions>
 </ng-template>
