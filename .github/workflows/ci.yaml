@@ -40,7 +40,7 @@ jobs:
         env:
           DEB_BUILD_OPTIONS: noautodbgsym
         with:
-          buildpackage-opts: --build=binary --no-sign
+          buildpackage-opts: -us -uc -d -b
  
   test-shell:
     runs-on: ubuntu-latest
