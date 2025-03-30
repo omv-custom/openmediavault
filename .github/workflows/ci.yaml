@@ -37,6 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build deb
+        working-directory: deb/openmediavault/
         run: dpkg-buildpackage -us -uc -d -b
  
   test-shell:
