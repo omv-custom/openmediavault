@@ -36,11 +36,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Required
+        run: sudo apt install debhelper dh-python fakeroot python3-all python3-stdeb python3-yaml -y
       - name: Build deb
         working-directory: deb/openmediavault/
-        run: 
-              sudo apt install debhelper dh-python fakeroot python3-all python3-stdeb python3-yaml -y
-              dpkg-buildpackage -us -uc -d -b
+        run: dpkg-buildpackage -us -uc -d -b
  
   test-shell:
     runs-on: ubuntu-latest
