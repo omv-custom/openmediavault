@@ -49,12 +49,14 @@ jobs:
         working-directory: deb/openmediavault/
         run: dpkg-buildpackage -us -uc -d -b
       - name: Move File
-        run: ls -la && mv deb/*.deb ../debs && mv deb/*.buildinfo ../debs && mv deb/*.changes ../debs
+        run: mv deb/*.deb ../debs && mv deb/*.buildinfo ../debs && mv deb/*.changes ../debs
       - name: List File
-        run: cd deb && ls -la
+        run: cd debs && ls -la
       - uses: actions/upload-artifact@v4
         with:
           path: 'debs'
+          pattern: openmediavault_*.*
+          merge-multiple: true
  
   test-shell:
     runs-on: ubuntu-latest
