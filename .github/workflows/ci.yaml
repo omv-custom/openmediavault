@@ -12,6 +12,12 @@ env:
   NODE_VERSION: 22
   NODE_OPTIONS: --max_old_space_size=4096
 
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+  actions: write
+
 jobs:
   build:
 
