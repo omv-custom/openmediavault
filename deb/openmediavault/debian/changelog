@@ -1,6 +1,9 @@
 openmediavault (8.0.1) stable; urgency=low
 
   * Fix Update Packages
+  * Issue #1941: Add UDEV rule to fix the duplicate serial number
+    issue for TerraMaster D5-300 and other hard drive enclosures
+    based on the JMicron Gen1 SATA 6Gb/s Bridge.
 
  -- Gekomod <zaba141@o2.pl>  Thu, 21 Mar 2025 20:50:11 +0100
 
