@@ -1,0 +1,85 @@
+<!-- processes-page.component.html -->
+<div class="processes-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>System Processes</mat-card-title>
+      <mat-card-subtitle>Real-time process monitoring (similar to top command)</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="controls">
+        <button mat-raised-button color="primary" (click)="loadProcesses()" [disabled]="isLoading">
+          <mat-icon>refresh</mat-icon>
+          Refresh
+        </button>
+
+        <button mat-raised-button [color]="autoRefresh ? 'accent' : 'primary'"
+                (click)="toggleAutoRefresh()">
+          <mat-icon>{{ autoRefresh ? 'pause' : 'play_arrow' }}</mat-icon>
+          Auto-refresh ({{ refreshInterval/1000 }}s)
+        </button>
+      </div>
+
+      <div class="table-container">
+        <div *ngIf="isLoading" class="loading-spinner">
+          <mat-spinner diameter="40"></mat-spinner>
+        </div>
+
+        <table mat-table [dataSource]="processes" *ngIf="!isLoading">
+          <!-- PID Column -->
+          <ng-container matColumnDef="pid">
+            <th mat-header-cell *matHeaderCellDef matTooltip="Process ID">PID</th>
+            <td mat-cell *matCellDef="let process">{{ process.pid }}</td>
+          </ng-container>
+
+          <!-- User Column -->
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef>User</th>
+            <td mat-cell *matCellDef="let process">{{ process.user }}</td>
+          </ng-container>
+
+          <!-- CPU Column -->
+          <ng-container matColumnDef="cpu">
+            <th mat-header-cell *matHeaderCellDef matTooltip="CPU Usage">CPU%</th>
+            <td mat-cell *matCellDef="let process">
+              <div class="progress-container">
+                <span>{{ process.cpu.toFixed(1) }}%</span>
+                <mat-progress-bar mode="determinate" [value]="process.cpu" color="warn">
+                </mat-progress-bar>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Memory Column -->
+          <ng-container matColumnDef="mem">
+            <th mat-header-cell *matHeaderCellDef matTooltip="Memory Usage">MEM%</th>
+            <td mat-cell *matCellDef="let process">
+              <div class="progress-container">
+                <span>{{ process.mem.toFixed(1) }}%</span>
+                <mat-progress-bar mode="determinate" [value]="process.mem" color="primary">
+                </mat-progress-bar>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Time Column -->
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef matTooltip="CPU Time">Time</th>
+            <td mat-cell *matCellDef="let process">{{ process.time }}</td>
+          </ng-container>
+
+          <!-- Command Column -->
+          <ng-container matColumnDef="command">
+            <th mat-header-cell *matHeaderCellDef>Command</th>
+            <td mat-cell *matCellDef="let process" class="command-cell">
+              <span class="command-text" matTooltip="{{ process.command }}">{{ process.command | truncate:50 }}</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

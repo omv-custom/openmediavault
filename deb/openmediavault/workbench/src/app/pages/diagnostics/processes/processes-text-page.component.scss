@@ -1,0 +1,117 @@
+/* processes-page.component.scss */
+@use '@angular/material' as mat;
+
+.processes-container {
+  padding: 16px;
+
+  mat-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+
+    mat-card-header {
+      padding: 16px 16px 0;
+
+      mat-card-title {
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      mat-card-subtitle {
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+
+    mat-card-content {
+      padding: 16px;
+    }
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  button {
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.table-container {
+  position: relative;
+  min-height: 300px;
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+  }
+}
+
+table {
+  width: 100%;
+
+  th {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    min-width: 50px;
+    text-align: right;
+  }
+
+  mat-progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    flex-grow: 1;
+  }
+}
+
+.command-cell {
+  max-width: 300px;
+
+  .command-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+}
+
+/* Custom truncate pipe style */
+.truncated {
+  color: #666;
+  &::after {
+    content: '...';
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .controls {
+    flex-direction: column;
+  }
+
+  .displayed-columns {
+    flex-wrap: wrap;
+  }
+
+  .command-cell {
+    max-width: 200px;
+  }
+}
