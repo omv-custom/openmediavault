@@ -32,6 +32,7 @@ import { MatTabsModule as MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @NgModule({
@@ -64,6 +65,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatTabsModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatGridListModule,
     DragDropModule,
     OverlayModule,
     ClipboardModule
