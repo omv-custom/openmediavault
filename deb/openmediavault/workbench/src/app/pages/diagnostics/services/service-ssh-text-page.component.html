@@ -1,0 +1,138 @@
+<div class="ssh-container">
+  <mat-card class="ssh-card">
+    <mat-card-header class="ssh-header">
+      <div class="status-badge" [class.active]="sshStats.config?.enable" matTooltip="Current Status SSH">
+        {{ sshStats.config?.enable ? 'ACTIVE' : 'INACTIVE' }}
+      </div>
+      <mat-card-title class="ssh-title">
+        <mat-icon [color]="getStatusColor()" class="status-icon">{{ getStatusIcon() }}</mat-icon>
+        <span>{{ 'SSH Service' | transloco }}</span>
+      </mat-card-title>
+      <mat-card-subtitle class="ssh-subtitle">{{ 'Current connections and configuration' | transloco }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider class="ssh-divider"></mat-divider>
+
+    <mat-card-content *ngIf="!isLoading && !error" class="ssh-content">
+      <div class="service-status" [class.active]="sshStats.config?.enable">
+        <div class="status-badge" [class.active]="sshStats.config?.enable">
+          {{ sshStats.config?.enable ? 'ACTIVE' : 'INACTIVE' }}
+        </div>
+        <span class="status-text">
+          {{ 'SSH service is currently' | transloco }} {{ sshStats.config?.enable ? 'running' : 'not running' }}
+        </span>
+      </div>
+
+      <div *ngIf="sshStats.config?.enable" class="stats-container">
+        <!-- Sessions Section -->
+        <div class="stats-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">group</mat-icon>
+            <h3>{{ 'Active Sessions' | transloco }}</h3>
+            <span class="badge">{{ parsedSessions.length }}</span>
+          </div>
+          
+          <div *ngIf="parsedSessions.length; else noSessions" class="cards-grid">
+            <div *ngFor="let session of parsedSessions" class="info-card session-card">
+              <div class="card-header">
+                <mat-icon class="card-icon">account_circle</mat-icon>
+                <div class="user-info">
+                  <span class="username">{{ session.user }}</span>
+                  <span class="user-ip">{{ session.ip }}</span>
+                </div>
+              </div>
+              <div class="card-details">
+                <div class="detail-item">
+                  <mat-icon>terminal</mat-icon>
+                  <span>{{ session.terminal }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>schedule</mat-icon>
+                  <span>{{ session.loginTime }}</span>
+                </div>
+                <div *ngIf="session.pid" class="detail-item">
+                  <mat-icon>memory</mat-icon>
+                  <span>PID: {{ session.pid }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noSessions>
+            <div class="empty-state">
+              <mat-icon>hourglass_empty</mat-icon>
+              <p>{{ 'No active sessions' | transloco }}</p>
+            </div>
+          </ng-template>
+        </div>
+
+        <mat-divider class="section-divider"></mat-divider>
+
+        <!-- Connections Section -->
+        <div class="stats-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">swap_horizontal_circle</mat-icon>
+            <h3>{{ 'Active Connections' | transloco }}</h3>
+            <span class="badge">{{ parsedConnections.length }}</span>
+          </div>
+          
+          <div *ngIf="parsedConnections.length; else noConnections" class="cards-grid">
+            <div *ngFor="let conn of parsedConnections" class="info-card connection-card">
+              <div class="card-header">
+                <mat-icon class="card-icon">lan</mat-icon>
+                <div class="conn-info">
+                  <span class="conn-protocol">{{ conn.protocol }}</span>
+                  <span class="conn-state" [class.established]="conn.state === 'ESTABLISHED'">
+                    {{ conn.state }}
+                  </span>
+                </div>
+              </div>
+              <div class="card-details">
+                <div class="detail-item">
+                  <mat-icon>person</mat-icon>
+                  <span>{{ conn.user }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>home</mat-icon>
+                  <span>{{ conn.localAddress }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>public</mat-icon>
+                  <span>{{ conn.foreignAddress }}</span>
+                </div>
+                <div class="detail-item">
+                  <mat-icon>settings</mat-icon>
+                  <span>{{ conn.command }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #noConnections>
+            <div class="empty-state">
+              <mat-icon>link_off</mat-icon>
+              <p>{{ 'No active connections' | transloco }}</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="isLoading" class="loading-state">
+      <mat-spinner diameter="50" color="accent"></mat-spinner>
+      <p>{{ 'Loading SSH information...' | transloco }}</p>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="error && !isLoading" class="error-state">
+      <mat-icon color="warn">error_outline</mat-icon>
+      <p>{{ error }}</p>
+    </mat-card-content>
+
+    <mat-divider class="ssh-divider"></mat-divider>
+
+    <mat-card-actions class="ssh-actions">
+      <button mat-flat-button color="primary" (click)="refresh()" [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        {{ 'Refresh Data' | transloco }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

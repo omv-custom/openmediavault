@@ -1,0 +1,447 @@
+// ssh-info.component.scss
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  body:not(.dark-theme) {
+    .ssh-header, .ssh-actions {
+        background-color: #f5f5f5;
+    }
+  }
+
+}
+
+.ssh-container {
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  .ssh-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .ssh-header {
+      .ssh-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.5rem;
+        font-weight: 500;
+
+        .status-icon {
+          width: 32px;
+          height: 32px;
+          font-size: 32px;
+        }
+      }
+
+        .status-badge {
+          padding: 0.25rem 0.75rem;
+          border-radius: 1rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: white;
+          margin-left: auto;
+          height: 30px;
+
+          &.active {
+            background-color: #4caf50;
+          }
+
+          &:not(.active) {
+            background-color: #f44336;
+          }
+        }
+
+      .ssh-subtitle {
+        font-size: 0.875rem;
+        opacity: 0.8;
+      }
+    }
+
+    .ssh-divider {
+      margin: 0;
+    }
+
+    .ssh-content {
+      padding: 1.5rem;
+
+      .service-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        background-color: rgba(0, 0, 0, 0.05);
+
+        .status-badge {
+          padding: 0.25rem 0.75rem;
+          border-radius: 1rem;
+          font-size: 0.75rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: white;
+
+          &.active {
+            background-color: #4caf50;
+          }
+
+          &:not(.active) {
+            background-color: #f44336;
+          }
+        }
+
+        .status-text {
+          font-size: 0.875rem;
+        }
+      }
+
+      .stats-container {
+        .stats-section {
+          margin-bottom: 2rem;
+
+          .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+
+            .section-icon {
+              font-size: 1.5rem;
+              width: 1.5rem;
+              height: 1.5rem;
+            }
+
+            h3 {
+              margin: 0;
+              font-size: 1.125rem;
+              font-weight: 500;
+            }
+
+            .badge {
+              padding: 0.125rem 0.625rem;
+              border-radius: 0.75rem;
+              background-color: rgba(63, 81, 181, 0.1);
+              color: #3f51b5;
+              font-size: 0.75rem;
+              font-weight: 600;
+            }
+          }
+
+          .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+
+            @media (max-width: 600px) {
+              grid-template-columns: 1fr;
+            }
+          }
+
+          .info-card {
+            padding: 1rem;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              border-color: #3f51b5;
+            }
+
+            .card-header {
+              display: flex;
+              align-items: center;
+              gap: 0.75rem;
+              margin-bottom: 0.75rem;
+              padding-bottom: 0.75rem;
+              border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+              .card-icon {
+                font-size: 1.5rem;
+                width: 1.5rem;
+                height: 1.5rem;
+                color: #3f51b5;
+              }
+
+              .user-info, .conn-info {
+                display: flex;
+                flex-direction: column;
+
+                .username, .conn-protocol {
+                  font-weight: 500;
+                  font-size: 0.875rem;
+                }
+
+                .user-ip {
+                  font-size: 0.75rem;
+                  opacity: 0.8;
+                }
+
+                .conn-state {
+                  font-size: 0.6875rem;
+                  padding: 0.125rem 0.5rem;
+                  border-radius: 0.625rem;
+                  background-color: rgba(0, 0, 0, 0.05);
+                  align-self: flex-start;
+
+                  &.established {
+                    background-color: rgba(76, 175, 80, 0.1);
+                    color: #4caf50;
+                  }
+                }
+              }
+            }
+
+            .card-details {
+              display: grid;
+              gap: 0.5rem;
+
+              .detail-item {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.8125rem;
+
+                mat-icon {
+                  font-size: 1.125rem;
+                  width: 1.125rem;
+                  height: 1.125rem;
+                  opacity: 0.7;
+                }
+              }
+            }
+          }
+
+          .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            text-align: center;
+
+            mat-icon {
+              font-size: 3rem;
+              width: 3rem;
+              height: 3rem;
+              opacity: 0.5;
+              margin-bottom: 1rem;
+            }
+
+            p {
+              margin: 0;
+              font-size: 0.875rem;
+              opacity: 0.8;
+            }
+          }
+        }
+
+        .section-divider {
+          margin: 1.5rem 0;
+        }
+      }
+    }
+
+    .loading-state, .error-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      text-align: center;
+
+      mat-icon {
+        font-size: 3rem;
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.875rem;
+      }
+    }
+
+    .error-state {
+      mat-icon {
+        color: #f44336;
+      }
+    }
+
+    .ssh-actions {
+      display: flex;
+      justify-content: flex-end;
+      padding: 1rem 1.5rem;
+    }
+  }
+}
+
+// Dark Theme Styles
+.dark-theme {
+  .ssh-container {
+    .ssh-card {
+      background-color: #424242;
+      color: #ffffff;
+
+      .ssh-header {
+        background-color: #424242 !important;
+        .ssh-title {
+          color: #ffffff;
+        }
+
+        .ssh-subtitle {
+          color: rgba(255, 255, 255, 0.7);
+        }
+      }
+
+      .ssh-actions {
+         background-color: #424242 !important;  
+      }
+
+      .ssh-content {
+        .service-status {
+          background-color: rgba(255, 255, 255, 0.08);
+
+          .status-text {
+            color: rgba(255, 255, 255, 0.9);
+          }
+        }
+
+        .stats-container {
+          .stats-section {
+            .section-header {
+              h3 {
+                color: #ffffff;
+              }
+
+              .badge {
+                background-color: rgba(187, 194, 220, 0.1);
+                color: #bbc2dc;
+              }
+            }
+
+            .info-card {
+              background-color: #2d2d2d;
+              border-color: rgba(255, 255, 255, 0.12);
+
+              &:hover {
+                border-color: #7986cb;
+              }
+
+              .card-header {
+                border-color: rgba(255, 255, 255, 0.08);
+
+                .card-icon {
+                  color: #7986cb;
+                }
+
+                .user-info, .conn-info {
+                  .username, .conn-protocol {
+                    color: #ffffff;
+                  }
+
+                  .user-ip {
+                    color: rgba(255, 255, 255, 0.7);
+                  }
+
+                  .conn-state {
+                    background-color: rgba(255, 255, 255, 0.08);
+
+                    &.established {
+                      background-color: rgba(102, 187, 106, 0.2);
+                      color: #66bb6a;
+                    }
+                  }
+                }
+              }
+
+              .card-details {
+                .detail-item {
+                  color: rgba(255, 255, 255, 0.8);
+                }
+              }
+            }
+
+            .empty-state {
+              background-color: rgba(255, 255, 255, 0.05);
+
+              p {
+                color: rgba(255, 255, 255, 0.7);
+              }
+            }
+          }
+        }
+      }
+
+      .loading-state, .error-state {
+        p {
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .ssh-container {
+    padding: 1rem;
+
+    .ssh-card {
+      .ssh-header {
+        padding: 1rem;
+      }
+
+      .ssh-content {
+        padding: 1rem;
+      }
+
+      .ssh-actions {
+        padding: 0.75rem 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .ssh-container {
+    padding: 0.5rem;
+
+    .ssh-card {
+      border-radius: 8px;
+
+      .ssh-header {
+        .ssh-title {
+          font-size: 1.25rem;
+        }
+      }
+
+      .service-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+    }
+  }
+}
