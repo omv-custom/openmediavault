@@ -138,26 +138,33 @@ export class ServiceSshTextPageComponent implements OnInit {
       });
   }
 
-  private parseConnections(connectionsOutput: string): ParsedConnection[] {
-    if (!connectionsOutput || connectionsOutput.includes('No connections')) {
-      return [];
-    }
-
-    return connectionsOutput.split('\n')
-      .filter(line => line.trim())
-      .map(line => {
-        const parts = line.split(/\s+/).filter(part => part.trim());
-        return {
-          command: parts[0],
-          pid: parts[1],
-          user: parts[2],
-          protocol: parts[3],
-          localAddress: parts[8],
-          foreignAddress: parts[9],
-          state: parts[10] || 'N/A'
-        };
-      });
+private parseConnections(connectionsOutput: string): ParsedConnection[] {
+  if (!connectionsOutput || connectionsOutput.includes('No connections')) {
+    return [];
   }
+
+  return connectionsOutput.split('\n')
+    .filter(line => line.trim())
+    .map(line => {
+      const parts = line.split(/\s+/).filter(part => part.trim());
+      
+      // Sprawdź czy mamy wystarczającą liczbę części i czy foreignAddress nie jest pusty
+      if (parts.length < 10 || !parts[9]) {
+        return null;
+      }
+
+      return {
+        command: parts[0] || 'N/A',
+        pid: parts[1] || 'N/A',
+        user: parts[2] || 'N/A',
+        protocol: parts[3] || 'N/A',
+        localAddress: parts[8] || 'N/A',
+        foreignAddress: parts[9],
+        state: parts[10] || 'N/A'
+      };
+    })
+    .filter(connection => connection !== null) as ParsedConnection[]; // Usuń puste połączenia
+}
 
   refresh(): void {
     this.loadSshStats();
