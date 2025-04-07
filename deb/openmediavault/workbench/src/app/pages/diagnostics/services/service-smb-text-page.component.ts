@@ -49,7 +49,7 @@ export class ServiceSmbTextPageComponent implements OnInit {
   public connectionsColumns: string[] = [
     'pid', 'username', 'group', 'machine', 'protocolVersion', 'encryption', 'signing'
   ];
-  
+
   public servicesColumns: string[] = [
     'name', 'pid', 'machine', 'connectedAt', 'encryption', 'signing'
   ];
@@ -70,7 +70,7 @@ export class ServiceSmbTextPageComponent implements OnInit {
   loadData(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.rpcService.request('SMB', 'getStats', null)
       .pipe(
         finalize(() => this.loading = false)
@@ -150,9 +150,8 @@ export class ServiceSmbTextPageComponent implements OnInit {
   }
 
   private parseConnectionLine(line: string): SambaConnection | null {
-    // Example line: "1120390 nobody       nogroup      192.168.1.27 (ipv4:192.168.1.27:34458)    SMB3_11           -                    -"
     const parts = line.trim().split(/\s{2,}/);
-    
+
     if (parts.length < 6) return null;
 
     return {
@@ -167,12 +166,10 @@ export class ServiceSmbTextPageComponent implements OnInit {
   }
 
   private parseServiceLine(line: string): SambaService | null {
-    // Example line: "IPC$         1120367 imac-maks     pon kwi  7 16:05:57 2025 CEST    -            -"
     const parts = line.trim().split(/\s{2,}/);
-    
+
     if (parts.length < 6) return null;
 
-    // Parse date string (assuming format like "pon kwi  7 16:05:57 2025 CEST")
     const dateParts = parts[3].split(/\s+/);
     const dateStr = `${dateParts[2]} ${dateParts[1]} ${dateParts[5]} ${dateParts[3]}`;
     const connectedAt = new Date(dateStr);

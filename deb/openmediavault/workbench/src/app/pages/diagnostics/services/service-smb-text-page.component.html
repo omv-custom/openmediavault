@@ -4,10 +4,10 @@
       <div class="header-content">
         <mat-card-title class="samba-title">
           <mat-icon class="title-icon">dns</mat-icon>
-          Samba Status
+          {{ 'Samba Status' | transloco }}
         </mat-card-title>
         <mat-card-subtitle *ngIf="status.version" class="samba-subtitle">
-          Version: {{ status.version }}
+          {{ 'Version:' | transloco }} {{ status.version }}
         </mat-card-subtitle>
       </div>
       <button mat-icon-button matTooltip="Refresh" (click)="refresh()" class="refresh-button">
@@ -21,17 +21,17 @@
     <!-- Service Disabled State -->
     <div *ngIf="status?.isDisabled" class="disabled-state">
       <mat-icon class="disabled-icon">block</mat-icon>
-      <h3 class="disabled-title">Samba Service is Disabled</h3>
-      <p class="disabled-message">The Samba file sharing service is currently not running.</p>
+      <h3 class="disabled-title">{{ 'Samba Service is Disabled' | transloco }}</h3>
+      <p class="disabled-message">{{ 'The Samba file sharing service is currently not running.' | transloco }}</p>
       <button mat-raised-button color="primary" class="enable-button">
-        Enable Service
+        {{ 'Enable Service' | transloco }}
       </button>
     </div>
 
       <!-- Loading State -->
       <div *ngIf="loading && !status?.isDisabled" class="loading-state">
         <mat-spinner diameter="40"></mat-spinner>
-        <span class="loading-text">Loading Samba status...</span>
+        <span class="loading-text">{{ 'Loading Samba status...' | transloco }}</span>
       </div>
 
       <!-- Error State -->
@@ -46,11 +46,11 @@
         <section class="section">
           <div class="section-header">
             <mat-icon class="section-icon">people_outline</mat-icon>
-            <h3 class="section-title">Active Connections</h3>
+            <h3 class="section-title">{{ 'Active Connections' | transloco }}</h3>
           </div>
           <div *ngIf="status.connections.length === 0" class="empty-state">
             <mat-icon>info_outline</mat-icon>
-            <span>No active connections</span>
+            <span>{{ 'No active connections' | transloco }}</span>
           </div>
           <div *ngIf="status.connections.length > 0" class="table-container">
             <div class="table-wrapper">
@@ -72,37 +72,37 @@
         <section class="section">
           <div class="section-header">
             <mat-icon class="section-icon">dns</mat-icon>
-            <h3 class="section-title">Active Services</h3>
+            <h3 class="section-title">{{ 'Active Services' | transloco }}</h3>
           </div>
           <div *ngIf="status.services.length === 0" class="empty-state">
             <mat-icon>info_outline</mat-icon>
-            <span>No active services</span>
+            <span>{{ 'No active services' | transloco }}</span>
           </div>
           <div *ngIf="status.services.length > 0" class="table-container">
             <div class="table-wrapper">
               <table mat-table [dataSource]="status.services" class="mat-elevation-z1">
                 <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef>Service</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Service' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.name }}</td>
                 </ng-container>
                 <ng-container matColumnDef="pid">
-                  <th mat-header-cell *matHeaderCellDef>PID</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'PID' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.pid }}</td>
                 </ng-container>
                 <ng-container matColumnDef="machine">
-                  <th mat-header-cell *matHeaderCellDef>Machine</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Machine' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.machine }}</td>
                 </ng-container>
                 <ng-container matColumnDef="connectedAt">
-                  <th mat-header-cell *matHeaderCellDef>Connected</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Connected' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.connectedAt | date:'short' }}</td>
                 </ng-container>
                 <ng-container matColumnDef="encryption">
-                  <th mat-header-cell *matHeaderCellDef>Encryption</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Encryption' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.encryption }}</td>
                 </ng-container>
                 <ng-container matColumnDef="signing">
-                  <th mat-header-cell *matHeaderCellDef>Signing</th>
+                  <th mat-header-cell *matHeaderCellDef>{{ 'Signing' | transloco }}</th>
                   <td mat-cell *matCellDef="let svc">{{ svc.signing }}</td>
                 </ng-container>
 
@@ -117,11 +117,11 @@
         <section class="section">
           <div class="section-header">
             <mat-icon class="section-icon">lock_outline</mat-icon>
-            <h3 class="section-title">Locked Files</h3>
+            <h3 class="section-title">{{ 'Locked Files' | transloco }}</h3>
           </div>
           <div *ngIf="status.lockedFiles.length === 0" class="empty-state">
             <mat-icon>info_outline</mat-icon>
-            <span>No locked files</span>
+            <span>{{ 'No locked files' | transloco }}</span>
           </div>
           <div *ngIf="status.lockedFiles.length > 0" class="files-list">
             <mat-list>
