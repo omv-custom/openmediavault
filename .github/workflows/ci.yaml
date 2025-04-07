@@ -35,7 +35,7 @@ jobs:
           upload_sources: true
           upload_translations: false
           source: deb/openmediavault/usr/share/openmediavault/locale/openmediavault.pot                     # Sources pattern
-          translation: deb/openmediavault/usr/share/openmediavault/locale/${{ matrix.lc }}/openmediavault.po    # Translations pattern
+          translation: deb/openmediavault/usr/share/openmediavault/locale/%locale%/openmediavault.po    # Translations pattern
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
