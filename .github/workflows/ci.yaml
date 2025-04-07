@@ -38,8 +38,8 @@ jobs:
           translation: deb/openmediavault/usr/share/openmediavault/locale/%locale%/openmediavault.po    # Translations pattern
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_PROJECT_ID: 779152
+          CROWDIN_PERSONAL_TOKEN: 3e285e682af7f54b44f728bc371c821dc27d7709e1c89329d0f609c393f2c035c192264da7970a71
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
