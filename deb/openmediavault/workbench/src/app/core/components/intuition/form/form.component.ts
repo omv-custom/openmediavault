@@ -42,6 +42,7 @@ import {
 import { Unsubscribe } from '~/app/decorators';
 import { formatDeep, isFormatable } from '~/app/functions.helper';
 import { CustomValidators } from '~/app/shared/forms/custom-validators';
+import { DataStore } from '~/app/shared/models/data-store.type';
 import { ConstraintService } from '~/app/shared/services/constraint.service';
 
 let nextUniqueId = 0;
@@ -430,6 +431,16 @@ export class FormComponent implements AfterViewInit, OnInit {
         if (fulfilled) {
           const value = formatDeep(modifier.typeConfig, values);
           control.setValue(value);
+        }
+        break;
+      case 'reload':
+        if (fulfilled) {
+          // eslint-disable-next-line @typescript-eslint/ban-types
+          const reloadFn: Function = _.get(control, 'reload');
+          if (_.isFunction(reloadFn)) {
+            const store: DataStore = formatDeep(modifier.typeConfig, values);
+            reloadFn.call(control, store);
+          }
         }
         break;
     }

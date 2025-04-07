@@ -25,6 +25,7 @@ import { AbstractFormFieldComponent } from '~/app/core/components/intuition/form
 import { formatFormFieldConfig } from '~/app/core/components/intuition/functions.helper';
 import { Unsubscribe } from '~/app/decorators';
 import { DataStoreService } from '~/app/shared/services/data-store.service';
+import { DataStore } from '~/app/shared/models/data-store.type';
 
 @Component({
     selector: 'omv-form-select',
@@ -44,9 +45,12 @@ export class FormSelectComponent extends AbstractFormFieldComponent implements O
 
   override ngOnInit(): void {
     super.ngOnInit();
-    this.doLoadStore();
 
     const control = this.formGroup.get(this.config.name);
+    _.set(control, 'reload', this.doReloadStore.bind(this));
+
+    this.doLoadStore();
+
     this.subscriptions.add(
       control.valueChanges.subscribe((value) => {
         this.config.value = value;
@@ -85,5 +89,24 @@ export class FormSelectComponent extends AbstractFormFieldComponent implements O
           this.config.store.data.unshift(item);
         }
       });
+  }
+
+
+  private doReloadStore(store: DataStore): void {
+    const control = this.formGroup.get(this.config.name);
+    _.assign(
+      this.config.store,
+      // Reset several fields to make sure, the new store configuration is
+      // used and not falsified by old data.
+      {
+        data: undefined,
+        url: undefined,
+        proxy: undefined
+      },
+      // Assign the new store config that is used to reload the data.
+      store
+    );
+    control.setValue(null);
+    this.doLoadStore();
   }
 }
