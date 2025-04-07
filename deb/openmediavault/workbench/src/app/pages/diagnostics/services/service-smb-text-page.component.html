@@ -7,7 +7,7 @@
           {{ 'Samba Status' | transloco }}
         </mat-card-title>
         <mat-card-subtitle *ngIf="status.version" class="samba-subtitle">
-          {{ 'Version:' | transloco }} {{ status.version }}
+          {{ 'Version' | transloco }}: {{ status.version }}
         </mat-card-subtitle>
       </div>
       <button mat-icon-button matTooltip="Refresh" (click)="refresh()" class="refresh-button">

@@ -272,6 +272,12 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
+msgid "Active Connections"
+msgstr ""
+
+msgid "Active Services"
+msgstr ""
+
 msgid "Active or Idle"
 msgstr ""
 
@@ -1124,6 +1130,9 @@ msgstr ""
 msgid "Enable write-cache"
 msgstr ""
 
+msgid "Enable Service"
+msgstr ""
+
 msgid "Enabled"
 msgstr ""
 
@@ -1742,6 +1751,9 @@ msgstr ""
 msgid "Loading ..."
 msgstr ""
 
+msgid "Loading Samba status..."
+msgstr ""
+
 msgid "Local"
 msgstr ""
 
@@ -1767,6 +1779,9 @@ msgid "Loop device [%s, %s]"
 msgstr ""
 
 msgid "Luxembourg"
+msgstr ""
+
+msgid "Locked Files"
 msgstr ""
 
 msgid "MAC"
@@ -2052,6 +2067,15 @@ msgid "No monitored devices."
 msgstr ""
 
 msgid "No users connected"
+msgstr ""
+
+msgid "No active connections"
+msgstr ""
+
+msgid "No active services"
+msgstr ""
+
+msgid "No locked files"
 msgstr ""
 
 msgid "None"
@@ -2792,6 +2816,9 @@ msgstr ""
 msgid "Session not authenticated."
 msgstr ""
 
+msgid "Samba Service is Disabled"
+msgstr ""
+
 msgid "Set the destination permissions to be the same as the source permissions."
 msgstr ""
 
@@ -3108,6 +3135,9 @@ msgid "The SSH certificate used for authentication."
 msgstr ""
 
 msgid "The SSH public key in OpenSSH or RFC 4716 format."
+msgstr ""
+
+msgid "The Samba file sharing service is currently not running."
 msgstr ""
 
 msgid "The action to be done when pressing the power button."
