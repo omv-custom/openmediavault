@@ -464,6 +464,9 @@ msgstr ""
 msgid "Azerbaijan"
 msgstr ""
 
+msgid "Auto-refresh"
+msgstr ""
+
 msgid "B/G (2.4 GHz)"
 msgstr ""
 
@@ -2135,6 +2138,9 @@ msgstr ""
 msgid "Num"
 msgstr ""
 
+msgid "No processes found"
+msgstr ""
+
 msgid "OK"
 msgstr ""
 
@@ -2593,6 +2599,9 @@ msgstr ""
 
 msgid "Rwanda"
 msgstr ""
+
+msgid "Real-time system monitoring (similar to top command)"
+msgid ""
 
 msgid "S.M.A.R.T."
 msgstr ""
@@ -3084,6 +3093,15 @@ msgid "System restart required"
 msgstr ""
 
 msgid "System time"
+msgstr ""
+
+msgid "System Processes Monitor"
+msgstr ""
+
+msgid "Swap space not configured"
+msgstr ""
+
+msgid "Sleeping"
 msgstr ""
 
 msgid "TCP"
@@ -3888,6 +3906,9 @@ msgid "Zambia"
 msgstr ""
 
 msgid "Zimbabwe"
+msgstr ""
+
+msgid "Zombie"
 msgstr ""
 
 msgid "a day"

@@ -23,7 +23,7 @@
 
         <span class="uptime" *ngIf="systemStats">
           <mat-icon>schedule</mat-icon>
-          {{ 'Uptime:' | transloco }} {{ systemStats.uptime }}
+          {{ 'Uptime' | transloco }}: {{ systemStats.uptime }}
         </span>
       </div>
 
@@ -60,23 +60,23 @@
       {{ 'Memory' | transloco }}
     </h3>
     <div class="memory-stats">
-      <mat-progress-bar mode="determinate" 
+      <mat-progress-bar mode="determinate"
                        [value]="calculatePercentage(systemStats.memory.used, systemStats.memory.total)"
                        color="primary">
       </mat-progress-bar>
-      
+
       <div class="memory-details">
         <div class="memory-row">
-          <span class="memory-label">{{ 'Total:' | transloco }}</span>
+          <span class="memory-label">{{ 'Total' | transloco }}:</span>
           <span class="memory-value">{{ formatBytes(systemStats.memory.total) }}</span>
         </div>
         <div class="memory-row">
-          <span class="memory-label">{{ 'Used:' | transloco }}</span>
+          <span class="memory-label">{{ 'Used' | transloco }}:</span>
           <span class="memory-value">{{ formatBytes(systemStats.memory.used) }}</span>
           <span class="memory-percent">{{ calculatePercentage(systemStats.memory.used, systemStats.memory.total).toFixed(1) }}%</span>
         </div>
         <div class="memory-row">
-          <span class="memory-label">{{ 'Free:' | transloco }}</span>
+          <span class="memory-label">{{ 'Free' | transloco }}:</span>
           <span class="memory-value">{{ formatBytes(systemStats.memory.free) }}</span>
         </div>
       </div>
@@ -92,23 +92,23 @@
       {{ 'Swap' | transloco }}
     </h3>
     <div *ngIf="systemStats.swap.total > 0; else noSwap" class="swap-stats">
-      <mat-progress-bar mode="determinate" 
+      <mat-progress-bar mode="determinate"
                        [value]="calculatePercentage(systemStats.swap.used, systemStats.swap.total)"
                        color="accent">
       </mat-progress-bar>
-      
+
       <div class="swap-details">
         <div class="swap-row">
-          <span class="swap-label">{{ 'Total:' | transloco }}</span>
+          <span class="swap-label">{{ 'Total' | transloco }}:</span>
           <span class="swap-value">{{ formatBytes(systemStats.swap.total) }}</span>
         </div>
         <div class="swap-row">
-          <span class="swap-label">{{ 'Used:' | transloco }}</span>
+          <span class="swap-label">{{ 'Used' | transloco }}:</span>
           <span class="swap-value">{{ formatBytes(systemStats.swap.used) }}</span>
           <span class="swap-percent">{{ calculatePercentage(systemStats.swap.used, systemStats.swap.total).toFixed(1) }}%</span>
         </div>
         <div class="swap-row">
-          <span class="swap-label">{{ 'Free:' | transloco }}</span>
+          <span class="swap-label">{{ 'Free' | transloco }}:</span>
           <span class="swap-value">{{ formatBytes(systemStats.swap.free) }}</span>
         </div>
       </div>
@@ -127,19 +127,19 @@
               <h3>{{ 'Tasks' | transloco }}</h3>
               <div class="tasks-info">
                 <div class="task-count">
-                  <span class="label">{{ 'Total:' | transloco }}</span>
+                  <span class="label">{{ 'Total' | transloco }}:</span>
                   <span class="value">{{ systemStats.tasks.total }}</span>
                 </div>
                 <div class="task-count">
-                  <span class="label">{{ 'Running:' | transloco }}</span>
+                  <span class="label">{{ 'Running' | transloco }}:</span>
                   <span class="value">{{ systemStats.tasks.running }}</span>
                 </div>
                 <div class="task-count">
-                  <span class="label">{{ 'Sleeping:' | transloco }}</span>
+                  <span class="label">{{ 'Sleeping' | transloco }}:</span>
                   <span class="value">{{ systemStats.tasks.sleeping }}</span>
                 </div>
                 <div class="task-count">
-                  <span class="label">{{ 'Zombie:' | transloco }}</span>
+                  <span class="label">{{ 'Zombie' | transloco }}:</span>
                   <span class="value" [class.warning]="systemStats.tasks.zombie > 0">{{ systemStats.tasks.zombie }}</span>
                 </div>
               </div>
