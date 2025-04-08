@@ -2601,7 +2601,7 @@ msgid "Rwanda"
 msgstr ""
 
 msgid "Real-time system monitoring (similar to top command)"
-msgid ""
+msgstr ""
 
 msgid "S.M.A.R.T."
 msgstr ""
