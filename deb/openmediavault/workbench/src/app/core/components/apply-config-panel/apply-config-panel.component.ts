@@ -71,17 +71,17 @@ export class ApplyConfigPanelComponent {
     this.buttons = [
       {
         tooltip: gettext('Show details'),
-        icon: this.icon.details,
+        icon: "details",
         click: () => (this.expanded = !this.expanded)
       },
       {
         tooltip: gettext('Undo'),
-        icon: this.icon.undo,
+        icon: "arrow-back-up",
         click: this.onUndoPendingChanges.bind(this)
       },
       {
         tooltip: gettext('Apply'),
-        icon: this.icon.check,
+        icon: "check",
         click: this.onApplyPendingChanges.bind(this)
       }
     ];

@@ -1,22 +1,40 @@
-<omv-alert-panel *ngIf="dirtyModules | count"
-                 type="warning"
-                 icon="information"
-                 title="{{ 'Pending configuration changes' | transloco }}"
-                 [buttons]="buttons">
-  <div class="omv-cursor-pointer omv-display-flex omv-flex-column omv-align-items-start omv-align-content-start omv-justify-content-center"
-       (click)="expanded = !expanded">
-    {{ 'You must apply these changes in order for them to take effect.' | transloco }}
-    <div class="details"
-         [ngClass]="{'omv-display-none': !expanded}">
-      <div class="omv-mt-h">
-        {{ 'The following modules will be updated:' | transloco }}
+<div class="config-changes-alert">
+  <div *ngIf="dirtyModules | count" class="alert-container">
+    <div class="alert-header" (click)="expanded = !expanded">
+      <div class="header-content">
+        <mat-icon class="alert-icon">warning_amber</mat-icon>
+        <div class="header-text">
+          <h3 class="alert-title">{{ 'Pending configuration changes' | transloco }}</h3>
+          <p class="alert-summary">{{ 'You must apply these changes in order for them to take effect.' | transloco }}</p>
+        </div>
       </div>
-      <ul>
-        <li *ngFor="let module of dirtyModules | keyvalue"
-            matTooltip="{{ module.value | transloco }}">
-          {{ module.key }}
-        </li>
-      </ul>
+      <mat-icon class="expand-icon">{{ expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+    </div>
+
+    <div class="alert-body" [class.expanded]="expanded">
+      <div class="modules-info">{{ 'The following modules will be updated:' | transloco }}</div>
+      
+      <div class="modules-list">
+        <div *ngFor="let module of dirtyModules | keyvalue" class="module-item">
+          <mat-icon class="module-icon">settings</mat-icon>
+          <div class="module-details">
+            <div class="module-name">{{ module.key }}</div>
+            <div class="module-description">{{ module.value | transloco }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button *ngFor="let btn of buttons"
+                mat-flat-button
+                [color]="btn.color || 'primary'"
+                [class.mat-warn]="btn.type === 'warn'"
+                (click)="btn.click()"
+                [matTooltip]="btn.tooltip">
+          <i-tabler name="{{ btn.icon }}" *ngIf="btn.icon" class="button-icon"></i-tabler>
+          {{ btn.tooltip | transloco }}
+        </button>
+      </div>
     </div>
   </div>
-</omv-alert-panel>
+</div>
