@@ -1,56 +1,102 @@
 @use 'sass:map';
 @use 'scss/defaults/colors' as dc;
 @use 'scss/theme';
+@use 'sass:color';
 
 omv-datatable {
-  // Toolbar
+  // Base variables for both themes
+  --mat-primary-rgb: #{color.channel(theme.$omv-color-primary, "red")}, #{color.channel(theme.$omv-color-primary, "green")}, #{color.channel(theme.$omv-color-primary, "blue")};
+  --mat-accent-rgb: #{color.channel(theme.$omv-color-accent, "red")}, #{color.channel(theme.$omv-color-accent, "green")}, #{color.channel(theme.$omv-color-accent, "blue")};
+  --mat-background-rgb: 255, 255, 255;
+  --mat-text-rgb: 51, 51, 51;
+  --mat-border-rgb: 224, 224, 224;
+  --mat-card-rgb: 250, 250, 250; // Lighter background for header
+  --mat-header-rgb: 248, 248, 248; // Specific for header background
+
+  // Light theme styles
   .mat-toolbar {
+    padding: 0 12px;
+    background: rgba(var(--mat-header-rgb), 1);
+    min-height: 56px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(var(--mat-border-rgb), 1);
+
     .mat-button:not(.mat-button-disabled),
     .mat-icon-button:not(.mat-button-disabled) {
-      color: var(--mat-primary-color-text);
+      color: var(--mat-primary-color);
+      background: transparent;
+      border-radius: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:hover {
+        background: rgba(var(--mat-primary-rgb), 0.04);
+      }
+
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
     }
 
     .mat-mdc-form-field {
-      font-size: var(--mat-font-size-body-1);
+      font-size: 13px;
+      width: 200px;
+
+      .mat-mdc-text-field-wrapper {
+        background: rgba(var(--mat-background-rgb), 1);
+        border: 1px solid rgba(var(--mat-border-rgb), 1);
+        border-radius: 8px;
+        height: 36px;
+      }
+
+      .mat-mdc-form-field-infix {
+        padding: 8px 0;
+        min-height: 36px;
+      }
+
+      .mat-mdc-input-element {
+        color: #1a1a1a;
+      }
 
       &.mat-focused {
-        /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-        .mat-form-field-ripple {
-          background-color: var(--mat-primary-color-text);
-        }
-      }
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-      .mat-form-field-infix {
-        padding-bottom: unset;
-
-        .mat-mdc-input-element {
-          caret-color: var(--mat-primary-color-text);
-          color: currentcolor;
+        .mat-mdc-text-field-wrapper {
+          border-color: rgba(var(--mat-primary-rgb), 1);
+          box-shadow: 0 0 0 1px rgba(var(--mat-primary-rgb), 1);
         }
       }
     }
   }
 
-  // Progress bar
   .omv-datatable-progress-bar {
     position: relative;
+    height: 2px;
+    overflow: hidden;
 
     .mat-progress-bar {
       position: absolute;
+      background-color: var(--mat-primary-color);
+      border-radius: 1px;
     }
   }
 
-  // Templates
   .omv-datatable-template-unsorted-list {
-    margin: unset;
-    padding-left: 20px;
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none;
+
+    li {
+      padding: 4px 0;
+      color: #424242;
+      font-size: 13px;
+    }
   }
 
-  // Datatable
   .ngx-datatable {
-    /* stylelint-disable no-descending-specificity */
-    box-shadow: none;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
 
     &.single-selection,
     &.multi-selection,
@@ -58,166 +104,325 @@ omv-datatable {
       .datatable-body-row {
         &.active,
         &.active .datatable-row-group {
-          @include theme.background-color-pair('accent');
+          background: rgba(var(--mat-primary-rgb), 0.03) !important;
         }
 
         &.active:hover,
         &.active:hover .datatable-row-group {
-          @include theme.background-color-pair('accent');
-
-          background-color: map.get(theme.$omv-color-accent-palette, 800) !important;
-          transition-property: background;
-          transition-duration: 0.3s;
-          transition-timing-function: linear;
-        }
-
-        &.active:focus,
-        &.active:focus .datatable-row-group {
-          @include theme.background-color-pair('accent');
-
-          background-color: map.get(theme.$omv-color-accent-palette, 700) !important;
+          background: rgba(var(--mat-primary-rgb), 0.06) !important;
         }
       }
     }
 
     &:not(.cell-selection) {
       .datatable-body-row {
+        transition: background 0.15s ease;
+
         &:hover,
         &:hover .datatable-row-group {
-          @include theme.background-color-pair('primary');
-
-          transition-property: background;
-          transition-duration: 0.3s;
-          transition-timing-function: linear;
-        }
-
-        &:focus,
-        &:focus .datatable-row-group {
-          @include theme.background-color-pair('primary');
-
-          background-color: map.get(theme.$omv-color-primary-palette, 700);
+          background: rgba(0, 0, 0, 0.01) !important;
         }
       }
     }
 
-    /**
-     * Header Styles
-     */
     .datatable-header {
-      border-bottom: 1px solid rgb(0 0 0 / 12%);
+      border-bottom: 1px solid #f0f0f0;
+      background: #ffffff;
 
       .datatable-header-cell {
-        text-align: left;
-        padding: 0.9rem 1.2rem;
-        vertical-align: bottom;
+        padding: 12px 16px;
+        font-weight: 500;
+        color: #666;
+        font-size: 12px;
+        letter-spacing: 0.3px;
 
-        .datatable-header-cell-wrapper {
-          position: relative;
+        .sort-active {
+          color: var(--mat-primary-color);
         }
       }
 
       .resize-handle {
-        border-right: solid 1px #eeeeee;
+        border-right: solid 1px #f0f0f0;
       }
     }
 
-    /**
-     * Body Styles
-     */
     .datatable-body {
       .datatable-row-detail {
-        background: dc.$omv-color-whitesmoke;
-        padding: 10px;
+        background: #fafafa;
+        padding: 16px;
+        border-bottom: 1px solid #f0f0f0;
       }
 
       .datatable-group-header {
-        background: dc.$omv-color-whitesmoke;
-        border-bottom: solid 1px #d9d8d9;
-        border-top: solid 1px #d9d8d9;
+        background: #f8f8f8;
+        padding: 8px 16px;
+        font-size: 12px;
+        color: #666;
       }
 
       .empty-row {
-        border-top: 0;
-        border-bottom: 1px solid rgb(0 0 0 / 12%);
-        text-align: left;
-        padding: 0.5rem 1.2rem;
-        vertical-align: top;
+        padding: 24px;
+        color: #999;
+        text-align: center;
+        font-size: 13px;
       }
 
       .datatable-body-row {
-        border-bottom: 1px solid rgb(0 0 0 / 12%);
+        border-bottom: 1px solid #f0f0f0;
 
         .datatable-body-cell {
-          text-align: left;
-          padding: 0.9rem 1.2rem;
-          vertical-align: top;
-          border-top: 0;
-        }
-
-        .datatable-body-group-cell {
-          text-align: left;
-          padding: 0.9rem 1.2rem;
-          vertical-align: top;
-          border-top: 0;
+          padding: 12px 16px;
+          font-size: 13px;
+          color: #333;
+          line-height: 1.5;
         }
       }
     }
 
-    /**
-     * Footer Styles
-     */
     .datatable-footer {
+      border-top: 1px solid #f0f0f0;
+      background: #ffffff;
+      color: #666;
+      font-size: 12px;
+
       .page-count {
-        line-height: 50px;
-        height: 50px;
-        padding: 0 1.2rem;
+        padding: 0 16px;
       }
 
       .datatable-pager {
-        margin: 0 10px;
+        margin: 0 8px;
 
         li {
-          vertical-align: middle;
+          margin: 0 2px;
 
           &.disabled a {
-            color: var(--mat-color-disabled-text);
-            background-color: transparent !important;
+            color: #ccc;
           }
 
           &.active a {
-            background: var(--mat-background-color-hover);
-            font-weight: bold;
+            background: transparent;
+            color: var(--mat-primary-color);
+            font-weight: 500;
+            text-decoration: underline;
           }
         }
 
         a {
-          color: var(--mat-color-text);
-          height: 22px;
-          min-width: 24px;
-          line-height: 22px;
-          padding: 0 6px;
-          border-radius: 3px;
-          margin: 6px 3px;
-          text-align: center;
-          text-decoration: none;
-          vertical-align: bottom;
+          height: 32px;
+          min-width: 32px;
+          border-radius: 0;
+          margin: 0;
+          color: #666;
 
           &:hover {
-            background: var(--mat-background-color-hover);
-            color: theme.$omv-color-primary;
+            background: transparent;
+            color: var(--mat-primary-color);
           }
-        }
-
-        .datatable-icon-left,
-        .datatable-icon-skip,
-        .datatable-icon-right,
-        .datatable-icon-prev {
-          font-size: 20px;
-          line-height: 20px;
-          padding: 0 3px;
         }
       }
     }
-    /* stylelint-enable no-descending-specificity */
+  }
+
+  mat-chip-option {
+    max-width: 100%;
+    height: 24px;
+    font-size: 12px;
+    border-radius: 12px;
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+
+  img {
+    max-height: 32px;
+    border-radius: 4px;
+    display: block;
+  }
+
+  mat-checkbox {
+    margin: -2px 0;
+  }
+
+  .mat-menu-content {
+    padding: 4px 0;
+
+    button.mat-menu-item {
+      height: 36px;
+      font-size: 13px;
+      color: #333;
+
+      mat-icon {
+        margin-right: 8px;
+        font-size: 18px;
+      }
+    }
+  }
+
+  // Dark theme styles
+  .dark-theme & {
+    --mat-background-rgb: 45, 45, 45;
+    --mat-text-rgb: 224, 224, 224;
+    --mat-border-rgb: 68, 68, 68;
+    --mat-card-rgb: 40, 40, 40;
+    --mat-header-rgb: 37, 37, 37; // Darker header background
+
+    .mat-toolbar {
+      background: rgba(var(--mat-header-rgb), 1);
+      border-bottom-color: rgba(var(--mat-border-rgb), 1);
+
+      .mat-button:not(.mat-button-disabled),
+      .mat-icon-button:not(.mat-button-disabled) {
+        color: var(--mat-primary-color-light);
+
+        &:hover {
+          background: rgba(var(--mat-primary-rgb), 0.08);
+        }
+      }
+
+      .mat-mdc-form-field {
+        .mat-mdc-text-field-wrapper {
+          background: rgba(var(--mat-card-rgb), 1);
+          border-color: rgba(var(--mat-border-rgb), 1);
+        }
+
+        .mat-mdc-input-element {
+          color: rgba(var(--mat-text-rgb), 1);
+        }
+
+        &.mat-focused {
+          .mat-mdc-text-field-wrapper {
+            border-color: var(--mat-primary-color-light);
+            box-shadow: 0 0 0 1px var(--mat-primary-color-light);
+          }
+        }
+      }
+    }
+
+    .omv-datatable-progress-bar {
+      .mat-progress-bar {
+        background-color: var(--mat-primary-color-light);
+      }
+    }
+
+    .omv-datatable-template-unsorted-list {
+      li {
+        color: #b0b0b0;
+      }
+    }
+
+    .ngx-datatable {
+      background: #2d2d2d;
+      border-color: #444;
+
+      &.single-selection,
+      &.multi-selection,
+      &.multi-click-selection {
+        .datatable-body-row {
+          &.active,
+          &.active .datatable-row-group {
+            background: rgba(var(--mat-primary-rgb), 0.08) !important;
+          }
+
+          &.active:hover,
+          &.active:hover .datatable-row-group {
+            background: rgba(var(--mat-primary-rgb), 0.12) !important;
+          }
+        }
+      }
+
+      &:not(.cell-selection) {
+        .datatable-body-row {
+          &:hover,
+          &:hover .datatable-row-group {
+            background: rgba(255, 255, 255, 0.03) !important;
+          }
+        }
+      }
+
+      .datatable-header {
+        border-bottom-color: #444;
+        background: #252525;
+
+        .datatable-header-cell {
+          color: #aaa;
+
+          .sort-active {
+            color: var(--mat-primary-color-light);
+          }
+        }
+
+        .resize-handle {
+          border-right-color: #444;
+        }
+      }
+
+      .datatable-body {
+        .datatable-row-detail {
+          background: #333;
+          border-bottom-color: #444;
+        }
+
+        .datatable-group-header {
+          background: #2a2a2a;
+          color: #999;
+        }
+
+        .empty-row {
+          color: #777;
+        }
+
+        .datatable-body-row {
+          border-bottom-color: #444;
+
+          .datatable-body-cell {
+            color: #e0e0e0;
+          }
+        }
+      }
+
+      .datatable-footer {
+        border-top-color: #444;
+        background: #252525;
+        color: #aaa;
+
+        .datatable-pager {
+          li {
+            &.disabled a {
+              color: #555;
+            }
+
+            &.active a {
+              color: var(--mat-primary-color-light);
+            }
+          }
+
+          a {
+            color: #aaa;
+
+            &:hover {
+              color: var(--mat-primary-color-light);
+            }
+          }
+        }
+      }
+    }
+
+    mat-chip-option {
+      background: #3a3a3a !important;
+      color: #e0e0e0 !important;
+    }
+
+    .mat-menu-content {
+      background: #333;
+
+      button.mat-menu-item {
+        color: #e0e0e0;
+
+        &:hover {
+          background: #3a3a3a;
+        }
+      }
+    }
   }
 }
