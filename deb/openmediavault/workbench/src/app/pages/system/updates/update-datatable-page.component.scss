@@ -1,0 +1,451 @@
+/* Główne kontenery */
+.updates-container {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* Karta */
+.modern-card {
+  border-radius: 12px;
+  box-shadow: var(--mat-sys-elevation-2);
+  overflow: hidden;
+  border: 1px solid var(--mat-sys-divider);
+  background-color: var(--mat-sys-surface);
+}
+
+.border {
+  border: 1px solid #e0e0e0;
+}
+
+/* Nagłówek karty */
+.card-header {
+  padding: 1.5rem;
+  background-color: var(--mat-sys-surface-container-low);
+  border-bottom: 1px solid var(--mat-sys-divider);
+  display: flex;
+  align-items: center;
+}
+
+/* Awatar w nagłówku */
+.card-avatar {
+  background-color: var(--mat-sys-secondary-container);
+  border-radius: 10px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  
+  .icon-xl {
+    width: 24px;
+    height: 24px;
+    color: var(--mat-sys-on-secondary-container);
+  }
+}
+
+/* Tytuł karty */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+  margin: 0;
+}
+
+/* Główny kontener przycisków */
+.header-actions {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+  align-items: center;
+
+  /* Bazowe style dla przycisków */
+  .action-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 20px;
+    padding: 8px 16px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+
+    /* Style ikon */
+    i-tabler {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      transition: transform 0.3s ease;
+    }
+
+    /* Efekt hover */
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      i-tabler {
+        transform: rotate(15deg);
+      }
+    }
+
+    /* Efekt aktywacji */
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Stan disabled */
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  /* Specyficzne style dla przycisku Check */
+  .check-button {
+    background-color: var(--mat-sys-secondary-container);
+    color: var(--mat-sys-on-secondary-container);
+    border: 1px solid var(--mat-outline);
+
+    /* Animacja dla ikony odświeżania */
+    i-tabler[name="rotate-clockwise-2"] {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Animacja ładowania */
+    &.loading i-tabler[name="rotate-clockwise-2"] {
+      animation: spin 1s linear infinite;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: var(--mat-secondary-container-hover);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Style dla przycisku Install */
+  .install-button {
+    background-color: var(--mat-sys-primary);
+    color: var(--mat-on-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover:not(:disabled) {
+      background-color: var(--mat-sys-primary-hover);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+/* Animacja obracania */
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Efekt ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Zawartość karty */
+mat-card-content {
+  padding: 1.5rem;
+}
+
+/* Tabela aktualizacji */
+.updates-table {
+  width: 100%;
+  margin-top: 1rem;
+  
+  th {
+    font-weight: 500;
+    color: var(--mat-sys-on-surface);
+    font-size: 0.875rem;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--mat-sys-divider);
+  }
+  
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--mat-sys-divider);
+    vertical-align: middle;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* Wiersze aktualizacji */
+.update-item {
+  .package-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    
+    i-tabler {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.5;
+      color: var(--mat-sys-primary);
+    }
+    
+    .security-icon {
+      color: var(--mat-sys-error);
+    }
+  }
+  
+  .version-display {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .version-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+    }
+    
+    .version-label {
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 0.75rem;
+      min-width: 70px;
+    }
+    
+    .version-value {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.8125rem;
+      
+      &.available {
+        color: var(--mat-sys-primary);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .size-display {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.8125rem;
+    
+    .download-size {
+      color: var(--mat-sys-on-surface-variant);
+      font-size: 0.75rem;
+      margin-left: 8px;
+    }
+  }
+  
+  .repository-display {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    .repo-name {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.8125rem;
+      padding: 2px 6px;
+      background-color: var(--mat-sys-surface-container-high);
+      border-radius: 4px;
+      color: var(--mat-sys-on-surface-variant);
+    }
+    
+    .repo-origin {
+      color: var(--mat-sys-on-surface-variant);
+      cursor: help;
+      
+      i-tabler {
+        width: 16px;
+        height: 16px;
+        stroke-width: 1.5;
+      }
+    }
+  }
+  
+  .package-description {
+    color: var(--mat-sys-on-surface-variant);
+    font-size: 0.875rem;
+  }
+}
+
+/* Stan ładowania */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+  
+  mat-progress-spinner {
+    color: var(--mat-sys-primary);
+  }
+  
+  p {
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
+  }
+}
+
+/* Komunikat o błędzie */
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 1rem;
+  background-color: var(--mat-sys-error-container);
+  border-radius: 4px;
+  color: var(--mat-sys-on-error-container);
+  
+  i-tabler {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+  }
+  
+  button {
+    margin-left: auto;
+  }
+}
+
+/* Brak aktualizacji */
+.no-updates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 1rem;
+  background-color: var(--mat-sys-surface-container-high);
+  border-radius: 4px;
+  color: var(--mat-sys-on-surface-variant);
+  
+  i-tabler {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.5;
+    color: var(--mat-sys-primary);
+  }
+}
+
+/* Style dla dialogu postępu */
+.progress-container {
+  padding: 16px;
+  
+  .overall-progress {
+    margin-bottom: 24px;
+    
+    .status-message {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 14px;
+      
+      span:last-child {
+        font-weight: 500;
+        color: var(--mat-primary);
+      }
+    }
+  }
+  
+  .details-accordion {
+    mat-expansion-panel {
+      margin-bottom: 8px;
+      box-shadow: none;
+      border: 1px solid var(--mat-divider);
+      
+      mat-panel-title {
+        align-items: center;
+        
+        .status-icon {
+          width: 18px;
+          height: 18px;
+          margin-right: 8px;
+        }
+      }
+      
+      mat-panel-description {
+        align-items: center;
+        justify-content: flex-end;
+        
+        .mini-progress {
+          width: 100px;
+          margin-left: 16px;
+        }
+      }
+      
+      .progress-details {
+        padding: 8px;
+        background-color: var(--mat-surface-container-high);
+        border-radius: 4px;
+        font-family: monospace;
+        font-size: 13px;
+        white-space: pre-wrap;
+      }
+    }
+  }
+}
+
+.header-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.action-button {
+  i-tabler {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-actions {
+    width: 100%;
+    margin: 0;
+    
+    .action-button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .updates-table {
+    overflow-x: auto;
+    display: block;
+    
+    th, td {
+      white-space: nowrap;
+    }
+  }
+}
