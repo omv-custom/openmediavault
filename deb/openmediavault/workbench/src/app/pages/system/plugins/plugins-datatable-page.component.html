@@ -1,42 +1,161 @@
-<omv-intuition-datatable-page [config]="this.config"></omv-intuition-datatable-page>
-
-<ng-template #pluginInfoTpl
-             let-row="row">
-  <div class="omv-datatable-cell-package-info">
-    <div class="omv-datatable-cell-header">
-      <div class="omv-datatable-cell-header-text">
-        <div class="omv-font-weight-title omv-font-size-title">{{ row.name }} {{ row.version }}</div>
-        <div class="omv-font-size-subheading-2">{{ row.summary }}</div>
+<div class="plugin-manager">
+  <header class="manager-header">
+    <div class="header-left">
+      <h1 class="title">{{ 'Plugin Manager' | transloco }}</h1>
+      <span class="plugin-count">{{filteredPlugins.length}}/{{plugins.length}} {{ 'plugins' | transloco }}</span>
+    </div>    
+    <div class="controls">
+      <!-- Category Filter -->
+      <div class="custom-select category-filter">
+        <i-tabler name="category" class="filter-icon"></i-tabler>
+        <select [value]="selectedCategory" (change)="onCategoryChange($event)" class="filter-select">
+          <option value="">{{ 'All Categories' | transloco }}</option>
+          <option *ngFor="let category of availableCategories" [value]="category">
+            {{category | titlecase}}
+          </option>
+        </select>
+        <i-tabler name="chevron-down" class="select-arrow"></i-tabler>
       </div>
-      <mat-chip-listbox *ngIf="row.installed"
-                     class="installed">
-        <mat-chip-option class="omv-background-color-pair-green"
-                  [selectable]="false"
-                  [disableRipple]="true">
-          {{ 'Installed' | transloco }}
-        </mat-chip-option>
-      </mat-chip-listbox>
+
+      <!-- Status Filter -->
+      <div class="custom-select status-filter">
+        <i-tabler name="filter" class="filter-icon"></i-tabler>
+        <select [value]="selectedStatus" (change)="onStatusChange($event)" class="filter-select">
+          <option value="">{{ 'All Statuses' | transloco }}</option>
+          <option value="installed">{{ 'Installed' | transloco }}</option>
+          <option value="not_installed">{{ 'Not Installed' | transloco }}</option>
+        </select>
+        <i-tabler name="chevron-down" class="select-arrow"></i-tabler>
+      </div>
+
+      <!-- Search Box -->
+      <div class="search-box">
+        <i-tabler name="search" class="search-icon"></i-tabler>
+        <input 
+          type="text"
+          placeholder="Search plugins..."
+          [value]="searchQuery"
+          (input)="updateSearch($event)"
+          class="search-input">
+      </div>
+
+      <button (click)="checkForUpdates()" class="update-button">
+        <i-tabler name="refresh"></i-tabler>
+        <span>{{ 'Check Updates' | transloco }}</span>
+      </button>
     </div>
-    <div *ngIf="row.pluginarchitecture.length"
-         class="architecture">
-      <mat-chip-listbox>
-        <mat-chip-option *ngFor="let item of row.pluginarchitecture | sort"
-                  [selectable]="false"
-                  [disableRipple]="true">
-          {{ item }}
-        </mat-chip-option>
-      </mat-chip-listbox>
-    </div>
-    <br>
-    <ng-container *ngIf="row.extendeddescription"><span>{{ row.extendeddescription }}</span><br><br></ng-container>
-    <ng-container *ngIf="row.pluginsection"><span>{{ 'Section' | transloco }}: {{ row.pluginsection | titlecase }}</span><br></ng-container>
-    <ng-container *ngIf="row.maintainer"><span>{{ 'Maintainer' | transloco }}: {{ row.maintainer }}</span><br></ng-container>
-    <ng-container *ngIf="row.homepage">
-      <span>
-        {{ 'Homepage' | transloco }}: <a href="{{ row.homepage }}">{{ row.homepage }}</a>
-      </span><br>
-    </ng-container>
-    <ng-container *ngIf="row.repository"><span>{{ 'Repository' | transloco }}: {{ row.repository }}</span><br></ng-container>
-    <ng-container *ngIf="row.size"><span>{{ 'Size' | transloco }}: {{ row.size | binaryUnit }}</span><br></ng-container>
+  </header>
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>{{ 'Loading plugins...' | transloco }}</p>
   </div>
+
+  <div *ngIf="!isLoading" class="plugin-grid">
+    <div *ngFor="let plugin of filteredPlugins" 
+         class="plugin-card" 
+         [class]="plugin.installed?'installed':''"
+         [class.installing]="plugin.isInstalling">
+
+  <div class="card-header">
+    <h3 class="plugin-name">{{plugin.name}}</h3>
+    <span class="plugin-version">v{{plugin.version}}</span>
+    <span class="plugin-section" [style.background]="getSectionColor(plugin.pluginsection)">
+      {{plugin.pluginsection | titlecase}}
+    </span>
+    <span *ngIf="plugin.installed" class="installed-badge">
+      <i-tabler name="check"></i-tabler>
+      {{ 'Installed' | transloco }}
+    </span>
+  </div>
+
+  <div *ngIf="plugin.isInstalling" class="install-progress">
+    <mat-progress-bar 
+      mode="determinate" 
+      [value]="plugin.installProgress">
+    </mat-progress-bar>
+    <div class="progress-text">
+      {{getInstallationStatus(plugin)}}
+    </div>
+  </div>
+
+      <p class="plugin-description">{{plugin.abstract}}</p>
+
+      <div class="plugin-meta">
+        <div class="meta-item">
+          <i-tabler name="cpu"></i-tabler>
+          <span>{{plugin.pluginarchitecture}}</span>
+        </div>
+        <div class="meta-item">
+          <i-tabler name="database"></i-tabler>
+          <span>{{plugin.repository}}</span>
+        </div>
+        <div class="meta-item">
+          <i-tabler name="file"></i-tabler>
+          <span>{{plugin.size | binaryUnit}}</span>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <button *ngIf="!plugin.installed && !plugin.isInstalling" 
+                (click)="installPlugin(plugin)"
+                class="action-button install">
+          <i-tabler name="download"></i-tabler>
+          {{ 'Install' | transloco }}
+        </button>
+        <button *ngIf="plugin.installed && !plugin.isInstalling"
+                (click)="uninstallPlugin(plugin)"
+                class="action-button uninstall">
+          <i-tabler name="trash"></i-tabler>
+          {{ 'Uninstall' | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && filteredPlugins.length === 0" class="empty-state">
+    <i-tabler name="package-off" class="empty-icon"></i-tabler>
+    <h3>{{ 'No plugins found' | transloco }}</h3>
+    <p>{{ 'Try adjusting your search query' | transloco }}</p>
+  </div>
+
+<ng-template #progressDialog let-data>
+  <h2 mat-dialog-title>{{data.title}}</h2>
+  <mat-dialog-content>
+    <div class="progress-container">
+      <mat-progress-bar 
+        mode="determinate" 
+        [value]="data.progress">
+      </mat-progress-bar>
+      <div class="progress-text">{{data.progress}}%</div>
+    </div>
+    
+    <div class="output-container">
+      <div class="output-header">Installation Output:</div>
+      <div class="output-content" #outputScroll>
+        <div *ngFor="let line of data.output" class="output-line">
+          {{line}}
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
 </ng-template>
+
+  <ng-template #confirmationDialog let-data>
+    <h2 mat-dialog-title>{{ data.title | transloco }}</h2>
+    <mat-dialog-content>
+      <p>{{ data.message | transloco }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>{{ 'Cancel' | transloco }}</button>
+      <button 
+        mat-button 
+        [color]="data.isCritical ? 'warn' : 'primary'" 
+        [mat-dialog-close]="true">
+        {{data.confirmText}}
+      </button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>

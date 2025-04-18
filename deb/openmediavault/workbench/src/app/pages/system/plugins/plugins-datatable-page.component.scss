@@ -1,15 +1,689 @@
-@use 'scss/defaults/variables' as dv;
+/* plugins-datatable-page.component.scss */
+.plugin-manager {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
 
-.omv-datatable-cell-package-info {
-  .omv-datatable-cell-header {
+.manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+  }
+
+  .header-left {
+    display: flex;
     align-items: center;
+    gap: 1rem;
+  }
 
-    .installed {
-      margin-left: dv.$omv-margin;
+  .plugin-count {
+    font-size: 0.875rem;
+    color: #718096;
+    background: #f7fafc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .search-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: #718096;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .search-input {
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    width: 250px;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #4e73df;
+      box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+    }
+  }
+}
+
+.update-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #4e73df;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #3b56b7;
+  }
+
+  i-tabler {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+
+  .spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid rgba(78, 115, 223, 0.2);
+    border-radius: 50%;
+    border-top-color: #4e73df;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    color: #4a5568;
+    font-size: 0.875rem;
+  }
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.plugin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.plugin-card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  transition: all 0.3s ease;
+  
+  &.installing {
+    opacity: 0.8;
+    background-color: #f8f9fa;
+    border-left: 3px solid #4e73df;
+.install-progress {
+  transition: all 0.3s ease;
+  
+  mat-progress-bar {
+    transition: all 0.5s ease;
+  }
+
+  .progress-text {
+    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    color: #4a5568;
+  }
+}    
+
+  }
+
+  .installed-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #38a169;
+    background: #f0fff4;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    animation: fadeIn 0.5s ease;
+
+    i-tabler {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+
+  .plugin-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .plugin-version {
+    font-size: 0.75rem;
+    color: #718096;
+    background: #f7fafc;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+  }
+
+  .plugin-section {
+    font-size: 0.75rem;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-weight: 500;
+  }
+
+  .installed-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #38a169;
+    background: #f0fff4;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    margin-left: auto;
+
+    i-tabler {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+}
+
+.plugin-description {
+  color: #4a5568;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.plugin-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #718096;
+
+    i-tabler {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
+  }
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+
+  .action-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    i-tabler {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &.install {
+      background-color: #4e73df;
+      color: white;
+
+      &:hover {
+        background-color: #3b56b7;
+      }
+    }
+
+    &.uninstall {
+      background-color: #f8f9fa;
+      color: #e53e3e;
+      border: 1px solid #e2e8f0;
+
+      &:hover {
+        background-color: #f7fafc;
+        border-color: #e53e3e;
+      }
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+  text-align: center;
+  color: #718096;
+
+  .empty-icon {
+    width: 3rem;
+    height: 3rem;
+    color: #cbd5e0;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    color: #4a5568;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.875rem;
+  }
+}
+
+.error-snackbar {
+  background-color: #e53e3e !important;
+  color: white !important;
+}
+
+.success-snackbar {
+  background-color: #38a169 !important;
+  color: white !important;
+}
+
+.install-progress {
+  margin: 1rem 0;
+  
+  .progress-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+    text-align: center;
+  }
+}
+
+.progress-container {
+  margin: 1rem 0;
+  
+  .progress-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: #666;
+    text-align: center;
+  }
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
+
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.plugin-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+
+  &.installing {
+    opacity: 0.7;
+    background-color: #f5f5f5;
+  }
+
+  .progress-container {
+    margin: 10px 0;
+
+    .progress-text {
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      margin-top: 4px;
     }
   }
 
-  .architecture {
-    margin-top: 0.5rem;
+  .actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &.install-button {
+        background-color: #4e73df;
+        color: white;
+        border: none;
+
+        &:hover {
+          background-color: #3b56b7;
+        }
+      }
+
+      &.uninstall-button {
+        background-color: #f8f9fa;
+        color: #e74a3b;
+        border: 1px solid #e2e8f0;
+
+        &:hover {
+          background-color: #f7fafc;
+          border-color: #e74a3b;
+        }
+      }
+    }
   }
+}
+
+.category-filter, .status-filter {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .filter-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: #718096;
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  .filter-select {
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    width: 180px;
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 66;
+
+    &:focus {
+      outline: none;
+      border-color: #4e73df;
+      box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+    }
+
+    option {
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      
+      i-tabler {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+.status-filter {
+  .filter-select {
+    width: 160px;
+  }
+}
+
+.output-container {
+  margin-top: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  max-height: 250px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  font-family: monospace;
+  font-size: 0.875rem;
+
+  .output-header {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+  }
+
+  .output-line {
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+
+    .download-message {
+      color: #4e73df;
+    }
+
+    .preparing-message {
+      color: #f6c23e;
+    }
+
+    .success-message {
+      color: #1cc88a;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .controls {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+  
+  .category-filter, .status-filter, .search-box {
+    width: 100%;
+    
+    .filter-select, .search-input {
+      width: 100%;
+    }
+  }
+}
+
+.custom-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 180px;
+  
+  &.status-filter {
+    width: 160px;
+  }
+
+  .filter-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: #718096;
+    width: 1.25rem;
+    height: 1.25rem;
+    z-index: 99;
+    pointer-events: none;
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: 0.75rem;
+    color: #718096;
+    width: 1rem;
+    height: 1rem;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .filter-select {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    appearance: none;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 2;
+
+    &:focus {
+      outline: none;
+      border-color: #4e73df;
+      box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+    }
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .custom-select,
+  .search-box,
+  .update-button {
+    width: 100% !important;
+  }
+}
+
+.installed-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  margin-left: 0.5rem;
+  
+  .badge-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0 0.75rem;
+    height: 100%;
+    background: linear-gradient(135deg, #38a169 0%, #48bb78 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 12px;
+    z-index: 2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .badge-icon {
+    width: 14px;
+    height: 14px;
+    stroke-width: 3;
+  }
+  
+  .badge-text {
+    position: relative;
+    top: 1px;
+  }
+  
+  .badge-shadow {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #2f855a 0%, #38a169 100%);
+    border-radius: 12px;
+    z-index: 1;
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+}
+
+// Dodatkowy styl dla karty z zainstalowanym pluginem
+.plugin-card.installed {
+  border-left: 3px solid #38a169;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(56, 161, 105, 0.2);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.installed-badge {
+  animation: fadeInUp 0.3s ease-out forwards;
 }
