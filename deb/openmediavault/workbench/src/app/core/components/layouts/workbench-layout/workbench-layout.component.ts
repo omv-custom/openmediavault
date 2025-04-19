@@ -67,6 +67,7 @@ export class WorkbenchLayoutComponent implements OnInit {
   public displayWelcomeMessage = false;
 
   private isSmallScreen: boolean;
+  isReloading = false;
 
   constructor(
     private authSessionService: AuthSessionService,
@@ -173,4 +174,13 @@ export class WorkbenchLayoutComponent implements OnInit {
       });
     }
   }
+
+loadMenu() {
+  this.isReloading = true;
+  this.navigationConfig.load().subscribe({
+    complete: () => {
+      this.isReloading = false;
+    }
+  });
+}
 }

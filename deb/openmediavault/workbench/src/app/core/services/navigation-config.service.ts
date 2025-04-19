@@ -110,6 +110,7 @@ export class NavigationConfigService {
      */
     return this.http.get('./assets/navigation-config.json').pipe(
       catchError((error) => {
+        console.error('Failed to load navigation config:', error);
         error.preventDefault?.();
         return of([]);
       }),

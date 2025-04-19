@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { RpcService } from '~/app/shared/services/rpc.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { NavigationConfigService } from '~/app/core/services/navigation-config.service'; 
 
 interface Plugin {
   name: string;
@@ -38,12 +39,12 @@ export class PluginsDatatablePageComponent implements OnInit {
   public selectedStatus = '';
 
   @ViewChild('confirmationDialog') confirmationDialog!: TemplateRef<any>;
-  @ViewChild('progressDialog') progressDialog!: TemplateRef<any>;
 
   constructor(
     private rpc: RpcService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private navigationConfigService: NavigationConfigService // Dodaj serwis menu
   ) {}
 
   ngOnInit(): void {
@@ -265,9 +266,9 @@ async uninstallPlugin(plugin: Plugin): Promise<void> {
               this.verifyInstallationStatus(plugin);
               plugin.installed = true;
               this.showMessage(`${plugin.name} installed successfully`);
-              },10000);
+              },15000);
             } else {
-              setTimeout(trackProgress, 500);
+              setTimeout(trackProgress, 1000);
             }
           } catch (error) {
             isComplete = true;
@@ -349,6 +350,7 @@ getInstallationStatus(plugin: Plugin): string {
       if (updatedPlugin) {
         plugin.installed = updatedPlugin.installed;
         plugin.isInstalling = false;
+        this.navigationConfigService.load().subscribe();
       }
     },
     error: (error) => {

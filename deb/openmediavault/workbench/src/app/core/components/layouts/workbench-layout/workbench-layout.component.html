@@ -2,7 +2,7 @@
 
   <!-- Sidebar -->
    <mat-sidenav #drawer class="sidebarNav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" [class.menu-reloading]="isReloading">
     <div class="p-16">
       <div class="mb-16">
         <a href="/" class="d-flex align-items-center">
