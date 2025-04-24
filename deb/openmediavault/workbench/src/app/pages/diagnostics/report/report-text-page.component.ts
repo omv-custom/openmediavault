@@ -15,22 +15,103 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-import { Component } from '@angular/core';
-
-import { TextPageConfig } from '~/app/core/components/intuition/models/text-page-config.type';
+import { Component, OnInit } from '@angular/core';
+import { RpcService } from '~/app/shared/services/rpc.service';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    template: '<omv-intuition-text-page [config]="this.config"></omv-intuition-text-page>',
-    standalone: false
+  selector: 'app-report',
+  templateUrl: './report-text-page.component.html',
+  styleUrls: ['./report-text-page.component.scss'],
+  standalone: false
 })
-export class ReportTextPageComponent {
-  public config: TextPageConfig = {
-    hasCopyToClipboardButton: true,
-    request: {
-      service: 'System',
-      get: {
-        method: 'getDiagnosticReport'
+
+export class ReportTextPageComponent implements OnInit {
+  reportData: string;
+  parsedSections: {title: string; content: string[]}[] = [];
+  isLoading = true;
+  error: string | null = null;
+
+  constructor(
+    private rpc: RpcService,
+    private clipboard: Clipboard,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit(): void {
+    this.loadReport();
+  }
+
+  loadReport(): void {
+    this.isLoading = true;
+    this.error = null;
+    
+    this.rpc.request('System', 'getDiagnosticReport', {}).subscribe({
+      next: (response: string) => {
+        this.reportData = response;
+        this.parseReport(response);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.error = err.message || 'Failed to load diagnostic report';
+        this.isLoading = false;
       }
-    }
-  };
+    });
+  }
+
+private parseReport(report: string): void {
+  // Rozdzielanie sekcji poprzez linie z === lub ====
+  const sections = report.split(/\n=+[\s=]*\n/).filter(section => section.trim());
+  
+  this.parsedSections = sections.map(section => {
+    const lines = section.split('\n').filter(line => line.trim());
+    const titleLine = lines[0];
+    const contentLines = lines.slice(1);
+    
+    // Ekstrakcja tytułu (usuwa znaki = z początku/końca)
+    const title = titleLine.replace(/^=+\s*|\s*=+$/g, '').trim();
+    
+    return {
+      title: title || 'Untitled Section',
+      content: contentLines
+    };
+  });
+}
+
+/*  private parseReport(report: string): void {
+    const sections = report.split(/\n=+\n?/).filter(section => section.trim());
+    
+    this.parsedSections = sections.map(section => {
+      const [titleLine, ...contentLines] = section.split('\n').filter(line => line.trim());
+      const title = titleLine.replace(/^=\s*|\s*=$/g, '');
+      
+      return {
+        title: title.trim(),
+        content: contentLines.map(line => line.trim())
+      };
+    });
+  }
+*/
+
+  copyToClipboard(): void {
+    this.clipboard.copy(this.reportData);
+    this.snackBar.open('Report copied to clipboard!', 'OK', {
+      duration: 3000,
+      panelClass: 'success-snackbar'
+    });
+  }
+
+  // Add this to your component class
+  getSectionIndex(section: any): number {
+    return this.parsedSections.indexOf(section);
+  }
+
+  isLastSection(section: any): boolean {
+    return this.getSectionIndex(section) === this.parsedSections.length - 1;
+  }
+
+  refresh(): void {
+    this.loadReport();
+  }
 }

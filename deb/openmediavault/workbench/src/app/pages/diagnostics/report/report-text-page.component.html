@@ -1,0 +1,60 @@
+<div class="report-container">
+  <mat-card class="report-card">
+    <mat-card-header class="report-header">
+      <mat-card-title class="report-title">
+        <mat-icon class="header-icon">summarize</mat-icon>
+        <div class="header-text">
+          <h1>System Diagnostic Report</h1>
+          <p class="subtitle">Detailed system information and configuration</p>
+        </div>
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-divider class="header-divider"></mat-divider>
+
+    <mat-card-actions class="report-actions">
+      <button mat-flat-button color="primary" (click)="refresh()" [disabled]="isLoading">
+        <mat-icon>refresh</mat-icon>
+        Refresh Report
+      </button>
+      <button mat-flat-button color="accent" (click)="copyToClipboard()" [disabled]="isLoading || !reportData">
+        <mat-icon>content_copy</mat-icon>
+        Copy Full Report
+      </button>
+    </mat-card-actions>
+
+    <mat-card-content class="report-content">
+      <div *ngIf="isLoading" class="loading-overlay">
+        <mat-spinner diameter="60"></mat-spinner>
+        <p>Generating diagnostic report...</p>
+      </div>
+
+      <div *ngIf="error && !isLoading" class="error-overlay">
+        <mat-icon class="error-icon">error_outline</mat-icon>
+        <h3>Error Loading Report</h3>
+        <p>{{ error }}</p>
+        <button mat-stroked-button (click)="refresh()">
+          <mat-icon>refresh</mat-icon>
+          Retry
+        </button>
+      </div>
+
+      <div *ngIf="!isLoading && !error" class="sections-container">
+        <div *ngFor="let section of parsedSections" class="report-section">
+          <div class="section-header">
+            <mat-icon class="section-icon">folder_open</mat-icon>
+            <h2 class="section-title">{{ section.title }}</h2>
+            <span class="line-count">{{ section.content.length }} entries</span>
+          </div>
+          
+          <div class="section-content">
+            <div *ngFor="let line of section.content" class="content-line">
+              <mat-icon class="line-icon">chevron_right</mat-icon>
+              <pre class="line-text">{{ line }}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

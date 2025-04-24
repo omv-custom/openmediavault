@@ -1,0 +1,408 @@
+<div class="plex-container">
+  <div class="sidebar">
+    <div class="logo-container">
+      <img src="assets/plex-logo.png" alt="Plex Logo" class="logo">
+      <h2>Plex Server</h2>
+    </div>
+    
+    <nav class="nav-menu">
+      <button (click)="selectTab('dashboard')" [class.active]="selectedTab === 'dashboard'">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </button>
+      <button (click)="selectTab('sessions')" [class.active]="selectedTab === 'sessions'">
+        <i class="fas fa-users"></i> Active Sessions
+      </button>
+      <button (click)="selectTab('transcoding')" [class.active]="selectedTab === 'transcoding'">
+        <i class="fas fa-microchip"></i> Transcoding
+      </button>
+      <button (click)="selectTab('libraries')" [class.active]="selectedTab === 'libraries'">
+        <i class="fas fa-photo-video"></i> Libraries
+      </button>
+      <button (click)="selectTab('settings')" [class.active]="selectedTab === 'settings'">
+        <i class="fas fa-cog"></i> Settings
+      </button>
+      <button (click)="selectTab('update')" [class.active]="selectedTab === 'update'">
+        <i class="fas fa-sync-alt"></i> Update
+      </button>
+    </nav>
+    
+    <div class="server-status" *ngIf="serverInfo">
+      <div class="status-indicator" [ngClass]="{'online': serverInfo.status === 'running', 'offline': serverInfo.status !== 'running'}"></div>
+      <span>{{ serverInfo.status === 'running' ? 'Online' : 'Offline' }}</span>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div *ngIf="isLoading" class="loading-overlay">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div *ngIf="selectedTab === 'dashboard'" class="tab-content dashboard-tab">
+      <div class="server-info-card">
+        <h3><i class="fas fa-server"></i> Server Information</h3>
+        <div class="info-grid" *ngIf="serverInfo">
+          <div class="info-item">
+            <span class="label">Version:</span>
+            <span class="value">{{ serverInfo.version }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Installation:</span>
+            <span class="value">{{ installationType | titlecase }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Platform:</span>
+            <span class="value">{{ serverInfo.platform }}</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Last Updated:</span>
+            <span class="value">{{ serverInfo.updatedAt | date:'medium' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-film"></i>
+          </div>
+          <div class="stat-content">
+            <h4>Movies</h4>
+            <p *ngIf="libraryStats.length">{{ getLibraryCount('movie') | number }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-tv"></i>
+          </div>
+          <div class="stat-content">
+            <h4>TV Shows</h4>
+            <p *ngIf="libraryStats.length">{{ getLibraryCount('show') | number }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-music"></i>
+          </div>
+          <div class="stat-content">
+            <h4>Music</h4>
+            <p *ngIf="libraryStats.length">{{ getLibraryCount('artist') | number }}</p>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-content">
+            <h4>Active Sessions</h4>
+            <p>{{ activeSessions.length }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <button class="action-btn" (click)="selectTab('update')" [disabled]="!updateAvailable">
+          <i class="fas fa-sync-alt"></i> Update Available
+        </button>
+        <button class="action-btn" (click)="selectTab('sessions')">
+          <i class="fas fa-eye"></i> View Sessions
+        </button>
+      </div>
+    </div>
+
+    <!-- Sessions Tab -->
+    <div *ngIf="selectedTab === 'sessions'" class="tab-content sessions-tab">
+      
+  <div class="sessions-header">
+    <h2><i class="fas fa-users"></i> Active Sessions</h2>
+    <div class="refresh-controls">
+      <button mat-icon-button (click)="manualRefresh()" [disabled]="isRefreshing" matTooltip="Refresh sessions">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <div class="refresh-status">
+        <mat-spinner *ngIf="isRefreshing" diameter="20"></mat-spinner>
+        <div *ngIf="lastRefreshTime" class="last-refresh">
+          Last refresh: {{ lastRefreshTime | date:'HH:mm:ss' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div *ngIf="activeSessions.length === 0" class="no-sessions">
+        <i class="fas fa-user-slash"></i>
+        <p>No active sessions</p>
+      </div>
+
+      <div class="sessions-grid" *ngIf="activeSessions.length > 0">
+        <div class="session-card" *ngFor="let session of activeSessions">
+          <div class="session-header">
+            <img [src]="session.user.thumb || 'assets/default-avatar.png'" alt="User" class="user-avatar">
+            <div class="user-info">
+              <h4>{{ session.user.title }}</h4>
+              <p>{{ session.player.title }} • {{ session.player.platform }}</p>
+            </div>
+<button class="terminate-btn" 
+        (click)="openTerminateDialog(session)"
+        [disabled]="isTerminating || isDialogOpen">
+  <i class="fas fa-times"></i>
+</button>
+          </div>
+          
+          <div class="session-content">
+            <div class="media-poster" *ngIf="session.media">
+              <img [src]="session.media.thumb" alt="Media" *ngIf="session.media.thumb">
+              <div class="no-poster" *ngIf="!session.media.thumb">
+                <i class="fas fa-photo-video"></i>
+              </div>
+            </div>
+            
+            <div class="media-info">
+              <h5>{{ session.media?.title || 'Unknown Media' }}</h5>
+              <p *ngIf="session.media?.type">{{ session.media.type | titlecase }}</p>
+              <p *ngIf="session.media?.duration">
+                {{ session.progress / session.media.duration * 100 | number:'1.0-0' }}% complete
+              </p>
+              <p>Started: {{ session.startedAt | date:'shortTime' }}</p>
+            </div>
+          </div>
+          
+          <div class="session-progress">
+            <div class="progress-bar" [style.width.%]="session.progress / session.media.duration * 100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Add the Transcoding tab content -->
+<div *ngIf="selectedTab === 'transcoding'" class="tab-content transcoding-tab">
+  <h2><i class="fas fa-microchip"></i> Active Transcoding Sessions</h2>
+  
+  <div *ngIf="transcodingSessions.length === 0" class="no-sessions">
+    <i class="fas fa-microchip"></i>
+    <p>No active transcoding sessions</p>
+  </div>
+
+  <div class="transcoding-grid" *ngIf="transcodingSessions.length > 0">
+    <div class="transcoding-card" *ngFor="let session of transcodingSessions">
+      <div class="transcoding-header">
+        <h4>Session #{{ session.id }}</h4>
+        <div class="transcoding-status" [ngClass]="{
+          'active': !session.complete,
+          'complete': session.complete
+        }">
+          {{ session.complete ? 'Complete' : 'Active' }}
+        </div>
+      </div>
+      
+      <div class="transcoding-content">
+        <div class="transcoding-info">
+          <div class="info-item">
+            <span>Type:</span>
+            <strong>{{ session.type | titlecase }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Progress:</span>
+            <strong>{{ session.progress | number:'1.0-2' }}%</strong>
+          </div>
+          <div class="info-item">
+            <span>Speed:</span>
+            <strong>{{ session.speed | number:'1.2-2' }}x</strong>
+          </div>
+          <div class="info-item">
+            <span>Video:</span>
+            <strong>{{ session.videoDecision | titlecase }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Audio:</span>
+            <strong>{{ session.audioDecision | titlecase }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Throttled:</span>
+            <strong>{{ session.throttled ? 'Yes' : 'No' }}</strong>
+          </div>
+          <div class="info-item">
+            <span>Started:</span>
+            <strong>{{ session.timeStamp | date:'shortTime' }}</strong>
+          </div>
+        </div>
+        
+        <div class="transcoding-progress">
+          <div class="progress-bar" [style.width.%]="session.progress"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Libraries Tab -->
+    <div *ngIf="selectedTab === 'libraries'" class="tab-content libraries-tab">
+      <h2><i class="fas fa-photo-video"></i> Library Statistics</h2>
+      
+      <div class="libraries-grid">
+        <div class="library-card" *ngFor="let lib of libraryStats">
+          <div class="library-icon">
+            <i [class]="getLibraryIcon(lib.type)"></i>
+          </div>
+          <div class="library-content">
+            <h4>{{ lib.name }}</h4>
+            <p>{{ lib.type | titlecase }} Library</p>
+            
+            <div class="library-stats">
+              <div class="stat-item">
+                <span>Items</span>
+                <strong>{{ lib.count | number }}</strong>
+              </div>
+              <div class="stat-item">
+                <span>Size</span>
+                <strong>{{ lib.size }}</strong>
+              </div>
+              <div class="stat-item">
+                <span>Last Scan</span>
+                <strong>{{ lib.lastScanned | date:'shortDate' }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div *ngIf="selectedTab === 'settings'" class="tab-content settings-tab">
+      <h2><i class="fas fa-cog"></i> Server Settings</h2>
+      
+      <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+        <div class="settings-group">
+          <h4>General Settings</h4>
+          
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" formControlName="autoUpdate">
+              <span>Automatic Updates</span>
+            </label>
+            <p class="description">Automatically download and install updates when available</p>
+          </div>
+          
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" formControlName="hardwareAcceleration">
+              <span>Hardware Acceleration</span>
+            </label>
+            <p class="description">Use hardware acceleration for video transcoding</p>
+          </div>
+        </div>
+        
+        <div class="settings-group">
+          <h4>Remote Access</h4>
+          
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" formControlName="remoteAccess">
+              <span>Enable Remote Access</span>
+            </label>
+            <p class="description">Allow access to your server outside your home network</p>
+          </div>
+        </div>
+        
+        <div class="settings-group">
+          <h4>Privacy</h4>
+          
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" formControlName="analytics">
+              <span>Share Analytics</span>
+            </label>
+            <p class="description">Help improve Plex by sharing anonymous usage data</p>
+          </div>
+        </div>
+        
+        <button type="submit" class="save-btn">Save Settings</button>
+      </form>
+    </div>
+
+    <!-- Update Tab -->
+    <div *ngIf="selectedTab === 'update'" class="tab-content update-tab">
+      <h2><i class="fas fa-sync-alt"></i> Server Update</h2>
+      
+      <div class="update-card" *ngIf="serverInfo">
+        <div class="update-current">
+          <h4>Current Version</h4>
+          <p class="version">{{ serverInfo.version }}</p>
+          <p>Installed on {{ serverInfo.updatedAt | date:'mediumDate' }}</p>
+        </div>
+        
+        <div class="update-available" *ngIf="updateAvailable">
+          <div class="update-alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <h4>Update Available</h4>
+          </div>
+          <p class="version">{{ serverInfo.latestVersion }}</p>
+          <p class="release-date">Released on {{ serverInfo.latestReleaseDate | date:'mediumDate' }}</p>
+          
+          <div class="update-notes">
+            <h5>What's New:</h5>
+            <ul>
+              <li *ngFor="let note of serverInfo.releaseNotes">{{ note }}</li>
+            </ul>
+          </div>
+          
+          <button class="update-btn" (click)="updateServer()">
+            <i class="fas fa-download"></i> Update Now
+          </button>
+        </div>
+        
+        <div class="update-available" *ngIf="!updateAvailable">
+          <div class="update-ok">
+            <i class="fas fa-check-circle"></i>
+            <h4>Up to Date</h4>
+          </div>
+          <p>Your server is running the latest version</p>
+        </div>
+      </div>
+      
+      <div class="installation-info">
+        <h4>Installation Method: {{ installationType | titlecase }}</h4>
+        <p *ngIf="installationType === 'docker'">
+          <i class="fas fa-info-circle"></i> Docker containers should be updated through your container management system
+        </p>
+        <p *ngIf="installationType === 'native'">
+          <i class="fas fa-info-circle"></i> Native installations can be updated directly from this interface
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #terminateDialog>
+  <div class="termination-dialog">
+    <h2 mat-dialog-title>Potwierdzenie</h2>
+    
+    <mat-dialog-content>
+      <p>Czy na pewno chcesz zakończyć sesję użytkownika 
+         <strong>{{currentSession?.user?.title || 'Nieznany użytkownik'}}</strong>?
+      </p>
+      
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Powód (opcjonalny)</mat-label>
+        <textarea matInput 
+                 [(value)]="terminationReason"
+                 (input)="terminationReason = $event.target.value"
+                 rows="3"></textarea>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeTerminateDialog()">Anuluj</button>
+      <button mat-raised-button 
+              color="warn" 
+              (click)="confirmTermination()"
+              [disabled]="isTerminating">
+        <span *ngIf="!isTerminating">Zakończ sesję</span>
+        <mat-spinner *ngIf="isTerminating" diameter="20"></mat-spinner>
+      </button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>

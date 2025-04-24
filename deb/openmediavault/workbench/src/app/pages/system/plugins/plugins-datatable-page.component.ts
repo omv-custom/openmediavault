@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RpcService } from '~/app/shared/services/rpc.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,7 +25,8 @@ interface Plugin {
 @Component({
   templateUrl: './plugins-datatable-page.component.html',
   styleUrls: ['./plugins-datatable-page.component.scss'],
-  standalone: false
+  standalone: false,
+  encapsulation: ViewEncapsulation.None
 })
 export class PluginsDatatablePageComponent implements OnInit {
   public plugins: Plugin[] = [];
@@ -37,6 +38,7 @@ export class PluginsDatatablePageComponent implements OnInit {
   public filename = '';
   public running = false;
   public selectedStatus = '';
+  public isDarkTheme = false;
 
   @ViewChild('confirmationDialog') confirmationDialog!: TemplateRef<any>;
 
@@ -48,7 +50,12 @@ export class PluginsDatatablePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkTheme();
     this.loadPlugins();
+  }
+
+  checkTheme() {
+    this.isDarkTheme = document.body.classList.contains('dark-theme');
   }
 
   private showMessage(message: string, isError = false): void {

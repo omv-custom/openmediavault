@@ -17,11 +17,22 @@ import { SmbShareDatatablePageComponent } from '~/app/pages/services/smb/smb-sha
 import { SmbShareFormPageComponent } from '~/app/pages/services/smb/smb-share-form-page.component';
 import { SshFormPageComponent } from '~/app/pages/services/ssh/ssh-form-page.component';
 import { IsDirtyGuardService } from '~/app/shared/services/is-dirty-guard.service';
+import { PlexDatatablePageComponent } from '~/app/pages/services/plex/plex-datatable-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: NavigationPageComponent
+  },
+  {
+    path: 'plex',
+    component: PlexDatatablePageComponent,
+    canDeactivate: [IsDirtyGuardService],
+    data: {
+      title: gettext('Plex Media Server'),
+      editing: true,
+      notificationTitle: gettext('Updated Plex settings.')
+    }
   },
   {
     path: 'ssh',

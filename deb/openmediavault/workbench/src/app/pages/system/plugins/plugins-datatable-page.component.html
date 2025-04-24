@@ -1,7 +1,7 @@
-<div class="plugin-manager">
+<div class="plugin-manager" [class.dark-theme]="isDarkTheme">
   <header class="manager-header">
     <div class="header-left">
-      <h1 class="title">{{ 'Plugin Manager' | transloco }}</h1>
+      <h1 class="title">{{ 'Plugins' | transloco }}</h1>
       <span class="plugin-count">{{filteredPlugins.length}}/{{plugins.length}} {{ 'plugins' | transloco }}</span>
     </div>    
     <div class="controls">
@@ -41,13 +41,13 @@
 
       <button (click)="checkForUpdates()" class="update-button">
         <i-tabler name="refresh"></i-tabler>
-        <span>{{ 'Check Updates' | transloco }}</span>
+        <span>{{ 'Check for new updates' | transloco }}</span>
       </button>
     </div>
   </header>
   <div *ngIf="isLoading" class="loading-state">
     <div class="spinner"></div>
-    <p>{{ 'Loading plugins...' | transloco }}</p>
+    <p>{{ 'Loading ...' | transloco }}</p>
   </div>
 
   <div *ngIf="!isLoading" class="plugin-grid">
@@ -81,7 +81,7 @@
       <p class="plugin-description">{{plugin.abstract}}</p>
 
       <div class="plugin-meta">
-        <div class="meta-item">
+        <div class="meta-item" *ngIf="plugin.pluginarchitecture.length > 0">
           <i-tabler name="cpu"></i-tabler>
           <span>{{plugin.pluginarchitecture}}</span>
         </div>

@@ -42,12 +42,10 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
     this.lastActivityTime = Date.now();
     localStorage.setItem('lastActivityTime', this.lastActivityTime.toString());
 
-    /*
-    if (this.dialogRef) {
+   /* if (this.dialogRef) {
       this.dialogRef.close();
       this.dialogRef = null;
-    }
-    */
+    } */
   }
 
   private startTimer(): void {
@@ -77,4 +75,5 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   public refreshPage(): void {
     window.location.reload();
   }
+
 }

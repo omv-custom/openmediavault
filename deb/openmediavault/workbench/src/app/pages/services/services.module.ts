@@ -15,6 +15,9 @@ import { SmbSettingsFormPageComponent } from '~/app/pages/services/smb/smb-setti
 import { SmbShareDatatablePageComponent } from '~/app/pages/services/smb/smb-share-datatable-page.component';
 import { SmbShareFormPageComponent } from '~/app/pages/services/smb/smb-share-form-page.component';
 import { SshFormPageComponent } from '~/app/pages/services/ssh/ssh-form-page.component';
+import { PlexDatatablePageComponent } from '~/app/pages/services/plex/plex-datatable-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '~/app/material.module';
 
 @NgModule({
   declarations: [
@@ -29,8 +32,9 @@ import { SshFormPageComponent } from '~/app/pages/services/ssh/ssh-form-page.com
     RsyncTaskFormPageComponent,
     RsyncModuleSettingsFormPageComponent,
     RsyncModuleDatatablePageComponent,
-    RsyncModuleFormPageComponent
+    RsyncModuleFormPageComponent,
+    PlexDatatablePageComponent
   ],
-  imports: [CommonModule, CoreModule, ServicesRoutingModule]
+  imports: [CommonModule, CoreModule, ServicesRoutingModule, ReactiveFormsModule,MaterialModule]
 })
 export class ServicesModule {}

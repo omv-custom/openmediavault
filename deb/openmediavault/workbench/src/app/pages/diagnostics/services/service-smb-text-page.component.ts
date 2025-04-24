@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RpcService } from '~/app/shared/services/rpc.service';
 import { finalize } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface SambaConnection {
   pid: string;
@@ -56,7 +57,8 @@ export class ServiceSmbTextPageComponent implements OnInit {
 
   public filesColumns: string[] = ['path'];
 
-  constructor(private rpcService: RpcService) {}
+  constructor(private rpcService: RpcService,
+    private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.checkTheme();
@@ -183,6 +185,13 @@ export class ServiceSmbTextPageComponent implements OnInit {
       signing: parts[5].trim()
     };
   }
+
+enableService(): void {
+            this.snackBar.open(`Failed to enable Samba service: NOT IMPLEMENT`, 'Close', {
+                duration: 5000,
+                panelClass: ['error-snackbar']
+            });
+}
 
   refresh(): void {
     this.loadData();

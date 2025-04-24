@@ -522,7 +522,7 @@ nunjucksEnv.addFilter('union', (value: Array<any>, other: Array<any>) => _.union
 nunjucksEnv.addFilter('uniq', (value: Array<any>) => _.uniq(value));
 nunjucksEnv.addFilter('map', (value: Array<any>, filter: string, ...filterArgs: any) => {
   const filterFn = nunjucksEnv.getFilter(filter);
-  return _.map(value, (part) => filterFn.apply(this, [part, ...filterArgs]));
+  return _.map(value, (part) => filterFn(part, ...filterArgs));
 });
 /**
  * Note, this will override the built-in `slice` filter.

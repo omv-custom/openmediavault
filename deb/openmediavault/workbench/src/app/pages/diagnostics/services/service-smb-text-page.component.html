@@ -7,7 +7,7 @@
           {{ 'Samba Status' | transloco }}
         </mat-card-title>
         <mat-card-subtitle *ngIf="status.version" class="samba-subtitle">
-          {{ 'Version' | transloco }}: {{ status.version }}
+          {{ 'Version:' | transloco }} {{ status.version }}
         </mat-card-subtitle>
       </div>
       <button mat-icon-button matTooltip="Refresh" (click)="refresh()" class="refresh-button">
@@ -23,7 +23,7 @@
       <mat-icon class="disabled-icon">block</mat-icon>
       <h3 class="disabled-title">{{ 'Samba Service is Disabled' | transloco }}</h3>
       <p class="disabled-message">{{ 'The Samba file sharing service is currently not running.' | transloco }}</p>
-      <button mat-raised-button color="primary" class="enable-button">
+      <button mat-raised-button color="primary" class="enable-button" (click)="enableService()">
         {{ 'Enable Service' | transloco }}
       </button>
     </div>
