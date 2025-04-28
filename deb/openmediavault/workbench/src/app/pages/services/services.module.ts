@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { TranslocoModule } from '@jsverse/transloco';
 
 import { CoreModule } from '~/app/core/core.module';
 import { NfsSettingsFormPageComponent } from '~/app/pages/services/nfs/nfs-settings-form-page.component';
@@ -18,6 +19,7 @@ import { SshFormPageComponent } from '~/app/pages/services/ssh/ssh-form-page.com
 import { PlexDatatablePageComponent } from '~/app/pages/services/plex/plex-datatable-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '~/app/material.module';
+import { PipesModule } from '~/app/shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,6 @@ import { MaterialModule } from '~/app/material.module';
     RsyncModuleFormPageComponent,
     PlexDatatablePageComponent
   ],
-  imports: [CommonModule, CoreModule, ServicesRoutingModule, ReactiveFormsModule,MaterialModule]
+  imports: [CommonModule, CoreModule, ServicesRoutingModule, ReactiveFormsModule,MaterialModule, TranslocoModule, PipesModule]
 })
 export class ServicesModule {}

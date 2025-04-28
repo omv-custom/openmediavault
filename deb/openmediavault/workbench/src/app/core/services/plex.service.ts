@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of, from, forkJoin, throwError } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { parseString } from 'xml2js';
 import { ServerInfo } from '../models/server-info.model';
 import { Session } from '../models/session.model';
 import { LibraryStats } from '../models/library-stats.model';
+import { RpcService } from '~/app/shared/services/rpc.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +14,29 @@ export class PlexService {
   private plexToken = 'EcHzvdmMoq1Y-LggFH-D'; // Przenieś do environment.ts
   private defaultPlexPort = ':32400'; // Domyślny port Plex
   private plexUrl: string;
+  private statusAddons = {
+            radarr: { port: 7878, img: '/Content/Images/logo-full.png' },
+            sonarr: { port: 8989, img: '/Content/Images/logo.svg' },
+            overseerr: { port: 5055, img: '/favicon.ico' }
+  };
 
-  constructor(private http: HttpClient) {
+  constructor(private rpcService: RpcService) {
     this.initializePlexUrl();
+  }
+
+  testPlexConnection(): Observable<any> {
+    return this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/',
+      token: this.plexToken
+    }).pipe(
+      tap(response => console.log('Raw API response:', 'OK')),
+      catchError(error => {
+        console.error('API connection error:', error);
+        return throwError(error);
+      })
+    );
   }
 
   private initializePlexUrl(): void {
@@ -110,16 +130,6 @@ export class PlexService {
     ];
   }
 
-  private getHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      'X-Plex-Token': this.plexToken,
-      'Accept': '*',
-      'Access-Control-Allow-Origin': '**',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization, X-Requested-With'
-    });
-  }
-
   private parseXml(xml: string): Observable<any> {
     return from(new Promise((resolve, reject) => {
       parseString(xml, { explicitArray: false }, (err, result) => {
@@ -130,15 +140,23 @@ export class PlexService {
   }
 
   getServerInfo(): Observable<ServerInfo> {
-    return this.http.get(`${this.plexUrl}/`, {
-      headers: {'X-Plex-Token': this.plexToken,
-      'Accept': '*',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'},
-      responseType: 'text'
+    return this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/',
+      token: this.plexToken
     }).pipe(
-      switchMap(xmlResponse => this.parseXml(xmlResponse)),
-      map(json => this.mapServerInfo(json)),
+    map(rpcResponse => {
+      return rpcResponse;
+    }),
+    map(rpcResponse => {
+      return Array.isArray(rpcResponse) 
+        ? rpcResponse.join('\n') 
+        : rpcResponse;
+    }),
+    switchMap(xmlString => this.parseXml(xmlString)),
+    // Mapowanie na obiekt ServerInfo
+    map(xmlJson => this.mapServerInfo(xmlJson)),
       catchError(error => {
         console.error('Error fetching server info:', error);
         return of(this.getMockServerInfo());
@@ -147,10 +165,20 @@ export class PlexService {
   }
 
   getActiveSessions(): Observable<Session[]> {
-    return this.http.get(`${this.plexUrl}/status/sessions?X-Plex-Token=EcHzvdmMoq1Y-LggFH-D`, {
-      headers: this.getHeaders(),
-      responseType: 'text'
+    return this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/status/sessions',
+      token: this.plexToken
     }).pipe(
+    map(rpcResponse => {
+      return rpcResponse;
+    }),
+    map(rpcResponse => {
+      return Array.isArray(rpcResponse)
+        ? rpcResponse.join('\n')
+        : rpcResponse;
+    }),
       switchMap(xmlResponse => this.parseXml(xmlResponse)),
       map(json => this.mapSessions(json.MediaContainer.Video || [])),
       catchError(error => {
@@ -162,54 +190,67 @@ export class PlexService {
 
 getInstallationType(): Observable<'docker' | 'native' | 'unknown'> {
   return forkJoin([
-    this.http.get(`${this.plexUrl}/:/prefs`, {
-      headers: this.getHeaders(),
-      responseType: 'text'
+    this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/:/prefs',
+      token: this.plexToken
     }).pipe(
-      catchError(() => of(''))
+      catchError(() => of({ response: '' }))
     ),
-    this.http.get(`${this.plexUrl}/`, {
-      headers: this.getHeaders(),
-      responseType: 'text'
-    })
+    this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/',
+      token: this.plexToken
+    }).pipe(
+      catchError(() => of({ response: '' }))
+    )
   ]).pipe(
-    switchMap(([prefsResponse, rootResponse]) => 
-      forkJoin([
-        this.parseXml(prefsResponse).pipe(catchError(() => of({}))),
-        this.parseXml(rootResponse).pipe(catchError(() => of({})))
-      ])
-    ),
+    switchMap(([prefsResponse, rootResponse]) => {
+      // Konwersja odpowiedzi RPC do stringów XML
+      const prefsXml = Array.isArray(prefsResponse) 
+        ? prefsResponse.join('\n') 
+        : prefsResponse;
+      
+      const rootXml = Array.isArray(rootResponse) 
+        ? rootResponse.join('\n') 
+        : rootResponse;
+
+      return forkJoin([
+        this.parseXml(prefsXml).pipe(catchError(() => of({}))),
+        this.parseXml(rootXml).pipe(catchError(() => of({})))
+      ]);
+    }),
     map(([prefsJson, rootJson]): 'docker' | 'native' | 'unknown' => {
+      // 1. Sprawdzenie interfejsów sieciowych
       const networkInterfaceSetting = this.findSetting(prefsJson, 'PreferredNetworkInterface');
-      if (networkInterfaceSetting && networkInterfaceSetting.$.enumValues) {
-        const interfaces = networkInterfaceSetting.$.enumValues.split('|');
-        if (interfaces.some(intf => intf.includes('docker0'))) {
-          return 'docker';
-        }
+      if (networkInterfaceSetting?.$?.enumValues?.includes('docker0')) {
+        return 'docker';
       }
 
+      // 2. Sprawdzenie specyficznych ustawień Dockera
       const dockerSettings = ['Docker', 'Container', 'DockerHost'];
       if (dockerSettings.some(setting => this.findSetting(prefsJson, setting))) {
         return 'docker';
       }
 
+      // 3. Analiza platformy i identyfikatora
       const platform = (rootJson.MediaContainer?.$?.platform || '').toLowerCase();
       const machineId = (rootJson.MediaContainer?.$?.machineIdentifier || '').toLowerCase();
 
       const dockerPatterns = [
         /docker/, /container/, /k8s/, /kubernetes/,
-        /plexinc\/plex-media-server/, /plexpass\/plex-media-server/,
-        /docker0/
+        /plexinc\/plex-media-server/, /plexpass\/plex-media-server/
       ];
 
-      if (dockerPatterns.some(pattern => 
-        pattern.test(platform) || pattern.test(machineId))
-      ) {
+      if (dockerPatterns.some(p => p.test(platform) || p.test(machineId))) {
         return 'docker';
       }
 
+      // 4. Sprawdzenie natywnych platform
       const nativePatterns = [/windows/, /linux/, /macos/, /darwin/];
-      if (nativePatterns.some(pattern => pattern.test(platform))) {
+      if (nativePatterns.some(p => p.test(platform))) {
         return 'native';
       }
 
@@ -219,7 +260,6 @@ getInstallationType(): Observable<'docker' | 'native' | 'unknown'> {
   );
 }
 
-// Pomocnicza metoda do znajdowania ustawień w prefs
 private findSetting(prefsJson: any, settingId: string): any {
   if (!prefsJson.MediaContainer?.Setting) return null;
   
@@ -245,21 +285,16 @@ terminateSession(sessionId: string, reason: string = 'Session terminated by admi
     return throwError(() => new Error('Valid session ID is required'));
   }
 
-  const params = new HttpParams()
-    .set('reason', encodeURIComponent(reason));
-
-    return this.http.get(`${this.plexUrl}/status/sessions/terminate?sessionId=${encodeURIComponent(sessionId)}&X-Plex-Token=EcHzvdmMoq1Y-LggFH-D`, {
-      headers: this.getHeaders(),
-      params,
-      responseType: 'text'
-    }).pipe(
-    map(() => undefined),
+  return this.rpcService.request('PLEX', 'getFromUrl', {
+    host: location.hostname,
+    port: this.defaultPlexPort,
+    url: `/status/sessions/terminate?sessionId=${encodeURIComponent(sessionId)}`,
+    token: this.plexToken
+  }).pipe(
+    map(() => undefined), // Sukces - zwracamy void
     catchError(error => {
-      const message = error.status === 404 
-        ? 'Session not found (already ended?)' 
-        : error.status === 401
-        ? 'Unauthorized - check your Plex token'
-        : 'Server error during termination';
+      // Mapowanie błędów RPC na przyjazne komunikaty
+      const message = this.mapTranscodeError(error);
       return throwError(() => new Error(message));
     })
   );
@@ -314,67 +349,118 @@ terminateSession(sessionId: string, reason: string = 'Session terminated by admi
     }));
   }
 
-  getLibraryStats(): Observable<LibraryStats[]> {
-    return this.http.get(`${this.plexUrl}/library/sections`, {
-      headers: this.getHeaders(),
-      responseType: 'text'
-    }).pipe(
-      switchMap(xmlResponse => this.parseXml(xmlResponse)),
-      switchMap((json: any) => {
-        const directories = this.ensureArray(json.MediaContainer.Directory);
-        
-        const libraryRequests = directories.map((lib: any) => 
-          this.getLibraryDetails(lib.$.key).pipe(
-            map(details => ({
-              id: lib.$.key,
-              name: lib.$.title,
-              type: lib.$.type,
-              count: details.count,
-              size: details.size,
-              lastScanned: new Date(parseInt(lib.$.scannedAt) * 1000)
-            })),
-            catchError(() => of({
-              id: lib.$.key,
-              name: lib.$.title,
-              type: lib.$.type,
-              count: 0,
-              size: 0,
-              lastScanned: new Date(parseInt(lib.$.scannedAt) * 1000)
-            }))
-          )
-        );
-        
-        return forkJoin(libraryRequests);
-      }),
-      catchError(error => {
-        console.error('Error fetching library stats:', error);
-        return of(this.getMockLibraryStats());
-      })
-    );
-  }
+private getLibraryContent(libraryId: string, key?: string): Observable<{count: number, size: number}> {
+  const params = {
+    host: location.hostname,
+    port: this.defaultPlexPort,
+    url: key ? key : `/library/sections/${libraryId}/all`,
+    token: this.plexToken
+  };
 
-  private getLibraryDetails(libraryId: string): Observable<{count: number, size: number}> {
-    return this.http.get(`${this.plexUrl}/library/sections/${libraryId}/all`, {
-      headers: this.getHeaders(),
-      responseType: 'text'
-    }).pipe(
-      switchMap(xmlResponse => this.parseXml(xmlResponse)),
-      map(json => ({
-        count: parseInt(json.MediaContainer.$.size) || 0,
-        size: this.calculateLibrarySize(this.ensureArray(json.MediaContainer.Directory))
-      })),
-      catchError(error => {
-        console.error(`Error fetching details for library ${libraryId}:`, error);
-        return of({count: 0, size: 0});
-      })
-    );
-  }
+  return this.rpcService.request('PLEX', 'getFromUrl', params).pipe(
+    switchMap(rpcResponse => {
+      // Konwersja odpowiedzi RPC do stringa XML
+      const xmlString = Array.isArray(rpcResponse) 
+        ? rpcResponse.join('\n') 
+        : rpcResponse;
+      
+      return this.parseXml(xmlString);
+    }),
+    switchMap(async (json: any) => {
+      let totalCount = 0;
+      let totalSize = 0;
+
+      // Przetwarzanie Video
+      if (json.MediaContainer?.Video) {
+        const videos = this.ensureArray(json.MediaContainer.Video);
+        for (const video of videos) {
+          if (video.Media?.Part) {
+            const parts = this.ensureArray(video.Media.Part);
+            totalSize += parts.reduce((sum: number, part: any) => 
+              sum + (parseInt(part.$.size) || 0), 0);
+          }
+          totalCount++;
+        }
+      }
+
+      // Przetwarzanie Directory (foldery) - rekurencyjnie
+      if (json.MediaContainer?.Directory) {
+        const directories = this.ensureArray(json.MediaContainer.Directory);
+        const folderStats = await forkJoin(
+          directories.map((dir: any) => 
+            this.getLibraryContent(libraryId, dir.$.key).toPromise()
+          )
+        ).toPromise();
+
+        if (folderStats) {
+          totalCount += folderStats.reduce((sum, stats) => sum + stats.count, 0);
+          totalSize += folderStats.reduce((sum, stats) => sum + stats.size, 0);
+        }
+      }
+
+      return { count: totalCount, size: totalSize };
+    }),
+    catchError(error => {
+      console.error('Error processing library content:', error);
+      return of({ count: 0, size: 0 });
+    })
+  );
+}
+
+public getLibraryStats(): Observable<LibraryStats[]> {
+  return this.rpcService.request('PLEX', 'getFromUrl', {
+    host: location.hostname,
+    port: this.defaultPlexPort,
+    url: '/library/sections',
+    token: this.plexToken
+  }).pipe(
+    switchMap(rpcResponse => {
+      const xmlString = Array.isArray(rpcResponse) 
+        ? rpcResponse.join('\n') 
+        : rpcResponse;
+      return this.parseXml(xmlString);
+    }),
+    switchMap(async (json: any) => {
+      const directories = this.ensureArray(json.MediaContainer.Directory);
+      const stats = await forkJoin(
+        directories.map((lib: any) => 
+          this.getLibraryContent(lib.$.key).pipe(
+            map(content => ({
+              id: lib.$.key,
+              name: lib.$.title,
+              type: lib.$.type,
+              count: content.count,
+              size: content.size,
+              lastScanned: new Date(parseInt(lib.$.scannedAt) * 1000)
+            } as LibraryStats))
+          )
+        )
+      ).toPromise();
+
+      return stats || [];
+    }),
+    catchError(error => {
+      console.error('Error fetching library stats:', error);
+      return of(this.getMockLibraryStats());
+    })
+  );
+}
 
 getTranscodingSessions(): Observable<any[]> {
-  return this.http.get(`${this.plexUrl}/transcode/sessions`, {
-    headers: this.getHeaders(),
-    responseType: 'text'
-  }).pipe(
+    return this.rpcService.request('PLEX', 'getFromUrl', {
+      host: location.hostname,
+      port: this.defaultPlexPort,
+      url: '/transcode/sessions',
+      token: this.plexToken
+    }).pipe(
+    map(rpcResponse => {
+      return rpcResponse;
+    }),
+    map(rpcResponse => {
+      return Array.isArray(rpcResponse)
+        ? rpcResponse.join('\n')
+        : rpcResponse;
+    }),
     switchMap(xmlResponse => this.parseXml(xmlResponse)),
     map(json => {
       if (!json.MediaContainer?.TranscodeSession) return [];
@@ -399,11 +485,64 @@ getTranscodingSessions(): Observable<any[]> {
   );
 }
 
-  private calculateLibrarySize(directories: any[]): number {
-    return directories.reduce((total, dir) => {
-      const locationSize = parseInt(dir.Location?.$?.size) || 0;
-      return total + locationSize;
-    }, 0);
+stopTranscodeSession(sessionKey: string): Observable<void> {
+  if (!sessionKey?.trim()) {
+    return throwError(() => new Error('Valid session key is required'));
+  }
+
+  return this.rpcService.request('PLEX', 'getFromUrl', {
+    host: location.hostname,
+    port: this.defaultPlexPort,
+    url: `/transcode/sessions/${encodeURIComponent(sessionKey)}`,
+    token: this.plexToken
+  }).pipe(
+    map(() => undefined), // Sukces - zwracamy void
+    catchError(error => {
+      // Mapowanie błędów RPC na przyjazne komunikaty
+      const message = this.mapTranscodeError(error);
+      return throwError(() => new Error(message));
+    })
+  );
+}
+
+private mapTranscodeError(error: any): string {
+  if (error?.status === 404) {
+    return 'Transcode session not found (already ended?)';
+  }
+  if (error?.status === 401) {
+    return 'Unauthorized - check your Plex token';
+  }
+  if (error?.response?.error?.includes('session')) {
+    return 'Session error: ' + error.response.error;
+  }
+  return 'Server error while stopping transcode session: ' + (error.message || 'Unknown error');
+}
+
+  checkServiceStatus(port: number, serviceName: string, img: string): Observable<boolean> {
+    return this.rpcService.request('PLEX', 'getServiceStatus', {
+      host: location.hostname,
+      port: port,
+      path: img,
+      service: serviceName
+    }).pipe(
+      map((response: any) => {
+        // Rozszerzona logika weryfikacji odpowiedzi
+        return response.status === true;
+      }),
+      catchError(() => of(false))
+    );
+  }
+
+  checkRadarrStatus(): Observable<boolean> {
+    return this.checkServiceStatus(this.statusAddons.radarr.port, 'Radarr', `${this.statusAddons.radarr.img}`);
+  }
+
+  checkSonarrStatus(): Observable<boolean> {
+    return this.checkServiceStatus(this.statusAddons.sonarr.port, 'Sonarr', `${this.statusAddons.sonarr.img}`);
+  }
+
+  checkOverseerrStatus(): Observable<boolean> {
+    return this.checkServiceStatus(this.statusAddons.overseerr.port, 'Overseerr', `${this.statusAddons.overseerr.img}`);
   }
 
   private ensureArray(data: any): any[] {

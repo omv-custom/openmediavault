@@ -6,9 +6,16 @@ import { LibraryStats } from '~/app/core/models/library-stats.model';
 import { ServerInfo } from '~/app/core/models/server-info.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ThemePalette } from '@angular/material/core';
-import { interval, Subscription, of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { interval, Subscription, of, forkJoin } from 'rxjs';
+import { finalize,switchMap, catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+
+interface DialogData {
+  title: string;
+  content: string;
+  confirmText: string;
+  isTranscode?: boolean;
+}
 
 @Component({
   selector: 'app-plex-page',
@@ -36,6 +43,23 @@ export class PlexDatatablePageComponent implements OnInit, OnDestroy {
   currentSessionId = '';
   isDialogOpen = false;
   isTerminating = false;
+  currentTranscodeSessionId = '';
+  isStoppingTranscode = false;
+  totalItemsCount = 0;
+  totalLibrarySize = 0;
+  arrStatus = {
+    radarr: { installed: false, loading: true, error: false },
+    sonarr: { installed: false, loading: true, error: false },
+    overseerr: { installed: false, loading: true, error: false }
+  };
+
+// Add this property to the component class
+dialogData: DialogData = {
+  title: 'Confirmation',
+  content: '',
+  confirmText: 'Confirm',
+  isTranscode: false
+};
 
   constructor(
     private plexService: PlexService,
@@ -47,14 +71,30 @@ export class PlexDatatablePageComponent implements OnInit, OnDestroy {
       autoUpdate: [false],
       hardwareAcceleration: [true],
       remoteAccess: [true],
-      analytics: [true]
+      analytics: [true],
+      terminationReason: ['']
     });
   }
 
   ngOnInit(): void {
+    this.testConnection(); 
     this.loadData();
     this.detectInstallationType();
     this.startSessionAutoRefresh();
+    this.checkArrStatus();
+  setTimeout(() => {
+    if (this.arrStatus.radarr.loading || this.arrStatus.sonarr.loading || this.arrStatus.overseerr.loading) {
+      console.warn('Status check is still loading after 5 seconds!');
+      // Wymuś zakończenie ładowania
+      this.arrStatus.radarr.loading = false;
+      this.arrStatus.sonarr.loading = false;
+      this.arrStatus.overseerr.loading = false;
+      this.arrStatus.radarr.error = true;
+      this.arrStatus.sonarr.error = true;
+      this.arrStatus.overseerr.error = true;
+    }
+  }, 5000);
+
   }
 
   ngOnDestroy(): void {
@@ -93,6 +133,9 @@ export class PlexDatatablePageComponent implements OnInit, OnDestroy {
       this.libraryStats = stats || this.plexService.getMockLibraryStats();
       this.transcodingSessions = transcoding || [];
       this.updateAvailable = this.serverInfo.updateAvailable || false;
+
+      // Calculate totals after loading
+      this.calculateTotals();
       
       if (this.serverInfo.settings) {
         this.settingsForm.patchValue(this.serverInfo.settings);
@@ -105,10 +148,21 @@ export class PlexDatatablePageComponent implements OnInit, OnDestroy {
       this.activeSessions = this.plexService.getMockSessions();
       this.libraryStats = this.plexService.getMockLibraryStats();
       this.transcodingSessions = [];
+      this.calculateTotals(); // Calculate even with mock data
     } finally {
       this.isLoading = false;
     }
   }
+
+async testConnection(): Promise<void> {
+  try {
+    await this.plexService.testPlexConnection().toPromise();
+    this.showSuccess('Connected to Plex API successfully');
+  } catch (error) {
+    this.showError('Failed to connect to Plex API');
+    console.error('Connection test failed:', error);
+  }
+}
 
   detectInstallationType(): void {
     this.plexService.getInstallationType().subscribe({
@@ -169,55 +223,62 @@ terminateSession(session: Session): void {
   });
 } */
 
-  startSessionAutoRefresh(): void {
-    this.stopSessionAutoRefresh();
-    
-    this.refreshSubscription = interval(10000).pipe(
-      switchMap(() => {
-        if (this.selectedTab === 'sessions') {
-          this.isRefreshing = true;
-          return this.plexService.getActiveSessions().pipe(
-            catchError(error => {
-              console.error('Auto-refresh error:', error);
-              return of(null);
-            })
-          );
-        }
-        return of(null);
-      })
-    ).subscribe({
-      next: (sessions) => {
-        this.isRefreshing = false;
-        this.lastRefreshTime = new Date();
-        if (sessions && this.selectedTab === 'sessions') {
-          this.activeSessions = sessions;
-        }
-      },
-      error: (error) => {
-        this.isRefreshing = false;
-        console.error('Auto-refresh error:', error);
+startSessionAutoRefresh(): void {
+  this.stopSessionAutoRefresh();
+  
+  this.refreshSubscription = interval(10000).pipe(
+    switchMap(() => {
+      if (this.selectedTab === 'sessions' || this.selectedTab === 'transcoding') {
+        this.isRefreshing = true;
+        return forkJoin([
+          this.selectedTab === 'sessions' ? this.plexService.getActiveSessions() : of(null),
+          this.selectedTab === 'transcoding' ? this.plexService.getTranscodingSessions() : of(null)
+        ]).pipe(
+          catchError(error => {
+            console.error('Auto-refresh error:', error);
+            return of([null, null]);
+          })
+        );
       }
-    });
-  }
+      return of([null, null]);
+    })
+  ).subscribe({
+    next: ([sessions, transcoding]) => {
+      this.isRefreshing = false;
+      this.lastRefreshTime = new Date();
+      if (sessions && this.selectedTab === 'sessions') {
+        this.activeSessions = sessions;
+      }
+      if (transcoding && this.selectedTab === 'transcoding') {
+        this.transcodingSessions = transcoding;
+      }
+    },
+    error: (error) => {
+      this.isRefreshing = false;
+      console.error('Auto-refresh error:', error);
+    }
+  });
+}
 
-  manualRefresh(): void {
-    if (this.isRefreshing) return;
-    
-    this.isRefreshing = true;
-    this.plexService.getActiveSessions().subscribe({
-      next: (sessions) => {
-        this.activeSessions = sessions || [];
-        this.isRefreshing = false;
-        this.lastRefreshTime = new Date();
-        this.showSuccess('Sessions refreshed successfully');
-      },
-      error: (error) => {
-        console.error('Manual refresh error:', error);
-        this.isRefreshing = false;
-        this.showError('Failed to refresh sessions');
-      }
-    });
+async manualRefresh(): Promise<void> {
+  if (this.isRefreshing) return;
+  
+  this.isRefreshing = true;
+  try {
+    if (this.selectedTab === 'sessions') {
+      this.activeSessions = await this.plexService.getActiveSessions().toPromise() || [];
+    } else if (this.selectedTab === 'transcoding') {
+      this.transcodingSessions = await this.plexService.getTranscodingSessions().toPromise() || [];
+    }
+    this.lastRefreshTime = new Date();
+    this.showSuccess('Data refreshed successfully');
+  } catch (error) {
+    console.error('Manual refresh error:', error);
+    this.showError('Failed to refresh data');
+  } finally {
+    this.isRefreshing = false;
   }
+}
 
   stopSessionAutoRefresh(): void {
     if (this.refreshSubscription) {
@@ -226,15 +287,15 @@ terminateSession(session: Session): void {
     }
   }
 
-  selectTab(tab: string): void {
-    this.selectedTab = tab;
-    // Restart auto-refresh when switching to sessions tab
-    if (tab === 'sessions') {
-      this.startSessionAutoRefresh();
-    } else {
-      this.stopSessionAutoRefresh();
-    } 
- }
+selectTab(tab: string): void {
+  this.selectedTab = tab;
+  // Restart auto-refresh when switching to sessions or transcoding tab
+  if (tab === 'sessions' || tab === 'transcoding') {
+    this.startSessionAutoRefresh();
+  } else {
+    this.stopSessionAutoRefresh();
+  }
+}
 
   private showSuccess(message: string): void {
     this.snackBar.open(message, 'Close', {
@@ -250,52 +311,151 @@ terminateSession(session: Session): void {
     });
   }
 
-  openTerminateDialog(session: Session): void {
-    if (!session?.session?.id) {
-      this.showError('Nieprawidłowa sesja - brak ID');
-      return;
+openTerminateDialog(session: Session): void {
+  if (!session?.session?.id) {
+    this.showError('Invalid session - missing ID');
+    return;
+  }
+
+  this.currentSession = session;
+  this.currentSessionId = session.session.id;
+  this.terminationReason = '';
+  this.isDialogOpen = true;
+  
+  this.dialogData = {
+    title: 'Confirmation',
+    content: `Are you sure you want to terminate the session for user ${session.user.title || 'Unknown user'}?`,
+    confirmText: 'Terminate Session',
+    isTranscode: false
+  };
+  
+  this.dialog.open(this.terminateDialogTemplate, {
+    width: '400px',
+    disableClose: true
+  });
+}
+
+closeTerminateDialog(): void {
+  this.dialog.closeAll();
+  this.isDialogOpen = false;
+}
+
+// This method should already exist in your original code
+confirmTermination(): void {
+  if (!this.currentSessionId) return;
+
+  this.isTerminating = true;
+  this.dialog.closeAll();
+  
+  this.plexService.terminateSession(
+    this.currentSessionId, 
+    this.terminationReason || 'Session terminated by administrator'
+  ).subscribe({
+    next: () => {
+      this.activeSessions = this.activeSessions.filter(
+        s => s.session.id !== this.currentSessionId
+      );
+      this.showSuccess('Session terminated successfully');
+    },
+    error: (error) => {
+      this.showError(error.message || 'Error terminating session');
+    },
+    complete: () => {
+      this.isTerminating = false;
+      this.isDialogOpen = false;
     }
+  });
+}
 
-    this.currentSession = session; // <-- teraz przechowujemy cały obiekt
-    this.currentSessionId = session.session.id;
-    this.terminationReason = '';
-    this.isDialogOpen = true;
-    
-    this.dialog.open(this.terminateDialogTemplate, {
-      width: '400px',
-      disableClose: true
+// Update openStopTranscodeDialog method
+openStopTranscodeDialog(session: any): void {
+  this.currentTranscodeSessionId = session.id;
+  this.isDialogOpen = true;
+  
+  this.dialogData = {
+    title: `Stop Transcode Session #${session.id}`,
+    content: 'Are you sure you want to stop this transcoding session?',
+    confirmText: 'Stop Transcoding',
+    isTranscode: true
+  };
+  
+  this.dialog.open(this.terminateDialogTemplate, {
+    width: '400px',
+    disableClose: true
+  });
+}
+
+stopTranscodeSession(): void {
+  if (!this.currentTranscodeSessionId) return;
+
+  this.isStoppingTranscode = true;
+  this.dialog.closeAll();
+  
+  this.plexService.stopTranscodeSession(this.currentTranscodeSessionId).subscribe({
+    next: () => {
+      this.transcodingSessions = this.transcodingSessions.filter(
+        s => s.id !== this.currentTranscodeSessionId
+      );
+      this.showSuccess('Transcoding session stopped successfully');
+    },
+    error: (error) => {
+      this.showError(error.message || 'Error stopping transcoding session');
+    },
+    complete: () => {
+      this.isStoppingTranscode = false;
+      this.isDialogOpen = false;
+      this.currentTranscodeSessionId = '';
+    }
+  });
+}
+
+  calculateTotals(): void {
+    this.totalItemsCount = this.libraryStats.reduce((sum, lib) => sum + (lib.count || 0), 0);
+    this.totalLibrarySize = this.libraryStats.reduce((sum, lib) => sum + (lib.size || 0), 0);
+  
+    console.log('Calculated totals:', {
+      items: this.totalItemsCount,
+      size: this.totalLibrarySize
     });
   }
 
-  confirmTermination(): void {
-    if (!this.currentSessionId) return;
+checkArrStatus() {
+  // Reset status before checking
+  this.arrStatus = {
+    radarr: { installed: false, loading: true, error: false },
+    sonarr: { installed: false, loading: true, error: false },
+    overseerr: { installed: false, loading: true, error: false }
+  };
 
-    this.isTerminating = true;
-    this.dialog.closeAll();
-    
-    this.plexService.terminateSession(
-      this.currentSessionId, 
-      this.terminationReason || 'Sesja zakończona przez administratora'
-    ).subscribe({
-      next: () => {
-        this.activeSessions = this.activeSessions.filter(
-          s => s.session.id !== this.currentSessionId
-        );
-        this.showSuccess('Sesja została zakończona');
-      },
-      error: (error) => {
-        this.showError(error.message || 'Błąd podczas zakończania sesji');
-      },
-      complete: () => {
-        this.isTerminating = false;
-        this.isDialogOpen = false;
-      }
-    });
-  }
+  // Check Radarr
+  this.plexService.checkRadarrStatus().pipe(
+    finalize(() => this.arrStatus.radarr.loading = false)
+  ).subscribe({
+    next: (status) => this.arrStatus.radarr.installed = status,
+    error: () => this.arrStatus.radarr.error = true
+  });
 
-  closeTerminateDialog(): void {
-    this.dialog.closeAll();
-    this.isDialogOpen = false;
-  }
+  // Check Sonarr
+  this.plexService.checkSonarrStatus().pipe(
+    finalize(() => this.arrStatus.sonarr.loading = false)
+  ).subscribe({
+    next: (status) => this.arrStatus.sonarr.installed = status,
+    error: () => this.arrStatus.sonarr.error = true
+  });
+
+  this.plexService.checkOverseerrStatus().pipe(
+    finalize(() => this.arrStatus.overseerr.loading = false)
+  ).subscribe({
+    next: (status) => this.arrStatus.overseerr.installed = status,
+    error: () => this.arrStatus.overseerr.error = true
+  });
+}
+
+getStatusClass(service: 'radarr' | 'sonarr' | 'overseerr'): string {
+  const status = this.arrStatus[service];
+  if (status.loading) return 'status-loading';
+  if (status.error) return 'status-error';
+  return status.installed ? 'status-installed' : 'status-not-installed';
+}
 
 }

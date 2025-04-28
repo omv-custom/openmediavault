@@ -28,6 +28,7 @@ import { ToBooleanPipe } from '~/app/shared/pipes/to-boolean.pipe';
 import { TruncatePipe } from '~/app/shared/pipes/truncate.pipe';
 import { TrustHtmlPipe } from '~/app/shared/pipes/trust-html.pipe';
 import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
+import { FileSizePipe } from '~/app/shared/pipes/filesize.pipe';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     CountPipe,
     SplitPipe,
     Cron2humanPipe,
-    EscapeHtmlPipe
+    EscapeHtmlPipe,
+    FileSizePipe
   ],
   imports: [CommonModule],
   exports: [
@@ -87,7 +89,8 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     CountPipe,
     SplitPipe,
     Cron2humanPipe,
-    EscapeHtmlPipe
+    EscapeHtmlPipe,
+    FileSizePipe
   ],
   providers: [
     ToBooleanPipe,
@@ -116,7 +119,8 @@ import { UpperFirstPipe } from '~/app/shared/pipes/upper-first.pipe';
     CountPipe,
     SplitPipe,
     Cron2humanPipe,
-    EscapeHtmlPipe
+    EscapeHtmlPipe,
+    FileSizePipe
   ]
 })
 export class PipesModule {}
