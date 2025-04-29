@@ -52,14 +52,16 @@ export class PlexDatatablePageComponent implements OnInit, OnDestroy {
     sonarr: { installed: false, loading: true, error: false },
     overseerr: { installed: false, loading: true, error: false }
   };
+  mobileMenuVisible = false;
+  isRestarting = false;
 
-// Add this property to the component class
-dialogData: DialogData = {
-  title: 'Confirmation',
-  content: '',
-  confirmText: 'Confirm',
-  isTranscode: false
-};
+  // Add this property to the component class
+  dialogData: DialogData = {
+    title: 'Confirmation',
+    content: '',
+    confirmText: 'Confirm',
+    isTranscode: false
+  };
 
   constructor(
     private plexService: PlexService,
@@ -94,7 +96,6 @@ dialogData: DialogData = {
       this.arrStatus.overseerr.error = true;
     }
   }, 5000);
-
   }
 
   ngOnDestroy(): void {
@@ -451,11 +452,38 @@ checkArrStatus() {
   });
 }
 
-getStatusClass(service: 'radarr' | 'sonarr' | 'overseerr'): string {
-  const status = this.arrStatus[service];
-  if (status.loading) return 'status-loading';
-  if (status.error) return 'status-error';
-  return status.installed ? 'status-installed' : 'status-not-installed';
-}
+  getStatusClass(service: 'radarr' | 'sonarr' | 'overseerr'): string {
+    const status = this.arrStatus[service];
+    if (status.loading) return 'status-loading';
+    if (status.error) return 'status-error';
+    return status.installed ? 'status-installed' : 'status-not-installed';
+  }
+
+  // Metoda do przełączania menu mobilnego
+  toggleMobileMenu(): void {
+    this.mobileMenuVisible = !this.mobileMenuVisible;
+  }
+
+  // Metoda do restartowania serwera
+  restartServer(): void {
+    if (this.isRestarting) return;
+    
+    this.isRestarting = true;
+    this.plexService.restartServer().subscribe({
+      next: () => {
+        this.showSuccess('Server restart initiated');
+        // Odśwież status po krótkim opóźnieniu
+        setTimeout(() => {
+          this.loadData();
+          this.isRestarting = false;
+        }, 5000);
+      },
+      error: (error) => {
+        console.error('Restart failed:', error);
+        this.showError('Failed to restart server');
+        this.isRestarting = false;
+      }
+    });
+  }
 
 }

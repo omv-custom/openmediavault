@@ -1,16 +1,20 @@
 <div class="plex-container">
 
   <div class="top-nav">
-    <div class="nav-header">
-      <img src="assets/plex-logo.png" alt="Plex Logo" class="logo">
-      <h2>Plex Server</h2>
-      <div class="server-status" *ngIf="serverInfo">
-        <div class="status-indicator" [ngClass]="{'online': serverInfo.status === 'running', 'offline': serverInfo.status !== 'running'}"></div>
-        <span>{{ serverInfo.status === 'running' ? 'Online' : 'Offline' }}</span>
-      </div>
+  <div class="nav-header">
+    <img src="assets/plex-logo.png" alt="Plex Logo" class="logo">
+    <h2>Plex Server</h2>
+    <div class="server-status" *ngIf="serverInfo" (click)="restartServer()">
+      <div class="status-indicator" [ngClass]="{'online': serverInfo.status === 'running', 'offline': serverInfo.status !== 'running'}"></div>
+      <span>{{ serverInfo.status === 'running' ? 'Online' : 'Offline' }}</span>
+      <mat-spinner *ngIf="isRestarting" diameter="20"></mat-spinner>
     </div>
+    <button class="mobile-menu-btn" (click)="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
     
-    <nav class="nav-menu">
+    <nav class="nav-menu" [class.mobile-visible]="mobileMenuVisible">
       <button (click)="selectTab('dashboard')" [class.active]="selectedTab === 'dashboard'">
         <i class="fas fa-tachometer-alt"></i>{{ 'Dashboard' | transloco }}
       </button>
@@ -121,53 +125,74 @@
       <p>{{ totalLibrarySize | filesize }}</p>
     </div>
   </div>
+</div>
 
-<div class="arr-status">
-  <div class="status-item" [class]="getStatusClass('radarr')">
-    <div class="status-icon">
-      <mat-spinner *ngIf="arrStatus.radarr.loading" diameter="20"></mat-spinner>
-      <mat-icon *ngIf="!arrStatus.radarr.loading && arrStatus.radarr.error">error_outline</mat-icon>
-      <mat-icon *ngIf="!arrStatus.radarr.loading && !arrStatus.radarr.error">
-        {{ arrStatus.radarr.installed ? 'check_circle' : 'highlight_off' }}
-      </mat-icon>
+<div class="arr-status-container">
+  <div class="arr-status-grid">
+    <!-- Radarr Status Card -->
+    <div class="status-card" [class]="getStatusClass('radarr')">
+      <div class="status-icon">
+        <i class="fas fa-film"></i>
+        <div class="status-badge" [ngClass]="{
+          'online': arrStatus.radarr.installed && !arrStatus.radarr.error,
+          'offline': !arrStatus.radarr.installed && !arrStatus.radarr.error,
+          'error': arrStatus.radarr.error
+        }"></div>
+      </div>
+      <div class="status-content">
+        <h4>Radarr</h4>
+        <div class="status-text">
+          <span *ngIf="arrStatus.radarr.loading">{{ 'Checking...' | transloco }}</span>
+          <span *ngIf="!arrStatus.radarr.loading && arrStatus.radarr.installed">{{ 'Running' | transloco }}</span>
+          <span *ngIf="!arrStatus.radarr.loading && !arrStatus.radarr.installed && !arrStatus.radarr.error">{{ 'Not Available' | transloco }}</span>
+          <span *ngIf="!arrStatus.radarr.loading && arrStatus.radarr.error">{{ 'Error' | transloco }}</span>
+        </div>
+      </div>
     </div>
-    <div class="status-text">
-      <span>Radarr</span>
-      <small *ngIf="arrStatus.radarr.error">Check failed</small>
-      <small *ngIf="!arrStatus.radarr.installed && !arrStatus.radarr.error">Not available</small>
+
+    <!-- Sonarr Status Card -->
+    <div class="status-card" [class]="getStatusClass('sonarr')">
+      <div class="status-icon">
+        <i class="fas fa-tv"></i>
+        <div class="status-badge" [ngClass]="{
+          'online': arrStatus.sonarr.installed && !arrStatus.sonarr.error,
+          'offline': !arrStatus.sonarr.installed && !arrStatus.sonarr.error,
+          'error': arrStatus.sonarr.error
+        }"></div>
+      </div>
+      <div class="status-content">
+        <h4>Sonarr</h4>
+        <div class="status-text">
+          <span *ngIf="arrStatus.sonarr.loading">{{ 'Checking...' | transloco }}</span>
+          <span *ngIf="!arrStatus.sonarr.loading && arrStatus.sonarr.installed">{{ 'Running' | transloco }}</span>
+          <span *ngIf="!arrStatus.sonarr.loading && !arrStatus.sonarr.installed && !arrStatus.sonarr.error">{{ 'Not Available' | transloco }}</span>
+          <span *ngIf="!arrStatus.sonarr.loading && arrStatus.sonarr.error">{{ 'Error' | transloco }}</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="status-item" [class]="getStatusClass('sonarr')">
-    <div class="status-icon">
-      <mat-spinner *ngIf="arrStatus.sonarr.loading" diameter="20"></mat-spinner>
-      <mat-icon *ngIf="!arrStatus.sonarr.loading && arrStatus.sonarr.error">error_outline</mat-icon>
-      <mat-icon *ngIf="!arrStatus.sonarr.loading && !arrStatus.sonarr.error">
-        {{ arrStatus.sonarr.installed ? 'check_circle' : 'highlight_off' }}
-      </mat-icon>
-    </div>
-    <div class="status-text">
-      <span>Sonarr</span>
-      <small *ngIf="arrStatus.sonarr.error">Check failed</small>
-      <small *ngIf="!arrStatus.sonarr.installed && !arrStatus.sonarr.error">Not available</small>
-    </div>
-  </div>
-  <div class="status-item" [class]="getStatusClass('overseerr')">
-    <div class="status-icon">
-      <mat-spinner *ngIf="arrStatus.overseerr.loading" diameter="20"></mat-spinner>
-      <mat-icon *ngIf="!arrStatus.overseerr.loading && arrStatus.overseerr.error">error_outline</mat-icon>
-      <mat-icon *ngIf="!arrStatus.overseerr.loading && !arrStatus.overseerr.error">
-        {{ arrStatus.overseerr.installed ? 'check_circle' : 'highlight_off' }}
-      </mat-icon>
-    </div>
-    <div class="status-text">
-      <span>Overseerr</span>
-      <small *ngIf="arrStatus.overseerr.error">Check failed</small>
-      <small *ngIf="!arrStatus.overseerr.installed && !arrStatus.overseerr.error">Not available</small>
+
+    <!-- Overseerr Status Card -->
+    <div class="status-card" [class]="getStatusClass('overseerr')">
+      <div class="status-icon">
+        <i class="fas fa-ticket-alt"></i>
+        <div class="status-badge" [ngClass]="{
+          'online': arrStatus.overseerr.installed && !arrStatus.overseerr.error,
+          'offline': !arrStatus.overseerr.installed && !arrStatus.overseerr.error,
+          'error': arrStatus.overseerr.error
+        }"></div>
+      </div>
+      <div class="status-content">
+        <h4>Overseerr</h4>
+        <div class="status-text">
+          <span *ngIf="arrStatus.overseerr.loading">{{ 'Checking...' | transloco }}</span>
+          <span *ngIf="!arrStatus.overseerr.loading && arrStatus.overseerr.installed">{{ 'Running' | transloco }}</span>
+          <span *ngIf="!arrStatus.overseerr.loading && !arrStatus.overseerr.installed && !arrStatus.overseerr.error">{{ 'Not Available' | transloco }}</span>
+          <span *ngIf="!arrStatus.overseerr.loading && arrStatus.overseerr.error">{{ 'Error' | transloco }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-      </div>
 
       <div class="quick-actions">
         <button class="action-btn" (click)="selectTab('update')" [disabled]="!updateAvailable">
@@ -428,7 +453,7 @@
           <p class="release-date">{{ 'Released on' | transloco }} {{ serverInfo.latestReleaseDate | date:'mediumDate' }}</p>
           
           <div class="update-notes">
-            <h5>{{ 'What's New' | transloco }}:</h5>
+            <h5>{{ 'Whats New' | transloco }}:</h5>
             <ul>
               <li *ngFor="let note of serverInfo.releaseNotes">{{ note }}</li>
             </ul>

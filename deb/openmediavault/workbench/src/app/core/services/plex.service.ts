@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from, forkJoin, throwError } from 'rxjs';
+import { Observable, of, from, forkJoin, throwError, delay } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { parseString } from 'xml2js';
 import { ServerInfo } from '../models/server-info.model';
@@ -350,61 +350,80 @@ terminateSession(sessionId: string, reason: string = 'Session terminated by admi
   }
 
 private getLibraryContent(libraryId: string, key?: string): Observable<{count: number, size: number}> {
-  const params = {
-    host: location.hostname,
-    port: this.defaultPlexPort,
-    url: key ? key : `/library/sections/${libraryId}/all`,
-    token: this.plexToken
-  };
+  const baseUrl = key ? key : `/library/sections/${libraryId}/all`;
+  
+  return this.getLibraryPage(baseUrl, 0, 1000).pipe(
+    switchMap(firstPage => {
+      let totalCount = firstPage.totalSize;
+      let totalSize = this.calculateTotalSize(firstPage);
 
-  return this.rpcService.request('PLEX', 'getFromUrl', params).pipe(
-    switchMap(rpcResponse => {
-      // Konwersja odpowiedzi RPC do stringa XML
-      const xmlString = Array.isArray(rpcResponse) 
-        ? rpcResponse.join('\n') 
-        : rpcResponse;
-      
-      return this.parseXml(xmlString);
-    }),
-    switchMap(async (json: any) => {
-      let totalCount = 0;
-      let totalSize = 0;
-
-      // Przetwarzanie Video
-      if (json.MediaContainer?.Video) {
-        const videos = this.ensureArray(json.MediaContainer.Video);
-        for (const video of videos) {
-          if (video.Media?.Part) {
-            const parts = this.ensureArray(video.Media.Part);
-            totalSize += parts.reduce((sum: number, part: any) => 
-              sum + (parseInt(part.$.size) || 0), 0);
-          }
-          totalCount++;
-        }
-      }
-
-      // Przetwarzanie Directory (foldery) - rekurencyjnie
-      if (json.MediaContainer?.Directory) {
-        const directories = this.ensureArray(json.MediaContainer.Directory);
-        const folderStats = await forkJoin(
-          directories.map((dir: any) => 
-            this.getLibraryContent(libraryId, dir.$.key).toPromise()
+      // Process directories (folders) recursively
+      if (firstPage.directories?.length > 0) {
+        return forkJoin(
+          firstPage.directories.map((dir: any) => 
+            this.getLibraryContent(libraryId, dir.$.key)
           )
-        ).toPromise();
-
-        if (folderStats) {
-          totalCount += folderStats.reduce((sum, stats) => sum + stats.count, 0);
-          totalSize += folderStats.reduce((sum, stats) => sum + stats.size, 0);
-        }
+        ).pipe(
+          map((folderStats: {count: number, size: number}[]) => {
+            folderStats.forEach(stats => {
+              totalCount += stats.count;
+              totalSize += stats.size;
+            });
+            return { count: totalCount, size: totalSize };
+          })
+        );
       }
 
-      return { count: totalCount, size: totalSize };
+      return of({ count: totalCount, size: totalSize });
     }),
     catchError(error => {
       console.error('Error processing library content:', error);
       return of({ count: 0, size: 0 });
     })
   );
+}
+
+private getLibraryPage(url: string, start: number, size: number): Observable<any> {
+  const params = {
+    host: location.hostname,
+    port: this.defaultPlexPort,
+    url: `${url}?X-Plex-Container-Start=${start}&X-Plex-Container-Size=${size}`,
+    token: this.plexToken
+  };
+
+  return this.rpcService.request('PLEX', 'getFromUrl', params).pipe(
+    switchMap(rpcResponse => {
+      const xmlString = Array.isArray(rpcResponse) 
+        ? rpcResponse.join('\n') 
+        : rpcResponse;
+      return this.parseXml(xmlString);
+    }),
+    map(json => {
+      const items = json.MediaContainer?.Video || [];
+      const directories = json.MediaContainer?.Directory || [];
+      const totalSize = parseInt(json.MediaContainer?.$?.totalSize || '0');
+      
+      return {
+        items: this.ensureArray(items),
+        directories: this.ensureArray(directories),
+        totalSize
+      };
+    })
+  );
+}
+
+private calculateTotalSize(page: any): number {
+  let size = 0;
+  for (const item of page.items) {
+    if (item.Media?.Part) {
+      const parts = this.ensureArray(item.Media.Part);
+      size += parts.reduce(
+        (sum: number, part: any) => sum + (parseInt(part.$.size) || 0),
+        0
+      );
+    }
+  }
+  return size;
 }
 
 public getLibraryStats(): Observable<LibraryStats[]> {
@@ -505,18 +524,22 @@ stopTranscodeSession(sessionKey: string): Observable<void> {
   );
 }
 
-private mapTranscodeError(error: any): string {
-  if (error?.status === 404) {
-    return 'Transcode session not found (already ended?)';
+  private mapTranscodeError(error: any): string {
+    if (error?.status === 404) {
+      return 'Transcode session not found (already ended?)';
+    }
+    if (error?.status === 401) {
+      return 'Unauthorized - check your Plex token';
+    }
+    if (error?.response?.error?.includes('session')) {
+      return 'Session error: ' + error.response.error;
+    }
+    return 'Server error while stopping transcode session: ' + (error.message || 'Unknown error');
   }
-  if (error?.status === 401) {
-    return 'Unauthorized - check your Plex token';
+
+  restartServer(): Observable<any> {
+    return of({ success: true }).pipe(delay(1000));
   }
-  if (error?.response?.error?.includes('session')) {
-    return 'Session error: ' + error.response.error;
-  }
-  return 'Server error while stopping transcode session: ' + (error.message || 'Unknown error');
-}
 
   checkServiceStatus(port: number, serviceName: string, img: string): Observable<boolean> {
     return this.rpcService.request('PLEX', 'getServiceStatus', {

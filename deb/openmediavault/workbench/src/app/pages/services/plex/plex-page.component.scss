@@ -810,7 +810,6 @@ mat-spinner {
 }
 
 .transcoding-tab {
-  padding: 20px;
   
   .transcoding-grid {
     display: grid;
@@ -1274,5 +1273,189 @@ mat-spinner {
     gap: 10px;
     font-size: 12px;
     color: #7f8c8d;
+  }
+}
+
+.top-nav {
+  position: relative;
+  
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    margin-left: auto;
+    cursor: pointer;
+    
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+  
+  .nav-menu {
+    @media (max-width: 768px) {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #282a37;
+      z-index: 1000;
+      flex-direction: column;
+      border-top: 1px solid #3a3d4d;
+      
+      &.mobile-visible {
+        display: flex;
+      }
+      
+      button {
+        width: 100%;
+        border-bottom: 1px solid #3a3d4d;
+      }
+    }
+  }
+  
+  .server-status {
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 8px 12px;
+    border-radius: 4px;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    mat-spinner {
+      margin-left: 8px;
+      
+      ::ng-deep circle {
+        stroke: white;
+      }
+    }
+  }
+}
+
+.arr-status-container {
+  margin: 25px 0;
+  
+  .arr-status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+  }
+  
+  .status-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .status-icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 138, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #008aff;
+      font-size: 18px;
+      
+      .status-badge {
+        position: absolute;
+        bottom: -3px;
+        right: -3px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid white;
+        
+        &.online {
+          background: #2ecc71;
+        }
+        
+        &.offline {
+          background: #e74c3c;
+        }
+        
+        &.error {
+          background: #f39c12;
+        }
+      }
+    }
+    
+    .status-content {
+      flex: 1;
+      
+      h4 {
+        margin: 0 0 5px 0;
+        font-size: 16px;
+        color: #2c3e50;
+      }
+      
+      .status-text {
+        font-size: 13px;
+        font-weight: 500;
+        
+        span {
+          padding: 3px 8px;
+          border-radius: 4px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  
+  // Status-specific styles
+  .status-loading {
+    .status-content .status-text span {
+      background: #fff3e0;
+      color: #ff9800;
+    }
+  }
+  
+  .status-installed {
+    border-left-color: #2ecc71;
+    
+    .status-content .status-text span {
+      background: #e8f5e9;
+      color: #2ecc71;
+    }
+  }
+  
+  .status-not-installed {
+    border-left-color: #e74c3c;
+    
+    .status-content .status-text span {
+      background: #ffebee;
+      color: #e74c3c;
+    }
+  }
+  
+  .status-error {
+    border-left-color: #f39c12;
+    
+    .status-content .status-text span {
+      background: #fff3e0;
+      color: #f39c12;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .arr-status-container .arr-status-grid {
+    grid-template-columns: 1fr;
   }
 }
