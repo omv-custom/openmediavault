@@ -1,3 +1,9 @@
+openmediavault (8.0.3) stable; urgency=low
+
+  * Add Plex Module.
+
+ -- Gekomod <zaba141@o2.pl>  Thu, 6 Apr 2025 11:39:24 +0100
+
 openmediavault (8.0.2) stable; urgency=low
 
   * Rebuild Proccess Page.
