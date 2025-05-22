@@ -1,0 +1,7 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: "services.plex"
+  text: _("Plex Media Server")
+  icon: server
+  url: "/services/plex"

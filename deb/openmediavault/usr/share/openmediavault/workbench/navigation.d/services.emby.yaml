@@ -1,0 +1,7 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: "services.emby"
+  text: _("Emby Media Server")
+  icon: server
+  url: "/services/emby"

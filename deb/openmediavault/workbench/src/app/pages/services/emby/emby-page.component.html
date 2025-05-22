@@ -1,0 +1,309 @@
+<div class="emby-glass-dashboard" [class.dark-theme]="isDarkTheme">
+  <!-- Floating Header -->
+<header class="glass-header">
+  <div class="header-content">
+    <div class="logo" (click)="refreshData()">
+      <mat-icon class="logo-icon">play_circle_filled</mat-icon>
+      <h1>Emby <span>Console</span></h1>
+    </div>
+
+      <div class="header-actions">
+        <button class="glass-btn" (click)="loadEmbySettings()" matTooltip="Emby Settings">
+          <mat-icon>tune</mat-icon>
+        </button>
+
+        <button class="glass-btn" (click)="showConnectionSettings = true">
+          <mat-icon>link</mat-icon>
+        </button>
+
+        <button class="glass-btn" (click)="toggleLiveUpdate()" matTooltip="Live Updates">
+          <mat-icon>{{isLiveUpdate ? 'sync' : 'sync_disabled'}}</mat-icon>
+          <span class="pulse" *ngIf="isLiveUpdate"></span>
+        </button>
+
+        <button class="glass-btn theme-toggle" (click)="toggleTheme()" matTooltip="Toggle Theme">
+          <mat-icon>{{isDarkTheme ? 'light_mode' : 'dark_mode'}}</mat-icon>
+        </button>
+      </div>
+
+  </div>
+</header>
+
+  <!-- Main Content -->
+  <main class="dashboard-content">
+    <!-- Sessions Panel -->
+    <section class="glass-panel sessions-panel">
+      <div class="panel-header">
+        <h2>
+          <mat-icon>play_circle</mat-icon>
+          Active Sessions
+          <span class="badge">{{activePlayingSessions.length}}</span>
+        </h2>
+        <button class="glass-btn small" (click)="refreshSessions()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+      
+      <div class="sessions-list">
+        <div *ngFor="let session of activePlayingSessions" class="session-card">
+          <div class="user-section">
+            <div class="user-avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div class="user-info">
+              <h3>{{session.UserName}}</h3>
+              <div class="meta">
+                <span class="device">
+                  <mat-icon>devices</mat-icon>
+                  {{session.DeviceName}}
+                </span>
+                <span class="ip">{{session.RemoteEndPoint}}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="media-section">
+            <div class="media-poster" [style.backgroundImage]="getMediaImage(session)"></div>
+            <div class="media-info">
+              <h4>{{session.NowPlayingItem?.Name || 'Unknown Media'}}</h4>
+  <div class="media-meta">
+    <span *ngIf="session.NowPlayingItem?.OfficialRating" class="rating-badge" [style.background]="getRatingColor(session.NowPlayingItem.OfficialRating)">
+      {{session.NowPlayingItem.OfficialRating}}
+    </span>
+    <span *ngIf="session.NowPlayingItem?.ProductionYear" class="year">
+      {{session.NowPlayingItem.ProductionYear}}
+    </span>
+<span *ngIf="getQualityLabel(session)?.length > 0" class="quality-badge"
+      [class.hdr]="getQualityLabel(session)?.includes('HDR')"
+      [class.dolby-vision]="getQualityLabel(session)?.includes('DOVI')"
+      [class.hevc]="getQualityLabel(session)?.includes('hevc')"
+      [class.av1]="getQualityLabel(session)?.includes('av1')"
+      [class.hd]="hasHD(session)"
+      [class.uhd]="has4K(session)"
+      [matTooltip]="getQualityTooltip(session)">
+  {{getQualityLabel(session)}}
+</span>
+    <span *ngIf="session.NowPlayingItem?.SeriesName" class="series">
+      {{session.NowPlayingItem.SeriesName}}
+    </span>
+  </div>
+
+<div class="progress-container">
+  <div class="progress-time">
+    <span>{{formatPlayTime(session.PlayState?.PositionTicks)}}</span>
+    <span>{{formatPlayTime(session.NowPlayingItem?.RunTimeTicks)}}</span>
+  </div>
+  
+  <!-- Główny pasek postępu odtwarzania -->
+  <div class="playback-progress">
+    <div class="progress-bar" (click)="seekToPosition($event, session)">
+      <div class="progress-fill" 
+           [style.width.%]="getPlaybackPercentage(session)"
+           [style.background]="getProgressGradient(session)"
+           [class.paused]="session.PlayState?.IsPaused">
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pasek postępu transkodowania -->
+  <div *ngIf="session.TranscodingInfo?.CompletionPercentage" 
+       class="transcoding-progress">
+    <div class="transcode-bar">
+      <div class="transcode-fill" 
+           [style.width.%]="session.TranscodingInfo.CompletionPercentage">
+      </div>
+    </div>
+    <div class="transcode-info">
+      <span>Transcoding: {{session.TranscodingInfo.CompletionPercentage}}%</span>
+      <span>{{session.TranscodingInfo?.Framerate}} FPS</span>
+    </div>
+  </div>
+</div>              
+
+            </div>
+          </div>
+          
+          <div class="controls-section">
+            <div class="playback-meta">
+              <span class="play-method" [class.transcoding]="session.PlayState?.PlayMethod === 'Transcode'">
+                <mat-icon>{{getPlayMethodIcon(session.PlayState?.PlayMethod)}}</mat-icon>
+                {{getTranscodingStatus(session)}}
+              </span>
+            </div>
+            
+            <div class="action-buttons">
+              <button class="glass-btn small message" 
+                      (click)="openMessageDialog(session)"
+                      matTooltip="Send message">
+                <mat-icon>message</mat-icon>
+              </button>
+
+              <button class="glass-btn small control" (click)="togglePause(session.Id)"
+                      matTooltip="{{session.PlayState?.IsPaused ? 'Play' : 'Pause'}}">
+                <mat-icon>{{session.PlayState?.IsPaused ? 'play_arrow' : 'pause'}}</mat-icon>
+              </button>
+              
+              <button class="glass-btn small terminate" (click)="terminateSession(session.Id)" matTooltip="Terminate">
+                <mat-icon>power_settings_new</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div *ngIf="!activePlayingSessions.length" class="empty-state">
+          <mat-icon>play_disabled</mat-icon>
+          <h3>No Active Sessions</h3>
+          <p>When users start playing media, it will appear here</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side Panels -->
+    <div class="side-panels">
+      <!-- Libraries Panel -->
+      <section class="glass-panel libraries-panel">
+        <div class="panel-header">
+          <h2>
+            <mat-icon>video_library</mat-icon>
+            Libraries
+            <span class="badge">{{libraries.length}}</span>
+          </h2>
+        </div>
+        
+        <div class="libraries-grid">
+          <div *ngFor="let lib of libraries" class="library-card" (click)="scanLibrary(lib.Id)">
+            <div class="library-icon">
+              <mat-icon>{{getLibraryIcon(lib.CollectionType)}}</mat-icon>
+            </div>
+            <h3>{{lib.Name}}</h3>
+            <div class="library-stats">
+              <span>{{lib.ItemCount}} items</span>
+              <span>{{formatBytes(lib.TotalFileSize || 0)}}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Server Panel -->
+      <section class="glass-panel server-panel">
+        <div class="panel-header">
+          <h2>
+            <mat-icon>dns</mat-icon>
+            Server Info
+          </h2>
+        </div>
+        
+        <div class="server-info">
+          <div class="info-row">
+            <span>Version</span>
+            <span class="value">{{serverInfo?.Version || 'N/A'}}</span>
+          </div>
+          <div class="info-row">
+            <span>Status</span>
+            <span class="value online">Online</span>
+          </div>
+          <div class="info-row">
+            <span>Update</span>
+            <span class="value" [class.available]="serverInfo?.HasUpdateAvailable">
+              {{serverInfo?.HasUpdateAvailable ? 'Available' : 'Up to date'}}
+            </span>
+          </div>
+
+    <button mat-raised-button 
+            color="primary" 
+            class="update-btn"
+            [disabled]="!serverInfo?.HasUpdateAvailable || updateInProgress"
+            (click)="updateServer()">
+      <mat-icon>system_update_alt</mat-icon>
+      {{updateInProgress ? 'Aktualizowanie...' : 'Zaktualizuj'}}
+      <mat-spinner diameter="20" *ngIf="updateInProgress"></mat-spinner>
+    </button>
+
+        </div>
+      </section>
+
+<section class="glass-panel settings-panel">
+  <div class="panel-header">
+    <h2>
+      <mat-icon>settings</mat-icon>
+      Ustawienia Emby
+    </h2>
+  </div>
+
+  <div class="settings-content" *ngIf="embySettings">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nazwa serwera</mat-label>
+      <input matInput [(ngModel)]="embySettings.ServerName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Limit bitrate (Kbps)</mat-label>
+      <input matInput type="number" [(ngModel)]="embySettings.RemoteClientBitrateLimit">
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="embySettings.EnableRemoteAccess">Dostęp zdalny</mat-checkbox>
+    <mat-checkbox [(ngModel)]="embySettings.EnableAutomaticRestart">Automatyczny restart</mat-checkbox>
+
+    <div class="settings-actions">
+      <button mat-stroked-button (click)="loadEmbySettings()">
+        <mat-icon>refresh</mat-icon> Odśwież
+      </button>
+      <button mat-raised-button color="primary" (click)="saveEmbySettings()" [disabled]="!embySettings || isSaving">
+        <mat-icon>save</mat-icon> Zapisz
+        <mat-spinner diameter="20" *ngIf="isSaving"></mat-spinner>
+      </button>
+    </div>
+  </div>
+</section>
+
+    </div>
+  </main>
+</div>
+
+<ng-template #messageDialogTemplate>
+  <div class="message-dialog">
+    <div class="dialog-header">
+      <h2>Send Message</h2>
+      <button mat-icon-button (click)="closeMessageDialog()" class="close-btn">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <mat-dialog-content>
+      <div class="user-info">
+        <div class="user-avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div>
+          <h3>{{currentSession?.UserName || 'Unknown User'}}</h3>
+          <p>{{currentSession?.DeviceName || 'Unknown Device'}}</p>
+        </div>
+      </div>
+      
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="messageTitle">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Message</mat-label>
+        <textarea matInput [(ngModel)]="messageContent" required></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Display Time (ms)</mat-label>
+        <input matInput type="number" [(ngModel)]="messageTimeout" min="1000">
+      </mat-form-field>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-stroked-button (click)="closeMessageDialog()">Cancel</button>
+      <button mat-raised-button color="primary" 
+              (click)="sendMessageToSession()"
+              [disabled]="!messageContent || isSending">
+        Send
+        <mat-spinner diameter="20" *ngIf="isSending"></mat-spinner>
+      </button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>

@@ -1,0 +1,8 @@
+version: "1.0"
+type: navigation-item
+data:
+  path: "usermgmt.permission"
+  position: 10
+  text: _("Permission")
+  icon: tune
+  url: "/usermgmt/permission"
