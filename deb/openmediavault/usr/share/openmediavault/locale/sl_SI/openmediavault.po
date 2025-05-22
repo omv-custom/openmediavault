@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the openmediavault package.
-# 
+#
 # Translators:
 # Miha Bezjak <miha@bezjak.info>, 2017
 msgid ""
@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-30 16:42+0100\n"
-"PO-Revision-Date: 2012-03-17 01:48+0000\n"
+"PO-Revision-Date: 2025-04-08 15:26\n"
 "Last-Translator: Miha Bezjak <miha@bezjak.info>, 2017\n"
 "Language-Team: Slovenian (Slovenia) (http://app.transifex.com/openmediavault/openmediavault/language/sl_SI/)\n"
+"Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sl_SI\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"X-Generator: OpenMediaVault Translation Sync\n"
 
 msgid "%d days"
 msgstr ""
@@ -289,13 +290,16 @@ msgid "Address"
 msgstr "Naslov"
 
 msgid "Administrator: read/write, Users: no access, Others: no access"
-msgstr "Administrator: beri/piši, Uporabniki: brez dostopa, Ostali: brez dostopa"
+msgstr ""
+"Administrator: beri/piši, Uporabniki: brez dostopa, Ostali: brez dostopa"
 
 msgid "Administrator: read/write, Users: read-only, Others: no access"
-msgstr "Administrator: beri/piši, Uporabniki: samo branje, Ostali: brez dostopa"
+msgstr ""
+"Administrator: beri/piši, Uporabniki: samo branje, Ostali: brez dostopa"
 
 msgid "Administrator: read/write, Users: read-only, Others: read-only"
-msgstr "Administrator: beri/piši, Uporabniki: samo branje, Ostali: samo branje"
+msgstr ""
+"Administrator: beri/piši, Uporabniki: samo branje, Ostali: samo branje"
 
 msgid "Administrator: read/write, Users: read/write, Others: no access"
 msgstr "Administrator: beri/piši, Uporabniki: beri/piši, Ostali: brez dostopa"
@@ -369,7 +373,9 @@ msgstr ""
 msgid ""
 "An email message with the command output (if any produced) is send to the "
 "administrator."
-msgstr "Elektronsko sporočilo z rezultatom ukaza (v kolikor obstaja) je poslan administratorju."
+msgstr ""
+"Elektronsko sporočilo z rezultatom ukaza (v kolikor obstaja) je poslan "
+"administratorju."
 
 msgid ""
 "An email message with the command output (if any produced) is send to the "
@@ -722,7 +728,10 @@ msgid ""
 "Compression is worth using if your connection is slow. The efficiency of the"
 " compression depends on the type of the file, and varies widely. Useful for "
 "internet transfer only."
-msgstr "Uporaba stiskanja je vredna uporabe, v kolikor imate počasno povezavo. Učinkovitost stiskanja je odvisna od vrste datoteke in lahko niha. Uporabno samo za povezave preko interneta."
+msgstr ""
+"Uporaba stiskanja je vredna uporabe, v kolikor imate počasno povezavo. "
+"Učinkovitost stiskanja je odvisna od vrste datoteke in lahko niha. Uporabno "
+"samo za povezave preko interneta."
 
 msgid "Confirm"
 msgstr ""
@@ -890,7 +899,9 @@ msgid "Delete"
 msgstr "Izbriši"
 
 msgid "Delete files on the receiving side that don't exist on sender."
-msgstr "Izbriši datoteke, ki obstajajo na strani naslovnika in ne obstajajo na strani pošiljatelja"
+msgstr ""
+"Izbriši datoteke, ki obstajajo na strani naslovnika in ne obstajajo na "
+"strani pošiljatelja"
 
 msgid "Denmark"
 msgstr "Danska"
@@ -1152,7 +1163,9 @@ msgstr ""
 msgid ""
 "Enable this option to keep partially transferred files, otherwise they will "
 "be deleted if the transfer is interrupted."
-msgstr "Omogočite to možnost, da shranite delno prenesene datoteke, sicer bodo v primeru prekinjenega prenosa izbrisane."
+msgstr ""
+"Omogočite to možnost, da shranite delno prenesene datoteke, sicer bodo v "
+"primeru prekinjenega prenosa izbrisane."
 
 msgid "Enable user home directories."
 msgstr ""
@@ -3360,7 +3373,9 @@ msgstr ""
 msgid ""
 "The repository will be checked for new, removed or upgraded software "
 "packages."
-msgstr "Repozitorij bo preverjen za nove, odstranjene ali nadgrajene programske pakete."
+msgstr ""
+"Repozitorij bo preverjen za nove, odstranjene ali nadgrajene programske "
+"pakete."
 
 msgid "The requested page was not found."
 msgstr ""
@@ -3751,7 +3766,8 @@ msgstr "Posodobi ACL-je na cilju na enake kot so ACL-ji na izvorni strani."
 
 msgid ""
 "Update the destination extended attributes to be the same as the local ones."
-msgstr "Posodobi zunanje atribute na cilju na enake, kot so na lokalni strani."
+msgstr ""
+"Posodobi zunanje atribute na cilju na enake, kot so na lokalni strani."
 
 msgid "Updated NFS settings."
 msgstr ""
@@ -4118,3 +4134,73 @@ msgstr ""
 
 msgid "total"
 msgstr ""
+
+# Automatically added from POT file
+msgid "Active Connections"
+msgstr "TRANSLATION NEEDED: Active Connections"
+
+# Automatically added from POT file
+msgid "Active Services"
+msgstr "TRANSLATION NEEDED: Active Services"
+
+# Automatically added from POT file
+msgid "Enable Service"
+msgstr "TRANSLATION NEEDED: Enable Service"
+
+# Automatically added from POT file
+msgid "Loading Samba status..."
+msgstr "TRANSLATION NEEDED: Loading Samba status..."
+
+# Automatically added from POT file
+msgid "Locked Files"
+msgstr "TRANSLATION NEEDED: Locked Files"
+
+# Automatically added from POT file
+msgid "No active connections"
+msgstr "TRANSLATION NEEDED: No active connections"
+
+# Automatically added from POT file
+msgid "No active services"
+msgstr "TRANSLATION NEEDED: No active services"
+
+# Automatically added from POT file
+msgid "No locked files"
+msgstr "TRANSLATION NEEDED: No locked files"
+
+# Automatically added from POT file
+msgid "Samba Service is Disabled"
+msgstr "TRANSLATION NEEDED: Samba Service is Disabled"
+
+# Automatically added from POT file
+msgid "The Samba file sharing service is currently not running."
+msgstr ""
+"TRANSLATION NEEDED: The Samba file sharing service is currently not running."
+
+# Automatically added from POT file
+msgid "Auto-refresh"
+msgstr "TRANSLATION NEEDED: Auto-refresh"
+
+# Automatically added from POT file
+msgid "No processes found"
+msgstr "TRANSLATION NEEDED: No processes found"
+
+# Automatically added from POT file
+msgid "Real-time system monitoring (similar to top command)"
+msgstr ""
+"TRANSLATION NEEDED: Real-time system monitoring (similar to top command)"
+
+# Automatically added from POT file
+msgid "System Processes Monitor"
+msgstr "TRANSLATION NEEDED: System Processes Monitor"
+
+# Automatically added from POT file
+msgid "Swap space not configured"
+msgstr "TRANSLATION NEEDED: Swap space not configured"
+
+# Automatically added from POT file
+msgid "Sleeping"
+msgstr "TRANSLATION NEEDED: Sleeping"
+
+# Automatically added from POT file
+msgid "Zombie"
+msgstr "TRANSLATION NEEDED: Zombie"

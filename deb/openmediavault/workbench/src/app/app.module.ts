@@ -17,7 +17,7 @@
  */
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { APP_INITIALIZER, ErrorHandler, NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { provideClientHydration, withIncrementalHydration, BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslocoService } from '@jsverse/transloco';
 import { marker as gettext } from '@jsverse/transloco-keys-manager/marker';
@@ -60,6 +60,7 @@ import { allIcons } from 'angular-feather/icons';
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'
         })], providers: [
+        provideClientHydration(withIncrementalHydration()),
         {
             provide: ErrorHandler,
             useClass: GlobalErrorHandlerService

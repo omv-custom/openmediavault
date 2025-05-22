@@ -18,6 +18,7 @@ import { SmbShareFormPageComponent } from '~/app/pages/services/smb/smb-share-fo
 import { SshFormPageComponent } from '~/app/pages/services/ssh/ssh-form-page.component';
 import { IsDirtyGuardService } from '~/app/shared/services/is-dirty-guard.service';
 import { PlexDatatablePageComponent } from '~/app/pages/services/plex/plex-datatable-page.component';
+import { EmbyPageComponent } from '~/app/pages/services/emby/emby-page.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,16 @@ const routes: Routes = [
       title: gettext('Plex Media Server'),
       editing: true,
       notificationTitle: gettext('Updated Plex settings.')
+    }
+  },
+  {
+    path: 'emby',
+    component: EmbyPageComponent,
+    canDeactivate: [IsDirtyGuardService],
+    data: {
+      title: gettext('Emby Media Server'),
+      editing: true,
+      notificationTitle: gettext('Updated Emby settings.')
     }
   },
   {

@@ -1,6 +1,18 @@
+openmediavault (8.0.4) stable; urgency=low
+
+  * Add Plex Module.
+  * Add Emby Module.
+
+ -- Gekomod <zaba141@o2.pl>  Thu, 22 Apr 2025 11:39:24 +0100
+
 openmediavault (8.0.3) stable; urgency=low
 
   * Add Plex Module.
+  * Add search field to the `Diagnostics | System Logs | Logs` page.
+  * Display more information about the last/current scrub run on the
+    BTRFS details page.
+  * Improve validation of RPCs that contain passwords.
+  * Fasten Page with provideClientHydration
 
  -- Gekomod <zaba141@o2.pl>  Thu, 6 Apr 2025 11:39:24 +0100
 

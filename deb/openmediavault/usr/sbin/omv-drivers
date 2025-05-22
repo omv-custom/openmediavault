@@ -1,0 +1,54 @@
+#!/bin/bash
+# omv-drivers v2.0 - Updated for OMV data model
+
+DRIVER_DB="/var/lib/openmediavault/drivers.json"
+
+scan() {
+    # Scan and output in OMV config format
+    drivers=()
+    
+    # PCI drivers
+    lspci -k | awk -F: '/Kernel driver in use:/ {print $NF}' | while read -r driver; do
+        drivers+=("$(printf '{
+            "uuid": "%s",
+            "name": "%s",
+            "version": "%s",
+            "status": "active",
+            "type": "pci",
+            "date": "%s",
+            "module": "%s"
+        }' $(uuidgen) "$driver" "$(modinfo -F version "$driver" 2>/dev/null || echo unknown)" \
+          "$(date -Iseconds)" "$driver")")
+    done
+    
+    # Kernel modules
+    lsmod | awk 'NR>1 {print $1}' | while read -r module; do
+        drivers+=("$(printf '{
+            "uuid": "%s",
+            "name": "%s",
+            "version": "%s",
+            "status": "active",
+            "type": "kernel",
+            "date": "%s",
+            "module": "%s"
+        }' $(uuidgen) "$module" "$(modinfo -F version "$module" 2>/dev/null || echo unknown)" \
+          "$(date -Iseconds)" "$module")")
+    done
+    
+    # Output as JSON array
+    echo "[$(IFS=,; echo "${drivers[*]}")]"
+}
+
+case "$1" in
+    scan)
+        scan
+        ;;
+    update)
+        driver="$2"
+        # Update logic here
+        ;;
+    *)
+        echo "Usage: $0 {scan|update}"
+        exit 1
+        ;;
+esac

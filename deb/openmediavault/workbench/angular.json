@@ -72,9 +72,9 @@
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
+            "buildOptimizer": true,
             "sourceMap": true,
-            "optimization": false,
+            "optimization": true,
             "namedChunks": true,
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"

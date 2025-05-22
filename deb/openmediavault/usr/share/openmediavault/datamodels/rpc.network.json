@@ -677,6 +677,7 @@
 			},
 			"ftppassword": {
 			   "type": "string",
+				"format": "no-multi-line",
 			   "required": true
 			}
 		}

@@ -29,13 +29,13 @@ import { MatTableModule } from '@angular/material/table';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
-
 import { MatTabsModule as MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @NgModule({
@@ -70,6 +70,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatProgressSpinnerModule,
     MatGridListModule,
     MatSnackBarModule,
+    MatPaginatorModule,
     DragDropModule,
     OverlayModule,
     ClipboardModule

@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+import socket
+import os
+import pam
+import sys
+import time
+from systemd.journal import JournalHandler
+import logging
+import signal
+
+SOCKET_PATH = '/var/run/omv-auth.sock'
+PID_FILE = '/var/run/omv-auth.pid'
+
+class OMVAuthServer:
+    def __init__(self):
+        self.running = False
+        self.server = None
+        self.setup_logging()
+        self.pam = pam.pam()
+
+    def setup_logging(self):
+        logging.basicConfig(level=logging.INFO)
+        self.logger = logging.getLogger('omv-auth')
+        self.logger.addHandler(JournalHandler())
+
+    def start(self):
+        if self.running:
+            self.logger.warning("Service is already running")
+            return
+
+        # Remove existing socket if exists
+        try:
+            os.unlink(SOCKET_PATH)
+        except OSError:
+            if os.path.exists(SOCKET_PATH):
+                raise
+
+        # Create PID file
+        with open(PID_FILE, 'w') as f:
+            f.write(str(os.getpid()))
+
+        # Setup signal handlers
+        signal.signal(signal.SIGTERM, self.stop)
+        signal.signal(signal.SIGINT, self.stop)
+
+        # Create Unix socket server
+        self.server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self.server.bind(SOCKET_PATH)
+        os.chmod(SOCKET_PATH, 0o666)
+        self.server.listen(1)
+
+        self.running = True
+        self.logger.info(f"Server started and listening on {SOCKET_PATH}")
+
+        try:
+            while self.running:
+                connection, _ = self.server.accept()
+                try:
+                    data = connection.recv(1024).decode('utf-8').strip()
+                    if ':' in data:
+                        username, password = data.split(':', 1)
+                        self.logger.info(f"Authentication attempt for user: {username}")
+                        
+                        if self.pam.authenticate(username, password):
+                            connection.sendall(b'OK\n')
+                            self.logger.info(f"User {username} authenticated successfully")
+                        else:
+                            connection.sendall(b'Invalid credentials\n')
+                            self.logger.warning(f"Failed authentication for user {username}")
+                    else:
+                        connection.sendall(b'Invalid request format\n')
+                finally:
+                    connection.close()
+        except Exception as e:
+            if self.running:
+                self.logger.error(f"Server error: {str(e)}")
+        finally:
+            self.cleanup()
+
+    def stop(self, signum=None, frame=None):
+        if not self.running:
+            return
+
+        self.running = False
+        self.logger.info("Shutting down server...")
+        
+        # Create a temporary client to break the accept() loop
+        try:
+            temp_client = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            temp_client.connect(SOCKET_PATH)
+            temp_client.close()
+        except:
+            pass
+
+        self.cleanup()
+        self.logger.info("Server stopped")
+
+    def cleanup(self):
+        if self.server:
+            self.server.close()
+        try:
+            os.unlink(SOCKET_PATH)
+        except OSError:
+            pass
+        try:
+            os.unlink(PID_FILE)
+        except OSError:
+            pass
+
+    def status(self):
+        if os.path.exists(PID_FILE):
+            try:
+                with open(PID_FILE, 'r') as f:
+                    pid = int(f.read().strip())
+                    os.kill(pid, 0)  # Check if process exists
+                return True
+            except (OSError, ValueError):
+                return False
+        return False
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: omv-auth {start|stop|status|restart}")
+        sys.exit(1)
+
+    command = sys.argv[1].lower()
+    server = OMVAuthServer()
+
+    if command == 'start':
+        server.start()
+    elif command == 'stop':
+        server.stop()
+    elif command == 'restart':
+        server.stop()
+        time.sleep(1)
+        server.start()
+    elif command == 'status':
+        if server.status():
+            print("omv-auth is running")
+            sys.exit(0)
+        else:
+            print("omv-auth is not running")
+            sys.exit(3)
+    else:
+        print(f"Unknown command: {command}")
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()

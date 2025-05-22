@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the openmediavault package.
-# 
+#
 # Translators:
 # Herald Yu <yuhr123@gmail.com>, 2018-2019
 # LeeYang <150183966@qq.com>, 2021
@@ -15,14 +15,15 @@ msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-30 16:42+0100\n"
-"PO-Revision-Date: 2012-03-17 01:48+0000\n"
+"PO-Revision-Date: 2025-04-08 15:26\n"
 "Last-Translator: songming <by@songming.me>, 2013-2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/openmediavault/openmediavault/language/zh_CN/)\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: OpenMediaVault Translation Sync\n"
 
 msgid "%d days"
 msgstr "%d天"
@@ -1535,7 +1536,8 @@ msgid ""
 "If 'Guests allowed' is selected and no login credential is provided, then "
 "access as guest. Always access as guest when 'Guests only' is selecting; in "
 "this case no password is required to connect to the share."
-msgstr "如果选择“允许访客”，用户没有提供登录凭证，那么让其以访客权限读写。如果选择“仅访客”，则全部用户以访客读写，用户不需要密码便可以连接共享。"
+msgstr ""
+"如果选择“允许访客”，用户没有提供登录凭证，那么让其以访客权限读写。如果选择“仅访客”，则全部用户以访客读写，用户不需要密码便可以连接共享。"
 
 msgid ""
 "If a device is not listed here, it is usually because the device already "
@@ -1543,7 +1545,10 @@ msgid ""
 "be mounted <a href='#/storage/filesystems/mount'>here</a>. For the latter, "
 "please <a href='#/storage/disks'>wipe</a> the device as partitions are not "
 "supported."
-msgstr "若裝置沒在此被列出，通常是因為該裝置上已經含有一個檔案系統或分割。在前者狀況時，該檔案系統可以被掛載<a href='#/storage/filesystems/mount'>於此</a>。在後者狀況時，請<a href='#/storage/disks'>抹除</a>該裝置，因為分割未被支援。"
+msgstr ""
+"若裝置沒在此被列出，通常是因為該裝置上已經含有一個檔案系統或分割。在前者狀況時，該檔案系統可以被掛載<a "
+"href='#/storage/filesystems/mount'>於此</a>。在後者狀況時，請<a "
+"href='#/storage/disks'>抹除</a>該裝置，因為分割未被支援。"
 
 msgid ""
 "If set then the client will be prompted to supply a user name and password "
@@ -1555,7 +1560,8 @@ msgid ""
 "before starting the file transfer with the client. Then it is not possible "
 "to map users and groups by name and the daemon is not being able to follow "
 "symbolic links that are either absolute or outside of the new root path."
-msgstr "如果设置此项，守护进程会在客户端开始传输前chroot到共享文件夹目录。那么将无法用名字来映射用户和用户组，并且守护进程无法追随绝对路径或者新根目录之外的符号链接。"
+msgstr ""
+"如果设置此项，守护进程会在客户端开始传输前chroot到共享文件夹目录。那么将无法用名字来映射用户和用户组，并且守护进程无法追随绝对路径或者新根目录之外的符号链接。"
 
 msgid "If this option is set, then any attempted downloads will fail."
 msgstr "如果设定那么任何下载将失败。"
@@ -1569,7 +1575,9 @@ msgid ""
 "attribute, before mapping DOS attributes to UNIX permission bits. When set, "
 "DOS attributes will be stored onto an extended attribute in the UNIX file "
 "system, associated with the file or directory."
-msgstr "如果设置此参数，Samba 在映射 DOS 属性到 UNIX 系统前，首先会读取 DOS 文件系统扩展属性(系统、隐藏、存档或只读)。设置这项参数可以保存 DOS 文件系统中文件和文件夹的扩展属性到 UNIX 文件系统。"
+msgstr ""
+"如果设置此参数，Samba 在映射 DOS 属性到 UNIX 系统前，首先会读取 DOS "
+"文件系统扩展属性(系统、隐藏、存档或只读)。设置这项参数可以保存 DOS 文件系统中文件和文件夹的扩展属性到 UNIX 文件系统。"
 
 msgid ""
 "If this parameter is set, then users may not create or modify files in the "
@@ -2345,28 +2353,39 @@ msgstr "皮特凯恩群岛"
 msgid ""
 "Please check the <a href=\"http://www.samba.org/ftp/rsync/rsync.html\" "
 "target=\"_blank\">manual page</a> for more details."
-msgstr "详情请看<a href=\"http://www.samba.org/ftp/rsync/rsync.html\" target=\"_blank\"> 手册  </a> 。"
+msgstr ""
+"详情请看<a href=\"http://www.samba.org/ftp/rsync/rsync.html\" target=\"_blank\">"
+" 手册  </a> 。"
 
 msgid ""
 "Please check the <a href=\"http://www.samba.org/ftp/rsync/rsyncd.conf.html\""
 " target=\"_blank\">manual page</a> for more details."
-msgstr "详情请看<a href=\"http://www.samba.org/ftp/rsync/rsyncd.conf.html\" target=\"_blank\">手册</a> 。"
+msgstr ""
+"详情请看<a href=\"http://www.samba.org/ftp/rsync/rsyncd.conf.html\" "
+"target=\"_blank\">手册</a> 。"
 
 msgid ""
 "Please check the <a href=\"https://man.openbsd.org/sshd_config.5\" "
 "target=\"_blank\">manual page</a> for more details."
-msgstr "详情请看<a href=\"https://man.openbsd.org/sshd_config.5\" target=\"_blank\">手册</a>。"
+msgstr ""
+"详情请看<a href=\"https://man.openbsd.org/sshd_config.5\" "
+"target=\"_blank\">手册</a>。"
 
 msgid ""
 "Please check the <a "
 "href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' "
 "target='_blank'>manual page</a> for more details."
-msgstr "详情请看 <a href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' target='_blank'> 手册 </a> 。"
+msgstr ""
+"详情请看 <a "
+"href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' "
+"target='_blank'> 手册 </a> 。"
 
 msgid ""
 "Please check the <a href='https://manpages.debian.org/nfs-kernel-"
 "server/exports.5.html' target='_blank'>manual page</a> for more details."
-msgstr "详情请看 <a href='https://manpages.debian.org/nfs-kernel-server/exports.5.html' target='_blank'>手冊</a>。"
+msgstr ""
+"详情请看 <a href='https://manpages.debian.org/nfs-kernel-server/exports.5.html' "
+"target='_blank'>手冊</a>。"
 
 msgid "Please choose the method to wipe the device."
 msgstr "请选择该设备的擦除方式。"
@@ -2496,7 +2515,12 @@ msgid ""
 "want.</li><li>Idle - Check the device unless it is in SLEEP, STANDBY or IDLE"
 " mode. In the IDLE state, most disks are still spinning, so this is probably"
 " not what you want.</li></ul>"
-msgstr "测试时磁盘会转动，请选择合适的模式来控制磁盘转动。<ul><li>永远-无论是什么功耗模式下都测试(检查)磁盘，当检查时，这可能会使停转的磁盘开始转动。</li><li>睡眠-处于睡眠模式下不检查设备。</li><li>待机-处于待机和睡眠模式下不检查设备。此模式下磁盘一般不旋转，如果你不想每次检查都转动磁盘，那么这个模式比较适合。</li><li>闲置-处于待机、睡眠、闲置模式下不检查设备，在闲置状态下，大多数磁盘还在转动，所以这可能不适合你。</li></ul>"
+msgstr ""
+"测试时磁盘会转动，请选择合适的模式来控制磁盘转动。<ul><li>永远-"
+"无论是什么功耗模式下都测试(检查)磁盘，当检查时，这可能会使停转的磁盘开始转动。</li><li>睡眠-"
+"处于睡眠模式下不检查设备。</li><li>待机-"
+"处于待机和睡眠模式下不检查设备。此模式下磁盘一般不旋转，如果你不想每次检查都转动磁盘，那么这个模式比较适合。</li><li>闲置-"
+"处于待机、睡眠、闲置模式下不检查设备，在闲置状态下，大多数磁盘还在转动，所以这可能不适合你。</li></ul>"
 
 msgid "Primary"
 msgstr "主要"
@@ -3258,14 +3282,19 @@ msgstr "SMTP 服务器默认端口，例如：25、465 或者 587。"
 msgid ""
 "The destination remote server, e.g. [USER@]HOST:DEST, [USER@]HOST::DEST or "
 "rsync://[USER@]HOST[:PORT]/DEST."
-msgstr "目标远程服务器，例如：[USER@]HOST:DEST, [USER@]HOST::DEST 或 rsync://[USER@]HOST[:PORT]/DEST。"
+msgstr ""
+"目标远程服务器，例如：[USER@]HOST:DEST, [USER@]HOST::DEST 或 "
+"rsync://[USER@]HOST[:PORT]/DEST。"
 
 msgid ""
 "The domain name of the system. If your system is part of a private network "
 "without a registered domain, use <em>internal</em> as suggested by <a "
 "href=\"https://datatracker.ietf.org/doc/html/draft-davies-internal-tld-01\" "
 "target=\"_blank\">ICANN</a>."
-msgstr "此系統的網域名稱。若您的系統屬於私人網路，沒有註冊網域，則使用<em>internal</em>，這是<a href=\"https://datatracker.ietf.org/doc/html/draft-davies-internal-tld-01\" target=\"_blank\">ICANN</a>所建議的。"
+msgstr ""
+"此系統的網域名稱。若您的系統屬於私人網路，沒有註冊網域，則使用<em>internal</em>，這是<a "
+"href=\"https://datatracker.ietf.org/doc/html/draft-davies-internal-tld-01\" "
+"target=\"_blank\">ICANN</a>所建議的。"
 
 msgid "The field should only contain * or a comma separated list of values."
 msgstr "此处仅包含 * 或逗号分割的值列表。"
@@ -3394,7 +3423,9 @@ msgstr " 共享文件夹 '{{ _response.sharedfolder }}' 的快照 '{{ _response.
 msgid ""
 "The source remote server, e.g. [USER@]HOST:SRC, [USER@]HOST::SRC or "
 "rsync://[USER@]HOST[:PORT]/SRC."
-msgstr "源远程服务器，例如 [USER@]HOST:SRC, [USER@]HOST::SRC 或  rsync://[USER@]HOST[:PORT]/SRC。"
+msgstr ""
+"源远程服务器，例如 [USER@]HOST:SRC, [USER@]HOST::SRC 或  "
+"rsync://[USER@]HOST[:PORT]/SRC。"
 
 msgid "The system will reboot now. This may take some time ..."
 msgstr "系统将要重启，这需要一些时间 ..."
@@ -3543,7 +3574,9 @@ msgid ""
 "use the keyword ALL (or the netmask 0.0.0.0/0) and then explicitly specify "
 "to the hosts allow parameter those hosts that should be permitted access. "
 "Leave this field empty to use default settings."
-msgstr "此选项是以逗号、空格或制表符分开的一组主机，这些主机不允许读写这个共享，当不同列表有冲突时允许列表有优先权。如果要预设拒绝所有主机，则使用关键字 ALL (或者掩码 0.0.0.0/0)，然后在允许列表明确指定哪些主机有访问权限。此位置空则使用默认设置。"
+msgstr ""
+"此选项是以逗号、空格或制表符分开的一组主机，这些主机不允许读写这个共享，当不同列表有冲突时允许列表有优先权。如果要预设拒绝所有主机，则使用关键字 ALL"
+" (或者掩码 0.0.0.0/0)，然后在允许列表明确指定哪些主机有访问权限。此位置空则使用默认设置。"
 
 msgid ""
 "This option is a comma, space, or tab delimited set of host which are NOT "
@@ -3552,7 +3585,9 @@ msgid ""
 "use the keyword ALL (or the netmask 0.0.0.0/0) and then explicitly specify "
 "to the hosts allow parameter those hosts that should be permitted access. "
 "Leave this field empty to use default settings."
-msgstr "此选项是以逗号、空格或制表符分开的一组主机，这些主机不允许读写这个共享，当不同列表有冲突时允许列表有优先权。如果要预设拒绝所有主机，则使用关键字 ALL (或者掩码 0.0.0.0/0)，然后在允许列表明确指定哪些主机有访问权限。此位置空则使用默认设置。"
+msgstr ""
+"此选项是以逗号、空格或制表符分开的一组主机，这些主机不允许读写这个共享，当不同列表有冲突时允许列表有优先权。如果要预设拒绝所有主机，则使用关键字 ALL"
+" (或者掩码 0.0.0.0/0)，然后在允许列表明确指定哪些主机有访问权限。此位置空则使用默认设置。"
 
 msgid ""
 "This option is a comma, space, or tab delimited set of hosts which are "
@@ -3918,7 +3953,9 @@ msgid ""
 "Samba to be faster. Samba automatically turns this off for clients that use "
 "protocol levels lower than NT LM 0.12 and when it detects a client is "
 "Windows 9x."
-msgstr "对独占 oplocked 锁文件使用 sendfile 函数系统会更高效。系统 CPU 使用效率更高，Samba 速度也更快。如果客户端使用比 NT LM 0.12 还低的协议或者是 Windows 9X 时 Samba 会自动关闭该功能。"
+msgstr ""
+"对独占 oplocked 锁文件使用 sendfile 函数系统会更高效。系统 CPU 使用效率更高，Samba 速度也更快。如果客户端使用比 NT "
+"LM 0.12 还低的协议或者是 Windows 9X 时 Samba 会自动关闭该功能。"
 
 msgid "Use the specified WINS server."
 msgstr "使用指定 WINS 服务器。"
@@ -4124,3 +4161,73 @@ msgstr "已选中"
 
 msgid "total"
 msgstr "总计"
+
+# Automatically added from POT file
+msgid "Active Connections"
+msgstr "TRANSLATION NEEDED: Active Connections"
+
+# Automatically added from POT file
+msgid "Active Services"
+msgstr "TRANSLATION NEEDED: Active Services"
+
+# Automatically added from POT file
+msgid "Enable Service"
+msgstr "TRANSLATION NEEDED: Enable Service"
+
+# Automatically added from POT file
+msgid "Loading Samba status..."
+msgstr "TRANSLATION NEEDED: Loading Samba status..."
+
+# Automatically added from POT file
+msgid "Locked Files"
+msgstr "TRANSLATION NEEDED: Locked Files"
+
+# Automatically added from POT file
+msgid "No active connections"
+msgstr "TRANSLATION NEEDED: No active connections"
+
+# Automatically added from POT file
+msgid "No active services"
+msgstr "TRANSLATION NEEDED: No active services"
+
+# Automatically added from POT file
+msgid "No locked files"
+msgstr "TRANSLATION NEEDED: No locked files"
+
+# Automatically added from POT file
+msgid "Samba Service is Disabled"
+msgstr "TRANSLATION NEEDED: Samba Service is Disabled"
+
+# Automatically added from POT file
+msgid "The Samba file sharing service is currently not running."
+msgstr ""
+"TRANSLATION NEEDED: The Samba file sharing service is currently not running."
+
+# Automatically added from POT file
+msgid "Auto-refresh"
+msgstr "TRANSLATION NEEDED: Auto-refresh"
+
+# Automatically added from POT file
+msgid "No processes found"
+msgstr "TRANSLATION NEEDED: No processes found"
+
+# Automatically added from POT file
+msgid "Real-time system monitoring (similar to top command)"
+msgstr ""
+"TRANSLATION NEEDED: Real-time system monitoring (similar to top command)"
+
+# Automatically added from POT file
+msgid "System Processes Monitor"
+msgstr "TRANSLATION NEEDED: System Processes Monitor"
+
+# Automatically added from POT file
+msgid "Swap space not configured"
+msgstr "TRANSLATION NEEDED: Swap space not configured"
+
+# Automatically added from POT file
+msgid "Sleeping"
+msgstr "TRANSLATION NEEDED: Sleeping"
+
+# Automatically added from POT file
+msgid "Zombie"
+msgstr "TRANSLATION NEEDED: Zombie"

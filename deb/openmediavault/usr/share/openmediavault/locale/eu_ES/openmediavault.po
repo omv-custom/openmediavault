@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the openmediavault package.
-# 
+#
 # Translators:
 # Aitor Salaberria <amento@ni.eus>, 2024
 msgid ""
@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-30 16:42+0100\n"
-"PO-Revision-Date: 2012-03-17 01:48+0000\n"
+"PO-Revision-Date: 2025-04-08 15:26\n"
 "Last-Translator: Aitor Salaberria <amento@ni.eus>, 2024\n"
 "Language-Team: Basque (Spain) (http://app.transifex.com/openmediavault/openmediavault/language/eu_ES/)\n"
+"Language: eu_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: eu_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: OpenMediaVault Translation Sync\n"
 
 msgid "%d days"
 msgstr "%d egun"
@@ -4118,3 +4119,73 @@ msgstr ""
 
 msgid "total"
 msgstr ""
+
+# Automatically added from POT file
+msgid "Active Connections"
+msgstr "TRANSLATION NEEDED: Active Connections"
+
+# Automatically added from POT file
+msgid "Active Services"
+msgstr "TRANSLATION NEEDED: Active Services"
+
+# Automatically added from POT file
+msgid "Enable Service"
+msgstr "TRANSLATION NEEDED: Enable Service"
+
+# Automatically added from POT file
+msgid "Loading Samba status..."
+msgstr "TRANSLATION NEEDED: Loading Samba status..."
+
+# Automatically added from POT file
+msgid "Locked Files"
+msgstr "TRANSLATION NEEDED: Locked Files"
+
+# Automatically added from POT file
+msgid "No active connections"
+msgstr "TRANSLATION NEEDED: No active connections"
+
+# Automatically added from POT file
+msgid "No active services"
+msgstr "TRANSLATION NEEDED: No active services"
+
+# Automatically added from POT file
+msgid "No locked files"
+msgstr "TRANSLATION NEEDED: No locked files"
+
+# Automatically added from POT file
+msgid "Samba Service is Disabled"
+msgstr "TRANSLATION NEEDED: Samba Service is Disabled"
+
+# Automatically added from POT file
+msgid "The Samba file sharing service is currently not running."
+msgstr ""
+"TRANSLATION NEEDED: The Samba file sharing service is currently not running."
+
+# Automatically added from POT file
+msgid "Auto-refresh"
+msgstr "TRANSLATION NEEDED: Auto-refresh"
+
+# Automatically added from POT file
+msgid "No processes found"
+msgstr "TRANSLATION NEEDED: No processes found"
+
+# Automatically added from POT file
+msgid "Real-time system monitoring (similar to top command)"
+msgstr ""
+"TRANSLATION NEEDED: Real-time system monitoring (similar to top command)"
+
+# Automatically added from POT file
+msgid "System Processes Monitor"
+msgstr "TRANSLATION NEEDED: System Processes Monitor"
+
+# Automatically added from POT file
+msgid "Swap space not configured"
+msgstr "TRANSLATION NEEDED: Swap space not configured"
+
+# Automatically added from POT file
+msgid "Sleeping"
+msgstr "TRANSLATION NEEDED: Sleeping"
+
+# Automatically added from POT file
+msgid "Zombie"
+msgstr "TRANSLATION NEEDED: Zombie"

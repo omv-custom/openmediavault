@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the openmediavault package.
-# 
+#
 # Translators:
 # Chang-Eon Byeon <ksna0827@gmail.com>, 2014-2016
 # Ji-Hyeon Gim <potatogim@potatogim.net>, 2014-2015,2018,2020
@@ -12,14 +12,15 @@ msgstr ""
 "Project-Id-Version: openmediavault\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-30 16:42+0100\n"
-"PO-Revision-Date: 2012-03-17 01:48+0000\n"
+"PO-Revision-Date: 2025-04-08 15:26\n"
 "Last-Translator: Ji-Hyeon Gim <potatogim@potatogim.net>, 2014-2015,2018,2020\n"
 "Language-Team: Korean (Korea) (http://app.transifex.com/openmediavault/openmediavault/language/ko_KR/)\n"
+"Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ko_KR\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: OpenMediaVault Translation Sync\n"
 
 msgid "%d days"
 msgstr ""
@@ -367,7 +368,9 @@ msgid ""
 "An attempt to send the test email has been made. Please check your mailbox. "
 "If the email does not arrive, check any spam folders and also check there "
 "are no Postfix related errors in the system log."
-msgstr "테스트 이메일을 보냈습니다. 메일함을 확인해 주세요. 이메일이 도착하지 않았다면 스팸 메일함을 확인해 주시고 시스템 로그에서 Postfix와 관련된 오류가 없는지 확인해 주세요."
+msgstr ""
+"테스트 이메일을 보냈습니다. 메일함을 확인해 주세요. 이메일이 도착하지 않았다면 스팸 메일함을 확인해 주시고 시스템 로그에서 "
+"Postfix와 관련된 오류가 없는지 확인해 주세요."
 
 msgid ""
 "An email message with the command output (if any produced) is send to the "
@@ -725,7 +728,9 @@ msgid ""
 "Compression is worth using if your connection is slow. The efficiency of the"
 " compression depends on the type of the file, and varies widely. Useful for "
 "internet transfer only."
-msgstr "네트워크가 느린 경우, 압축을 사용하는 것이 도움이 될 수 있습니다. 압축의 효율성은 파일의 유형에 의존적이며, 변화의 폭이 크며, 인터넷을 통한 전송일 경우에만 유효합니다. "
+msgstr ""
+"네트워크가 느린 경우, 압축을 사용하는 것이 도움이 될 수 있습니다. 압축의 효율성은 파일의 유형에 의존적이며, 변화의 폭이 크며, "
+"인터넷을 통한 전송일 경우에만 유효합니다. "
 
 msgid "Confirm"
 msgstr ""
@@ -1552,7 +1557,10 @@ msgid ""
 "before starting the file transfer with the client. Then it is not possible "
 "to map users and groups by name and the daemon is not being able to follow "
 "symbolic links that are either absolute or outside of the new root path."
-msgstr "이 옵션이 설정되면, 데몬은 클라이언트와의 파일 송신을 시작하기 전에 공유 폴더 경로로 chroot를 수행합니다. 이후 사용자와 그룹을 이름으로 사상시키는 것이 불가능해지며, 데몬은 chroot를 통해 바뀐 새로운 루트 경로를 벗어나거나 절대 경로로 지정된 심볼릭 링크를 따라갈 수 없습니다. "
+msgstr ""
+"이 옵션이 설정되면, 데몬은 클라이언트와의 파일 송신을 시작하기 전에 공유 폴더 경로로 chroot를 수행합니다. 이후 사용자와 그룹을 "
+"이름으로 사상시키는 것이 불가능해지며, 데몬은 chroot를 통해 바뀐 새로운 루트 경로를 벗어나거나 절대 경로로 지정된 심볼릭 링크를 "
+"따라갈 수 없습니다. "
 
 msgid "If this option is set, then any attempted downloads will fail."
 msgstr "이 옵션이 설정되면, 모든 내려받기 시도는 실패하게 됩니다."
@@ -1566,7 +1574,10 @@ msgid ""
 "attribute, before mapping DOS attributes to UNIX permission bits. When set, "
 "DOS attributes will be stored onto an extended attribute in the UNIX file "
 "system, associated with the file or directory."
-msgstr "이 매개변수가 설정되면, 삼바는 DOS 속성들(시스템, 숨김, 보관이나 읽기전용)을 UNIX 권한 비트로 사상시키기 전에 파일 시스템 확장 속성으로부터 DOS 속성들을 읽는 것을 먼저 시도합니다. 또한 해당 파일이나 디렉터리에 연관된 DOS 속성들은 UNIX 파일 시스템의 확장 속성에 저장됩니다."
+msgstr ""
+"이 매개변수가 설정되면, 삼바는 DOS 속성들(시스템, 숨김, 보관이나 읽기전용)을 UNIX 권한 비트로 사상시키기 전에 파일 시스템 "
+"확장 속성으로부터 DOS 속성들을 읽는 것을 먼저 시도합니다. 또한 해당 파일이나 디렉터리에 연관된 DOS 속성들은 UNIX 파일 "
+"시스템의 확장 속성에 저장됩니다."
 
 msgid ""
 "If this parameter is set, then users may not create or modify files in the "
@@ -2358,7 +2369,10 @@ msgid ""
 "Please check the <a "
 "href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' "
 "target='_blank'>manual page</a> for more details."
-msgstr "자세한 내용은 <a href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' target='_blank'>매뉴얼 페이지</a>를 참고하세요."
+msgstr ""
+"자세한 내용은 <a "
+"href='http://www.samba.org/samba/docs/man/manpages-3/smb.conf.5.html' "
+"target='_blank'>매뉴얼 페이지</a>를 참고하세요."
 
 msgid ""
 "Please check the <a href='https://manpages.debian.org/nfs-kernel-"
@@ -3255,7 +3269,9 @@ msgstr ""
 msgid ""
 "The destination remote server, e.g. [USER@]HOST:DEST, [USER@]HOST::DEST or "
 "rsync://[USER@]HOST[:PORT]/DEST."
-msgstr "목적지 원격 서버, 예를 들어, [사용자@]호스트:목적지, [사용자@]호스트::목적지 혹은 rsync://[사용자@]호스트[:포트]/목적지."
+msgstr ""
+"목적지 원격 서버, 예를 들어, [사용자@]호스트:목적지, [사용자@]호스트::목적지 혹은 "
+"rsync://[사용자@]호스트[:포트]/목적지."
 
 msgid ""
 "The domain name of the system. If your system is part of a private network "
@@ -3340,7 +3356,9 @@ msgid ""
 " mask and directory mask but the inherit permissions parameter overrides "
 "this. This can be particularly useful on systems with many users to allow a "
 "single share to be used flexibly by each user."
-msgstr "새로운 파일과 경로의 권한은 기본적으로 생성 마스크와 디렉터리 마스크가 지배하지만 권한 상속 패러미터가 이것을 덮어씁니다. 많은 사용자에게 단일 공유를 허용하고 각 사용자에 의해 유동적으로 사용되는 시스템에 부분적으로 유용할 수 있습니다."
+msgstr ""
+"새로운 파일과 경로의 권한은 기본적으로 생성 마스크와 디렉터리 마스크가 지배하지만 권한 상속 패러미터가 이것을 덮어씁니다. 많은 "
+"사용자에게 단일 공유를 허용하고 각 사용자에 의해 유동적으로 사용되는 시스템에 부분적으로 유용할 수 있습니다."
 
 msgid "The port on which SSH is running on the remote system."
 msgstr "원격 시스템상에서 SSH가 동작 중인 포트 번호입니다."
@@ -3391,7 +3409,9 @@ msgstr ""
 msgid ""
 "The source remote server, e.g. [USER@]HOST:SRC, [USER@]HOST::SRC or "
 "rsync://[USER@]HOST[:PORT]/SRC."
-msgstr "원본 원격 서버. 예를 들면, [USER@]HOST:SRC, [USER@]HOST::SRC 혹은 rsync://[USER@]HOST[:PORT]/SRC."
+msgstr ""
+"원본 원격 서버. 예를 들면, [USER@]HOST:SRC, [USER@]HOST::SRC 혹은 "
+"rsync://[USER@]HOST[:PORT]/SRC."
 
 msgid "The system will reboot now. This may take some time ..."
 msgstr "시스템이 재시작됩니다. 몇 분이 소요될 수 있습니다 ..."
@@ -3540,7 +3560,10 @@ msgid ""
 "use the keyword ALL (or the netmask 0.0.0.0/0) and then explicitly specify "
 "to the hosts allow parameter those hosts that should be permitted access. "
 "Leave this field empty to use default settings."
-msgstr "이 옵션은 이 모듈에 대한 접근이 허용되지 않는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 목록이 충돌할 경우, 허용 목록이 우선권을 갖습니다. 모든 연결을 기본적으로 거부하려면 ALL 키워드(혹은 넷 마스크 0.0.0.0/0)를 사용하고 접근이 허용되어야 할 호스트를 호스트 허용 매개변수에 지정하십시오. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
+msgstr ""
+"이 옵션은 이 모듈에 대한 접근이 허용되지 않는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 목록이 충돌할 경우, 허용 목록이"
+" 우선권을 갖습니다. 모든 연결을 기본적으로 거부하려면 ALL 키워드(혹은 넷 마스크 0.0.0.0/0)를 사용하고 접근이 허용되어야 할"
+" 호스트를 호스트 허용 매개변수에 지정하십시오. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
 
 msgid ""
 "This option is a comma, space, or tab delimited set of host which are NOT "
@@ -3549,19 +3572,26 @@ msgid ""
 "use the keyword ALL (or the netmask 0.0.0.0/0) and then explicitly specify "
 "to the hosts allow parameter those hosts that should be permitted access. "
 "Leave this field empty to use default settings."
-msgstr "이 옵션은 이 공유에 대한 접근이 허용되지 않는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 목록이 충돌할 경우, 허용 목록이 우선권을 갖습니다. 모든 연결을 기본적으로 거부하려면 ALL 키워드(혹은 넷 마스크 0.0.0.0/0)를 사용하고 접근이 허용되어야 할 호스트를 호스트 허용 매개변수에 지정하십시오. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
+msgstr ""
+"이 옵션은 이 공유에 대한 접근이 허용되지 않는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 목록이 충돌할 경우, 허용 목록이"
+" 우선권을 갖습니다. 모든 연결을 기본적으로 거부하려면 ALL 키워드(혹은 넷 마스크 0.0.0.0/0)를 사용하고 접근이 허용되어야 할"
+" 호스트를 호스트 허용 매개변수에 지정하십시오. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
 
 msgid ""
 "This option is a comma, space, or tab delimited set of hosts which are "
 "permitted to access this module. You can specify the hosts by name or IP "
 "number. Leave this field empty to use default settings."
-msgstr "이 옵션은 이 모듈에 대한 접근이 허용되는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 호스트를 이름 또는 IP주소로 지정할 수 있습니다. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
+msgstr ""
+"이 옵션은 이 모듈에 대한 접근이 허용되는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 호스트를 이름 또는 IP주소로 지정할 "
+"수 있습니다. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
 
 msgid ""
 "This option is a comma, space, or tab delimited set of hosts which are "
 "permitted to access this share. You can specify the hosts by name or IP "
 "number. Leave this field empty to use default settings."
-msgstr "이 옵션은 이 공유에 대한 접근이 허용되는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 호스트를 이름 또는 IP주소로 지정할 수 있습니다. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
+msgstr ""
+"이 옵션은 이 공유에 대한 접근이 허용되는 쉼표, 공백 또는 탭으로 구분되는 호스트의 묶음입니다. 호스트를 이름 또는 IP주소로 지정할 "
+"수 있습니다. 기본 설정으로 사용하려면 이 영역을 비워두십시오."
 
 msgid ""
 "This option specifies the group name that file transfers to and from that "
@@ -3582,7 +3612,9 @@ msgid ""
 "This parameter can be used to ensure that if default acls exist on parent "
 "directories, they are always honored when creating a new file or "
 "subdirectory in these parent directories."
-msgstr "이 매개변수는 부모 디렉터리에 기본 ACL이 있다면, 새 파일이나 하위 디렉터리가 생성될 때 항상 이를 따르게 하기 위해 사용될 수 있습니다."
+msgstr ""
+"이 매개변수는 부모 디렉터리에 기본 ACL이 있다면, 새 파일이나 하위 디렉터리가 생성될 때 항상 이를 따르게 하기 위해 사용될 수 "
+"있습니다."
 
 msgid ""
 "This parameter controls whether files starting with a dot appear as hidden "
@@ -4121,3 +4153,73 @@ msgstr ""
 
 msgid "total"
 msgstr ""
+
+# Automatically added from POT file
+msgid "Active Connections"
+msgstr "TRANSLATION NEEDED: Active Connections"
+
+# Automatically added from POT file
+msgid "Active Services"
+msgstr "TRANSLATION NEEDED: Active Services"
+
+# Automatically added from POT file
+msgid "Enable Service"
+msgstr "TRANSLATION NEEDED: Enable Service"
+
+# Automatically added from POT file
+msgid "Loading Samba status..."
+msgstr "TRANSLATION NEEDED: Loading Samba status..."
+
+# Automatically added from POT file
+msgid "Locked Files"
+msgstr "TRANSLATION NEEDED: Locked Files"
+
+# Automatically added from POT file
+msgid "No active connections"
+msgstr "TRANSLATION NEEDED: No active connections"
+
+# Automatically added from POT file
+msgid "No active services"
+msgstr "TRANSLATION NEEDED: No active services"
+
+# Automatically added from POT file
+msgid "No locked files"
+msgstr "TRANSLATION NEEDED: No locked files"
+
+# Automatically added from POT file
+msgid "Samba Service is Disabled"
+msgstr "TRANSLATION NEEDED: Samba Service is Disabled"
+
+# Automatically added from POT file
+msgid "The Samba file sharing service is currently not running."
+msgstr ""
+"TRANSLATION NEEDED: The Samba file sharing service is currently not running."
+
+# Automatically added from POT file
+msgid "Auto-refresh"
+msgstr "TRANSLATION NEEDED: Auto-refresh"
+
+# Automatically added from POT file
+msgid "No processes found"
+msgstr "TRANSLATION NEEDED: No processes found"
+
+# Automatically added from POT file
+msgid "Real-time system monitoring (similar to top command)"
+msgstr ""
+"TRANSLATION NEEDED: Real-time system monitoring (similar to top command)"
+
+# Automatically added from POT file
+msgid "System Processes Monitor"
+msgstr "TRANSLATION NEEDED: System Processes Monitor"
+
+# Automatically added from POT file
+msgid "Swap space not configured"
+msgstr "TRANSLATION NEEDED: Swap space not configured"
+
+# Automatically added from POT file
+msgid "Sleeping"
+msgstr "TRANSLATION NEEDED: Sleeping"
+
+# Automatically added from POT file
+msgid "Zombie"
+msgstr "TRANSLATION NEEDED: Zombie"
