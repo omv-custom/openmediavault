@@ -15,6 +15,7 @@ import { ShutdownPageComponent } from '~/app/core/pages/shutdown-page/shutdown-p
 import { StandbyPageComponent } from '~/app/core/pages/standby-page/standby-page.component';
 import { MaterialModule } from '~/app/material.module';
 import { SharedModule } from '~/app/shared/shared.module';
+import {NgTiltModule} from '@geometricpanda/angular-tilt';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { SharedModule } from '~/app/shared/shared.module';
     SharedModule,
     ComponentsModule,
     MaterialModule,
+    NgTiltModule,
     RouterModule,
     TranslocoModule,
     DashboardModule

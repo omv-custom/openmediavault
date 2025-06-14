@@ -4,7 +4,7 @@
 @include mat.checkbox-overrides(
   (
     unselected-focus-icon-color:
-      var(--mdc-checkbox-unselected-hover-state-layer-color),
+      var(--mat-checkbox-unselected-hover-state-layer-color),
   )
 );
 

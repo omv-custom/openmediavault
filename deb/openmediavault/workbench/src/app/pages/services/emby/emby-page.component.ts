@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, Inject, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, OnDestroy, ViewChild, TemplateRef, DOCUMENT } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { catchError, of, forkJoin, timeout, lastValueFrom } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -62,6 +62,7 @@ interface Session {
   Client: string;
   DeviceName: string;
   RemoteEndPoint: string;
+  Protocol: string;
   PlayState?: PlayState;
   NowPlayingItem?: MediaItem;
   LastActivityDate: string;
@@ -202,10 +203,30 @@ export class EmbyPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.checkConnectionSettings();
     this.loadData();
     this.initializeForm();
     this.startAutoRefresh();
     this.loadEmbySettings();
+  }
+
+  private checkConnectionSettings(): void {
+    const savedSettings = localStorage.getItem('embyConnectionSettings');
+    if (!savedSettings) {
+      this.showConnectionSettings = true;
+      this.showNotification('Proszę skonfigurować połączenie z serwerem Emby');
+    } else {
+      try {
+        const settings = JSON.parse(savedSettings);
+        if (!settings.apiUrl || !settings.apiKey) {
+          this.showConnectionSettings = true;
+          this.showNotification('Niekompletne ustawienia połączenia');
+        }
+      } catch (e) {
+        this.showConnectionSettings = true;
+        this.showNotification('Błąd odczytu ustawień połączenia');
+      }
+    }
   }
 
   private initializeForm(): void {
@@ -307,6 +328,11 @@ export class EmbyPageComponent implements OnInit, OnDestroy {
   }
 
   loadData(): void {
+    if (!this.hasValidConnectionSettings()) {
+      this.showConnectionSettings = true;
+      return;
+    }
+
     if (!this.apiUrl || !this.apiKey) {
       this.showConnectionSettings = true;
       return;
@@ -344,6 +370,18 @@ export class EmbyPageComponent implements OnInit, OnDestroy {
         this.handleConnectionError(error);
       }
     });
+  }
+
+  private hasValidConnectionSettings(): boolean {
+    const savedSettings = localStorage.getItem('embyConnectionSettings');
+    if (!savedSettings) return false;
+  
+    try {
+      const settings = JSON.parse(savedSettings);
+      return !!settings.apiUrl && !!settings.apiKey;
+    } catch (e) {
+      return false;
+    }
   }
 
   private async loadLibraryDetails(): Promise<void> {
@@ -425,6 +463,7 @@ export class EmbyPageComponent implements OnInit, OnDestroy {
       Client: session.Client || session.ApplicationName || 'Unknown',
       DeviceName: session.DeviceName || 'Unknown',
       RemoteEndPoint: session.RemoteEndPoint?.split(':')[0] || 'Unknown',
+      Protocol: session.Protocol || 'Unknown',
       PlayState: {
         PlayMethod: playState.PlayMethod || (session.TranscodingInfo ? 'Transcode' : 'DirectPlay'),
         IsPaused: playState.IsPaused,
@@ -521,9 +560,41 @@ export class EmbyPageComponent implements OnInit, OnDestroy {
   }
 
   saveConnectionSettings(): void {
-    this.saveSettings();
+    if (!this.connectionSettings.apiUrl || !this.connectionSettings.apiKey) {
+      this.showNotification('URL serwera i klucz API są wymagane', 'OK', 3000);
+      return;
+    }
+
+    localStorage.setItem('embyConnectionSettings', JSON.stringify(this.connectionSettings));
+    this.apiUrl = this.connectionSettings.apiUrl;
+    this.apiKey = this.connectionSettings.apiKey;
     this.showConnectionSettings = false;
-    this.refreshData();
+    this.showNotification('Ustawienia zapisane pomyślnie');
+    this.loadData(); // Ponowne załadowanie danych po zapisaniu ustawień
+    /* this.saveSettings();
+    this.showConnectionSettings = false;
+    this.refreshData(); */
+  }
+
+  async testConnection(): Promise<void> {
+    if (!this.connectionSettings.apiUrl || !this.connectionSettings.apiKey) return;
+
+    try {
+      const headers = new HttpHeaders({
+        'X-Emby-Token': this.connectionSettings.apiKey,
+        'Accept': 'application/json'
+      });
+
+      const response = await lastValueFrom(
+        this.http.get(`${this.connectionSettings.apiUrl}/System/Info`, { headers })
+      );
+
+      if (response) {
+        this.showNotification('Połączenie z serwerem udane!', 'OK', 3000);
+      }
+    } catch (error) {
+      this.showNotification('Błąd połączenia: ' + (error.message || 'Nieznany błąd'), 'OK', 5000);
+    }
   }
 
   killSession(sessionId: string): void {
@@ -967,6 +1038,31 @@ getQualityTooltip(session: Session): string {
   }
 }
 
+hasQualityInfo(session: Session): boolean {
+  return this.hasHDR(session) || 
+         this.hasDolbyVision(session) ||
+         this.hasHEVC(session) ||
+         this.hasAV1(session) ||
+         this.hasHD(session) ||
+         this.has4K(session);
+}
+
+hasHDR(session: Session): boolean {
+  return this.getVideoStream(session)?.VideoRange?.includes('HDR') ?? false;
+}
+
+hasDolbyVision(session: Session): boolean {
+  return this.getVideoStream(session)?.VideoRange?.includes('DOVI') ?? false;
+}
+
+hasHEVC(session: Session): boolean {
+  return this.getVideoStream(session)?.Codec?.toLowerCase() === 'hevc';
+}
+
+hasAV1(session: Session): boolean {
+  return this.getVideoStream(session)?.Codec?.toLowerCase() === 'av1';
+}
+
 hasHD(session: Session): boolean {
   const bitrate = session.NowPlayingItem?.Bitrate ?? 0;
   return bitrate > 10000000 && bitrate <= 30000000;
@@ -975,6 +1071,12 @@ hasHD(session: Session): boolean {
 has4K(session: Session): boolean {
   const bitrate = session.NowPlayingItem?.Bitrate ?? 0;
   return bitrate > 30000000;
+}
+
+private getVideoStream(session: Session): MediaStream | undefined {
+  return Array.isArray(session.NowPlayingItem?.MediaStreams) 
+    ? session.NowPlayingItem?.MediaStreams.find(s => s?.Codec)
+    : undefined;
 }
 
 updateServer(): void {

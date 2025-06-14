@@ -12,6 +12,11 @@
 
 <i-tabler name="brand-github" class="someclass"></i-tabler>
 
+<button mat-icon-button mat-button class="d-flex justify-content-center mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base" mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered 
+        (click)="onFullScreen()">
+<i-tabler name="maximize"></i-tabler>
+</button>
+
 <button mat-icon-button mat-button [matMenuTriggerFor]="language" class="mat-mdc-menu-trigger m-r-5 mdc-icon-button mat-mdc-icon-button mat-unthemed mat-mdc-button-base"
 mat-ripple-loader-class-name="mat-mdc-button-ripple" mat-ripple-loader-centered aria-haspopup="menu" aria-expanded="false">
 <img class="rounded-circle object-cover icon-20" src="/assets/flags/{{ currentLocale }}.svg">

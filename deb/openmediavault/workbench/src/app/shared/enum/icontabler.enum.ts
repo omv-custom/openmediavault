@@ -60,5 +60,7 @@ export enum IconTabler {
    'mdi:docker' = 'brand-docker',
    'mdi:calendar-clock-outline' = 'calendar-clock',
    'mdi:restore' = 'restore',
-   'mdi:file-key-outline' = 'circle-key'
+   'mdi:file-key-outline' = 'circle-key',
+   'mdi:console' = 'terminal',
+   'group' = 'users-group'
 }

@@ -1,11 +1,11 @@
 <div class="emby-glass-dashboard" [class.dark-theme]="isDarkTheme">
   <!-- Floating Header -->
-<header class="glass-header">
-  <div class="header-content">
-    <div class="logo" (click)="refreshData()">
-      <mat-icon class="logo-icon">play_circle_filled</mat-icon>
-      <h1>Emby <span>Console</span></h1>
-    </div>
+  <header class="glass-header">
+    <div class="header-content">
+      <div class="logo" (click)="refreshData()">
+        <mat-icon class="logo-icon">play_circle_filled</mat-icon>
+        <h1>Emby <span>Console</span></h1>
+      </div>
 
       <div class="header-actions">
         <button class="glass-btn" (click)="loadEmbySettings()" matTooltip="Emby Settings">
@@ -25,12 +25,53 @@
           <mat-icon>{{isDarkTheme ? 'light_mode' : 'dark_mode'}}</mat-icon>
         </button>
       </div>
+    </div>
+  </header>
 
+  <!-- Connection Settings Dialog - Teraz na wierzchu -->
+  <div *ngIf="showConnectionSettings" class="connection-dialog-overlay">
+   <div class="connection-dialog-container">
+    <div class="glass-panel connection-dialog">
+      <div class="panel-header">
+        <h2>
+          <mat-icon>link</mat-icon>
+          Konfiguracja połączenia
+        </h2>
+        <button mat-icon-button (click)="showConnectionSettings = false" class="close-btn">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <div class="dialog-content">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>URL serwera Emby</mat-label>
+          <input matInput [(ngModel)]="connectionSettings.apiUrl" placeholder="http://localhost:8096">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Klucz API</mat-label>
+          <input matInput [(ngModel)]="connectionSettings.apiKey" type="password">
+        </mat-form-field>
+
+        <div class="dialog-actions">
+          <button mat-stroked-button (click)="testConnection()" 
+                  [disabled]="!connectionSettings.apiUrl || !connectionSettings.apiKey">
+            <mat-icon>wifi</mat-icon>
+            Testuj połączenie
+          </button>
+          <button mat-raised-button color="primary" (click)="saveConnectionSettings()" 
+                  [disabled]="!connectionSettings.apiUrl || !connectionSettings.apiKey">
+            <mat-icon>save</mat-icon>
+            Zapisz
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
+ </div>
 
-  <!-- Main Content -->
-  <main class="dashboard-content">
+  <!-- Main Content - Tylko gdy mamy ustawienia -->
+  <main class="dashboard-content" *ngIf="!showConnectionSettings">
     <!-- Sessions Panel -->
     <section class="glass-panel sessions-panel">
       <div class="panel-header">
@@ -58,6 +99,7 @@
                   {{session.DeviceName}}
                 </span>
                 <span class="ip">{{session.RemoteEndPoint}}</span>
+                <span class="protocol">{{ session.Protocol }} </span>
               </div>
             </div>
           </div>
@@ -66,13 +108,16 @@
             <div class="media-poster" [style.backgroundImage]="getMediaImage(session)"></div>
             <div class="media-info">
               <h4>{{session.NowPlayingItem?.Name || 'Unknown Media'}}</h4>
-  <div class="media-meta">
-    <span *ngIf="session.NowPlayingItem?.OfficialRating" class="rating-badge" [style.background]="getRatingColor(session.NowPlayingItem.OfficialRating)">
-      {{session.NowPlayingItem.OfficialRating}}
-    </span>
-    <span *ngIf="session.NowPlayingItem?.ProductionYear" class="year">
-      {{session.NowPlayingItem.ProductionYear}}
-    </span>
+              <div class="media-meta">
+                <span *ngIf="session.NowPlayingItem?.OfficialRating" class="rating-badge"
+                      [style.background]="getRatingColor(session.NowPlayingItem.OfficialRating)">
+                  {{session.NowPlayingItem.OfficialRating}}
+                </span>
+                
+                <span *ngIf="session.NowPlayingItem?.ProductionYear" class="year">
+                  {{session.NowPlayingItem.ProductionYear}}
+                </span>
+                
 <span *ngIf="getQualityLabel(session)?.length > 0" class="quality-badge"
       [class.hdr]="getQualityLabel(session)?.includes('HDR')"
       [class.dolby-vision]="getQualityLabel(session)?.includes('DOVI')"
@@ -81,12 +126,14 @@
       [class.hd]="hasHD(session)"
       [class.uhd]="has4K(session)"
       [matTooltip]="getQualityTooltip(session)">
-  {{getQualityLabel(session)}}
-</span>
-    <span *ngIf="session.NowPlayingItem?.SeriesName" class="series">
-      {{session.NowPlayingItem.SeriesName}}
-    </span>
-  </div>
+                  <span class="quality-icon"></span>
+                  <span class="quality-text">{{getQualityLabel(session)}}</span>
+                </span>
+              </div>
+
+              <div *ngIf="session.NowPlayingItem?.SeriesName" class="series">
+                {{session.NowPlayingItem.SeriesName}}
+              </div>
 
 <div class="progress-container">
   <div class="progress-time">
@@ -118,7 +165,7 @@
       <span>{{session.TranscodingInfo?.Framerate}} FPS</span>
     </div>
   </div>
-</div>              
+</div> 
 
             </div>
           </div>
@@ -209,57 +256,56 @@
             </span>
           </div>
 
-    <button mat-raised-button 
-            color="primary" 
-            class="update-btn"
-            [disabled]="!serverInfo?.HasUpdateAvailable || updateInProgress"
-            (click)="updateServer()">
-      <mat-icon>system_update_alt</mat-icon>
-      {{updateInProgress ? 'Aktualizowanie...' : 'Zaktualizuj'}}
-      <mat-spinner diameter="20" *ngIf="updateInProgress"></mat-spinner>
-    </button>
-
+          <button mat-raised-button 
+                  color="primary" 
+                  class="update-btn"
+                  [disabled]="!serverInfo?.HasUpdateAvailable || updateInProgress"
+                  (click)="updateServer()">
+            <mat-icon>system_update_alt</mat-icon>
+            {{updateInProgress ? 'Aktualizowanie...' : 'Zaktualizuj'}}
+            <mat-spinner diameter="20" *ngIf="updateInProgress"></mat-spinner>
+          </button>
         </div>
       </section>
 
-<section class="glass-panel settings-panel">
-  <div class="panel-header">
-    <h2>
-      <mat-icon>settings</mat-icon>
-      Ustawienia Emby
-    </h2>
-  </div>
+      <section class="glass-panel settings-panel">
+        <div class="panel-header">
+          <h2>
+            <mat-icon>settings</mat-icon>
+            Ustawienia Emby
+          </h2>
+        </div>
 
-  <div class="settings-content" *ngIf="embySettings">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Nazwa serwera</mat-label>
-      <input matInput [(ngModel)]="embySettings.ServerName">
-    </mat-form-field>
+        <div class="settings-content" *ngIf="embySettings">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nazwa serwera</mat-label>
+            <input matInput [(ngModel)]="embySettings.ServerName">
+          </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Limit bitrate (Kbps)</mat-label>
-      <input matInput type="number" [(ngModel)]="embySettings.RemoteClientBitrateLimit">
-    </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Limit bitrate (Kbps)</mat-label>
+            <input matInput type="number" [(ngModel)]="embySettings.RemoteClientBitrateLimit">
+          </mat-form-field>
 
-    <mat-checkbox [(ngModel)]="embySettings.EnableRemoteAccess">Dostęp zdalny</mat-checkbox>
-    <mat-checkbox [(ngModel)]="embySettings.EnableAutomaticRestart">Automatyczny restart</mat-checkbox>
+          <mat-checkbox [(ngModel)]="embySettings.EnableRemoteAccess">Dostęp zdalny</mat-checkbox>
+          <mat-checkbox [(ngModel)]="embySettings.EnableAutomaticRestart">Automatyczny restart</mat-checkbox>
 
-    <div class="settings-actions">
-      <button mat-stroked-button (click)="loadEmbySettings()">
-        <mat-icon>refresh</mat-icon> Odśwież
-      </button>
-      <button mat-raised-button color="primary" (click)="saveEmbySettings()" [disabled]="!embySettings || isSaving">
-        <mat-icon>save</mat-icon> Zapisz
-        <mat-spinner diameter="20" *ngIf="isSaving"></mat-spinner>
-      </button>
-    </div>
-  </div>
-</section>
-
+          <div class="settings-actions">
+            <button mat-stroked-button (click)="loadEmbySettings()">
+              <mat-icon>refresh</mat-icon> Odśwież
+            </button>
+            <button mat-raised-button color="primary" (click)="saveEmbySettings()" [disabled]="!embySettings || isSaving">
+              <mat-icon>save</mat-icon> Zapisz
+              <mat-spinner diameter="20" *ngIf="isSaving"></mat-spinner>
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 </div>
 
+<!-- Message Dialog Template -->
 <ng-template #messageDialogTemplate>
   <div class="message-dialog">
     <div class="dialog-header">

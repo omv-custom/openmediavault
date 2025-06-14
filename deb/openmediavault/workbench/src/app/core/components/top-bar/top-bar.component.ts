@@ -69,6 +69,7 @@ export class TopBarComponent {
   public numNotifications: undefined | number;
   public darkModeEnabled: boolean;
   public loggedInAs: string;
+  public isFullScreen: boolean = false;
 
   constructor(
     private blockUiService: BlockUiService,
@@ -209,6 +210,40 @@ export class TopBarComponent {
   onToggleDarkMode(): void {
     this.prefersColorSchemeService.toggle();
     this.darkModeEnabled = !this.darkModeEnabled;
+  }
+
+  onFullScreen() {
+    if (!this.isFullScreen) {
+      this.openFullscreen();
+    } else {
+      this.closeFullscreen();
+    }
+  }
+
+  openFullscreen() {
+    const elem = document.documentElement;
+    
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem['webkitRequestFullscreen']) { /* Safari */
+      elem['webkitRequestFullscreen']();
+    } else if (elem['msRequestFullscreen']) { /* IE11 */
+      elem['msRequestFullscreen']();
+    }
+    
+    this.isFullScreen = true;
+  }
+
+  closeFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document['webkitExitFullscreen']) { /* Safari */
+      document['webkitExitFullscreen']();
+    } else if (document['msExitFullscreen']) { /* IE11 */
+      document['msExitFullscreen']();
+    }
+    
+    this.isFullScreen = false;
   }
 
   private showDialog(title: string, message: string, template: string, callback: () => void): void {

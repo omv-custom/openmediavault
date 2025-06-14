@@ -40,6 +40,7 @@ import { TranslocoRootModule } from '~/app/transloco-root.module';
 
 import { FeatherModule } from 'angular-feather';
 import { allIcons } from 'angular-feather/icons';
+import {NgTiltModule} from '@geometricpanda/angular-tilt';
 
 @NgModule({ declarations: [AppComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
@@ -54,6 +55,7 @@ import { allIcons } from 'angular-feather/icons';
         TranslocoRootModule,
         MaterialModule,
         AppRoutingModule,
+        NgTiltModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable

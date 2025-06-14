@@ -22,8 +22,8 @@
   }
 
   .mat-mdc-progress-bar {
-   --mdc-linear-progress-track-height: 15px;
-   --mdc-linear-progress-active-indicator-height: 15px;
+   --mat-progress-bar-track-height: 15px !important;
+   --mdc-linear-progress-active-indicator-height: 15px !important;
   }
 
 
@@ -35,6 +35,8 @@
     position: relative;
     z-index: 999;
     justify-content: center;
+       --mat-progress-bar-track-height: 15px !important;
+   --mdc-linear-progress-active-indicator-height: 15px !important;
   }
 
 }

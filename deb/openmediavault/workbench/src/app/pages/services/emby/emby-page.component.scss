@@ -974,3 +974,82 @@
     }
   }
 }
+
+.connection-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000; // Bardzo wysoki z-index
+  backdrop-filter: blur(10px);
+}
+
+.connection-dialog-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  animation: fadeInScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.connection-dialog {
+  width: 100%;
+  background: rgb(255 255 255);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  
+  .panel-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--glass-border);
+    
+    h2 {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  .dialog-content {
+    padding: 24px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    color: var(--text);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--glass-border);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

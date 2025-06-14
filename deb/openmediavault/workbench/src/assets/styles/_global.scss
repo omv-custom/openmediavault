@@ -119,7 +119,8 @@ ul {
   color: #FFF;
 }
 .mat-mdc-unelevated-button:not(:disabled) {
-  color: #FFF !important;
+  background-color: var(--mat-sys-secondary, var(--mat-sys-primary)) !important;
+  margin-right : 5px;
 }
 .mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent{
   color: #FFF;
@@ -276,4 +277,12 @@ ul {
 }
 .op-5 {
   opacity: 0.5;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none !important;
+}
+
+.mat-padd {
+   margin: 0 20px 0 20px !important;
 }
