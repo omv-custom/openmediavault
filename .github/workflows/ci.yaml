@@ -31,7 +31,7 @@ jobs:
           cache-dependency-path: deb/openmediavault/workbench/package-lock.json
       - name: Install CI
         working-directory: deb/openmediavault/workbench/
-        run: npm ci --force --silent
+        run: npm ci --force
       - name: Build If Present
         working-directory: deb/openmediavault/workbench/
         run: npm run build --if-present
