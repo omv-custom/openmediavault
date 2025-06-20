@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ message.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="screenlock-container">
+        <div class="screenlock-box">
+            <div class="screenlock-header">
+                <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                </div>
+                <h2>Admin</h2>
+                <p>{{ message.title }}</p>
+            </div>
+            
+            <div class="message-content">
+                {{ message.content }}
+            </div>
+            
+            <div class="button-group">
+                <button (click)="refreshPage()" class="btn-primary unlock-btn">
+                    <i class="fas fa-refresh"></i> Odśwież stronę
+                </button>
+                <button (click)="navigateToLogin()" class="btn-primary unlock-btn">
+                    <i class="fas fa-sign-in-alt"></i> Przejdź do logowania
+                </button>
+            </div>
+            
+            <div class="screenlock-footer">
+                <p>Zapomniałeś hasła? <a href="#" id="reset-password">Skontaktuj się z administratorem</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -30,6 +30,7 @@ import { LoginPageComponent } from '~/app/core/pages/login-page/login-page.compo
 import { NavigationPageComponent } from '~/app/core/pages/navigation-page/navigation-page.component';
 import { ShutdownPageComponent } from '~/app/core/pages/shutdown-page/shutdown-page.component';
 import { StandbyPageComponent } from '~/app/core/pages/standby-page/standby-page.component';
+import { SessionExpiredComponent } from '~/app/core/components/CheckInactivity/session-expired.component';
 import { RouteConfigService } from '~/app/core/services/route-config.service';
 import { AuthGuardService } from '~/app/shared/services/auth-guard.service';
 import { RpcService } from '~/app/shared/services/rpc.service';
@@ -133,6 +134,10 @@ const routes: Routes = [
       {
         path: 'guruMeditation',
         component: GuruMeditationPageComponent
+      },
+      {
+        path: 'session-expired',
+        component: SessionExpiredComponent
       },
       {
         path: '404',

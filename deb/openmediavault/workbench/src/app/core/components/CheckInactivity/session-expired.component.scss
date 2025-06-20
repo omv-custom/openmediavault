@@ -1,0 +1,228 @@
+        :root {
+            --primary-color: #57b846;
+            --secondary-color: #4158d0;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --sidebar-width: 280px;
+            --header-height: 60px;
+            --gradient-bg: linear-gradient(-135deg, #c850c0, #4158d0);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #333;
+            --text-light: #666;
+            --border-color: #e0e0e0;
+            --sidebar-bg: rgba(0, 0, 0, 0.2);
+            --scrollbar-thumb: #c1c1c1;
+            --scrollbar-track: #f1f1f1;
+        }
+
+        [data-theme="dark"] {
+            --gradient-bg: linear-gradient(-135deg, #2d3436, #000);
+            --card-bg: rgba(45, 52, 54, 0.95);
+            --text-color: #f5f6fa;
+            --text-light: #b2bec3;
+            --border-color: #636e72;
+            --sidebar-bg: rgba(0, 0, 0, 0.4);
+            --scrollbar-thumb: #4a4a4a;
+            --scrollbar-track: #2d2d2d;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif !important;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-135deg, #c850c0, #4158d0) !important;
+            color: #333 !important;
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .screenlock-container {
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .screenlock-box {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .screenlock-header {
+            margin-bottom: 25px;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            border: 3px solid #e0e0e0;
+        }
+        
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+        
+        .message-content {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            text-align: left;
+        }
+        
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-primary i {
+            font-size: 14px;
+        }
+        
+        .screenlock-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .screenlock-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .screenlock-footer a:hover {
+            text-decoration: underline;
+        }
+
+	.screenlock-container {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    min-height: 100vh;
+	    background: linear-gradient(-135deg, #c850c0, #4158d0);
+	    padding: 20px;
+	}
+
+	.screenlock-box {
+	    background-color: rgba(255, 255, 255, 0.95);
+	    border-radius: 10px;
+	    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+	    padding: 30px;
+	    width: 100%;
+	    max-width: 400px;
+	    text-align: center;
+	    transition: all 0.3s ease;
+	}
+
+	.screenlock-header {
+	    margin-bottom: 30px;
+	}
+
+	.screenlock-header .user-avatar {
+	    width: 80px;
+	    height: 80px;
+	    border-radius: 50%;
+	    overflow: hidden;
+	    margin: 0 auto 15px;
+	    border: 3px solid #57b846;
+	}
+
+	.screenlock-header .user-avatar img {
+	    width: 100%;
+	    height: 100%;
+	    object-fit: cover;
+	}
+
+	.screenlock-header h2 {
+	    margin: 10px 0 5px;
+	    color: #333;
+	}
+
+	.screenlock-header p {
+	    color: #666;
+	    margin: 0;
+	}
+
+	.screenlock-form {
+	    margin-bottom: 20px;
+	}
+
+	.password-input {
+	    position: relative;
+	    margin-bottom: 15px;
+	}
+
+	.unlock-btn {
+	    width: 100%;
+	    padding: 12px;
+	    font-size: 1rem;
+	}
+
+	.screenlock-footer {
+	    font-size: 0.9rem;
+	    color: var(--text-light);
+	}
+
+	.screenlock-footer a {
+	    color: #57b846;
+	    text-decoration: none;
+	}
+
+	.screenlock-footer a:hover {
+	    text-decoration: underline;
+	}
+

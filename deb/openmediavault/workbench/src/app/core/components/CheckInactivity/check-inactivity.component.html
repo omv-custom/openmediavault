@@ -1,10 +1,7 @@
-<ng-template #inactivityDialog let-data>
-  <h2 mat-dialog-title>{{ data.title }}</h2>
-  <mat-dialog-content>
-    {{ data.message }}
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button mat-button class="bg-info" (click)="refreshPage()">Odśwież</button>
-    <button mat-button [mat-dialog-close]="true" class="bg-error" cdkFocusInitial>Wyloguj</button>
-  </mat-dialog-actions>
+<ng-template #inactivityToastr let-minutes="minutes" let-seconds="seconds">
+  <div class="toast-warning-content">
+    <strong>Twoja sesja wkrótce wygaśnie!</strong>
+    <p>Zostaniesz wylogowany za {{minutes}}m {{seconds}}s z powodu braku aktywności.</p>
+    <p class="small">Kliknij w powiadomienie, aby przedłużyć sesję.</p>
+  </div>
 </ng-template>
