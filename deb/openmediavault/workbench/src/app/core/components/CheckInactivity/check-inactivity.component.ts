@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CheckInactivityComponent implements OnInit, OnDestroy {
 
+  private readonly INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minut w milisekundach
   private redirectTime = 300000; // 5 minut w milisekundach - czas po którym nastąpi przekierowanie
   private warningTime = 60000; // 1 minuta przed przekierowaniem pokaż ostrzeżenie
   private lastActivityTime: number;
@@ -27,6 +28,7 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.checkLastActivityTime();
     this.lastActivityTime = Number(localStorage.getItem('lastActivityTime')) || Date.now();
     this.startTimer();
   }
@@ -47,6 +49,19 @@ export class CheckInactivityComponent implements OnInit, OnDestroy {
     localStorage.setItem('lastActivityTime', this.lastActivityTime.toString());
     this.clearToast();
     this.toastShown = false;
+  }
+
+  private checkLastActivityTime(): void {
+    const storedTime = localStorage.getItem('lastActivityTime');
+    if (storedTime) {
+      const lastTime = parseInt(storedTime, 10);
+      const currentTime = Date.now();
+      const timeDiff = currentTime - lastTime;
+
+      if (timeDiff > this.INACTIVITY_TIMEOUT) {
+        localStorage.removeItem('lastActivityTime');
+      }
+    }
   }
 
   private startTimer(): void {
