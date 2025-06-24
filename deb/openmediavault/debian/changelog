@@ -1,3 +1,11 @@
+openmediavault (8.0.7) stable; urgency=low
+
+  * Allow user to change the (maximum) number of items per page
+  * Add UDEV rule to fix the duplicate serial number issue for External SATA Hard Drive Adapter cable PA023U3
+  * Improve the requiredIf validator
+
+ -- Gekomod <zaba141@o2.pl>  Thu, 24 Jun 2025 17:29:52 +0100
+
 openmediavault (8.0.6) stable; urgency=low
 
   * Add page Session Expired.
