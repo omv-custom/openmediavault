@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openmediavault-ftp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-04 00:41+0200\n"
+"POT-Creation-Date: 2023-01-30 12:27+0100\n"
 "PO-Revision-Date: 2023-01-30 10:17+0000\n"
 "Last-Translator: Serhat SUT <serhat.sut@gmail.com>, 2023\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/openmediavault/teams/14254/tr_TR/)\n"
@@ -28,9 +28,6 @@ msgstr "0 KiB/s limitsiz demektir."
 msgid "A powerful modular FTP/SFTP/FTPS server."
 msgstr ""
 
-msgid "Access mode"
-msgstr ""
-
 msgid "Advanced settings"
 msgstr "Gelişmiş Ayarlar"
 
@@ -39,19 +36,8 @@ msgstr ""
 "Kullanıcıların kesintiye uğramış indirme ve yüklemelerine devam etmelerine "
 "izin ver."
 
-msgid ""
-"Allow users to log in without a password. Make sure the user <em>ftp</em> or"
-" group <em>nogroup</em> can access the files."
-msgstr ""
-
 msgid "Anonymous FTP"
 msgstr "Anonim FTP"
-
-msgid "Authenticated user ID"
-msgstr ""
-
-msgid "Authentication method"
-msgstr ""
 
 msgid "Ban Rules"
 msgstr "Engelleme Kuralları"
@@ -65,9 +51,6 @@ msgstr "Bantgenişliği kısıtlaması"
 msgid "Certificate"
 msgstr "Sertifika"
 
-msgid "Completion status"
-msgstr ""
-
 msgid "Create"
 msgstr "Oluştur"
 
@@ -80,13 +63,7 @@ msgstr "FTP paylaşımı oluşturuldu."
 msgid "Currently logged in users:"
 msgstr "Şu anda sisteme bağlı kullanıcılar:"
 
-msgid "Date & Time"
-msgstr ""
-
 msgid "Deny logins which do not have a valid shell."
-msgstr ""
-
-msgid "Direction"
 msgstr ""
 
 msgid "Display the home directory of the user in the browse list."
@@ -124,9 +101,6 @@ msgstr "İlave seçenekler"
 msgid "FTP"
 msgstr "FTP"
 
-msgid "FTP - Transfer log"
-msgstr ""
-
 msgid "FXP"
 msgstr "FXP"
 
@@ -136,12 +110,6 @@ msgid ""
 msgstr ""
 "FXP kullanıcı tarafına herhangi bir dosya bilgisi aktarımı olmaksızın iki "
 "uzak sunucu arasında aktarıma imkan tanır."
-
-msgid "Filename"
-msgstr ""
-
-msgid "Filesize"
-msgstr ""
 
 msgid "Home directories"
 msgstr "Ana klasörler"
@@ -221,9 +189,6 @@ msgstr "Aynı anda bağlanabilecek maksimum kullanıcı sayısı."
 msgid "Maximum upload rate (KiB/s)"
 msgstr "Maksimum yükleme hızı (KiB/s)"
 
-msgid "Message"
-msgstr ""
-
 msgid "Min. passive port"
 msgstr ""
 
@@ -270,9 +235,6 @@ msgstr "Port"
 msgid "Refresh time"
 msgstr "Yenileme zamanı"
 
-msgid "Remote host"
-msgstr ""
-
 msgid "Require valid shell"
 msgstr "Geçerli bir kabul gereklidir"
 
@@ -299,9 +261,6 @@ msgstr "Paylaşılmış klasör"
 
 msgid "Shares"
 msgstr "Paylaşımlar"
-
-msgid "Special action flag"
-msgstr ""
 
 msgid ""
 "Specifies the amount of time, in seconds, between checking and updating the "
@@ -379,12 +338,6 @@ msgstr "Zaman aşımı"
 msgid "Transfer log"
 msgstr "Altarım kaydı"
 
-msgid "Transfer time"
-msgstr ""
-
-msgid "Transfer type"
-msgstr ""
-
 msgid "Updated FTP ban rule."
 msgstr ""
 
@@ -392,9 +345,6 @@ msgid "Updated FTP share."
 msgstr ""
 
 msgid "Use the following bandwidth restriction."
-msgstr ""
-
-msgid "User name"
 msgstr ""
 
 msgid "Welcome message"

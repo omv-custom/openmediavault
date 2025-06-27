@@ -5,7 +5,6 @@
 # 
 # Translators:
 # Miha Bezjak <miha@bezjak.info>, 2022
-# Valentin Korenjak <valentin@korenjak.si>, 2025
 # 
 #, fuzzy
 msgid ""
@@ -14,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-03 12:25+0100\n"
 "PO-Revision-Date: 2022-03-22 21:34+0000\n"
-"Last-Translator: Valentin Korenjak <valentin@korenjak.si>, 2025\n"
+"Last-Translator: Miha Bezjak <miha@bezjak.info>, 2022\n"
 "Language-Team: Slovenian (Slovenia) (https://app.transifex.com/openmediavault/teams/14254/sl_SI/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +28,7 @@ msgid "Enabled"
 msgstr "Omogočeno"
 
 msgid "Open UI"
-msgstr "Odpri UI"
+msgstr ""
 
 msgid "Port"
 msgstr "Vrata"
@@ -41,7 +40,7 @@ msgid "The SSL certificate."
 msgstr "SSL potrdilo"
 
 msgid "Updated WeTTY settings."
-msgstr "Posodobljene nastavitve WeTTY."
+msgstr ""
 
 msgid "WeTTY"
-msgstr "WeTTY"
+msgstr ""
